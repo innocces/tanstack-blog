@@ -1,0 +1,44 @@
+{
+  "name": "@tanstack-blog/ui",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Theme-agnostic React layout, search and navigation components.",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./styles.css": "./styles.css"
+  },
+  "files": [
+    "dist",
+    "styles.css"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@tanstack/react-store": "^0.11.2",
+    "@tanstack/store": "^0.11.2",
+    "@tanstack-blog/core": "workspace:*",
+    "@tanstack-blog/search": "workspace:*",
+    "lz-string": "^1.5.0"
+  },
+  "peerDependencies": {
+    "@tanstack/react-router": "^1.120.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@tanstack/react-router": "^1.170.46",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "typescript": "^6.0.2"
+  }
+}

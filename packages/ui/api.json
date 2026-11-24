@@ -1,0 +1,239 @@
+{
+  "DropdownOption": {
+    "name": "DropdownOption",
+    "file": "ui/src/Dropdown.tsx",
+    "description": "One option in a Dropdown menu.",
+    "zh": "下拉菜单中的单个选项",
+    "props": [
+      {
+        "name": "value",
+        "type": "string",
+        "required": true,
+        "description": "Option value.",
+        "zh": "选项值"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "description": "Visible label.",
+        "zh": "显示的文案"
+      },
+      {
+        "name": "hint",
+        "type": "string",
+        "required": false,
+        "description": "Small secondary hint.",
+        "zh": "次要提示文字"
+      }
+    ]
+  },
+  "DropdownProps": {
+    "name": "DropdownProps",
+    "file": "ui/src/Dropdown.tsx",
+    "description": "Accessible custom select used instead of a native select.",
+    "zh": "用于替代原生 select 的无障碍自定义下拉菜单",
+    "props": [
+      {
+        "name": "value",
+        "type": "string",
+        "required": true,
+        "description": "Currently selected value.",
+        "zh": "当前选中的值"
+      },
+      {
+        "name": "options",
+        "type": "DropdownOption[]",
+        "required": true,
+        "description": "Options shown in the popover.",
+        "zh": "弹窗中展示的选项列表"
+      },
+      {
+        "name": "onChange",
+        "type": "(value: string) => void",
+        "required": true,
+        "description": "Called when an option is chosen.",
+        "zh": "选中某个选项时触发"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "description": "Accessible label for the trigger.",
+        "zh": "触发按钮的无障碍标签"
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Optional leading icon.",
+        "zh": "可选的前置图标"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Extra class on the root element.",
+        "zh": "根节点的附加类名",
+        "default": "undefined"
+      }
+    ]
+  },
+  "SearchDialogProps": {
+    "name": "SearchDialogProps",
+    "file": "ui/src/SearchDialog.tsx",
+    "description": "Command-palette search dialog.",
+    "zh": "命令面板式搜索弹窗",
+    "props": [
+      {
+        "name": "store",
+        "type": "UiStore",
+        "required": true,
+        "description": "Shared UI store controlling open state and locale.",
+        "zh": "控制开关状态与语言的全局 UI store"
+      },
+      {
+        "name": "adapter",
+        "type": "SearchAdapter",
+        "required": true,
+        "description": "Search adapter from `search` or `orama-search`.",
+        "zh": "来自 search 或 orama-search 包的搜索适配器"
+      },
+      {
+        "name": "config",
+        "type": "PressConfig",
+        "required": true,
+        "description": "Resolved site configuration.",
+        "zh": "已解析的站点配置"
+      },
+      {
+        "name": "t",
+        "type": "(key: string) => string",
+        "required": true,
+        "description": "Translation function.",
+        "zh": "翻译函数"
+      },
+      {
+        "name": "onNavigate",
+        "type": "(route: string) => void",
+        "required": false,
+        "description": "Optional SPA navigation callback.",
+        "zh": "可选的客户端路由跳转回调"
+      }
+    ]
+  },
+  "ThemeProviderProps": {
+    "name": "ThemeProviderProps",
+    "file": "ui/src/ThemeProvider.tsx",
+    "description": "Applies theme tokens as CSS variables before hydration.",
+    "zh": "在水合前把主题令牌写成 CSS 变量",
+    "props": [
+      {
+        "name": "store",
+        "type": "UiStore",
+        "required": true,
+        "description": "Store holding theme and color mode.",
+        "zh": "保存主题与明暗模式的 store"
+      },
+      {
+        "name": "themes",
+        "type": "PressTheme[]",
+        "required": true,
+        "description": "Registered themes available for switching.",
+        "zh": "可切换的已注册主题列表"
+      },
+      {
+        "name": "storageKey",
+        "type": "string",
+        "required": true,
+        "description": "localStorage key used for persistence.",
+        "zh": "持久化使用的 localStorage 键名"
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "description": "Application tree.",
+        "zh": "应用子树"
+      }
+    ]
+  },
+  "FeedbackProps": {
+    "name": "FeedbackProps",
+    "file": "ui/src/pages.tsx",
+    "description": "Lightweight yes/no page feedback widget.",
+    "zh": "轻量的是/否页面反馈组件",
+    "props": [
+      {
+        "name": "entryId",
+        "type": "string",
+        "required": true,
+        "description": "Stable id used as the localStorage key.",
+        "zh": "用作 localStorage 键名的稳定 id"
+      },
+      {
+        "name": "t",
+        "type": "(key: string) => string",
+        "required": true,
+        "description": "Translation function.",
+        "zh": "翻译函数"
+      }
+    ]
+  },
+  "ComponentPageProps": {
+    "name": "ComponentPageProps",
+    "file": "ui/src/pages.tsx",
+    "description": "Component documentation page with a live example and TSDoc props table.",
+    "zh": "带实时示例与 TSDoc 属性表的组件文档页",
+    "props": [
+      {
+        "name": "entry",
+        "type": "ContentEntry",
+        "required": true,
+        "description": "Content entry for this component.",
+        "zh": "该组件对应的内容条目"
+      },
+      {
+        "name": "t",
+        "type": "(key: string) => string",
+        "required": true,
+        "description": "Translation function.",
+        "zh": "翻译函数"
+      },
+      {
+        "name": "example",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Live example built from the ui package.",
+        "zh": "使用 ui 子包构建的实时示例"
+      },
+      {
+        "name": "api",
+        "type": "ComponentApi",
+        "required": false,
+        "description": "Props metadata generated from TSDoc comments.",
+        "zh": "由 TSDoc 生成的属性元数据"
+      },
+      {
+        "name": "locale",
+        "type": "string",
+        "required": false,
+        "description": "Active locale for bilingual prop descriptions.",
+        "zh": "用于双语属性描述的语言代码"
+      },
+      {
+        "name": "sourceBase",
+        "type": "string",
+        "required": false,
+        "description": "Base URL for \"View source\" links.",
+        "zh": "“查看源码”链接的基础地址"
+      },
+      {
+        "name": "catalog",
+        "type": "Record<string, ComponentApi>",
+        "required": false,
+        "description": "Full API catalog used to expand nested prop types. @zh 用于展开嵌套属性类型的完整 API 目录"
+      }
+    ]
+  }
+}
