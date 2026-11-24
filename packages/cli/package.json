@@ -1,0 +1,26 @@
+{
+  "name": "@tanstack-blog/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Interactive TUI scaffolder for TanStack Blog projects.",
+  "license": "MIT",
+  "bin": {
+    "create-tanstack-blog": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && chmod +x dist/index.js"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.9.0",
+    "kolorist": "^1.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^6.0.2"
+  }
+}
