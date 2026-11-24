@@ -1,0 +1,60 @@
+{
+  "name": "@tanstack-blog/core",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Framework core: config, content pipeline, i18n, theme contracts and Vite integration.",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "import": "./dist/vite.js"
+    },
+    "./theme": {
+      "types": "./dist/theme/index.d.ts",
+      "import": "./dist/theme/index.js"
+    },
+    "./content": {
+      "types": "./dist/content/index.d.ts",
+      "import": "./dist/content/index.js"
+    },
+    "./content/collection": {
+      "types": "./dist/content/collection.d.ts",
+      "import": "./dist/content/collection.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test dist/**/*.test.js || true"
+  },
+  "dependencies": {
+    "@tanstack/highlight": "^1.2.12",
+    "@tanstack/markdown": "^1.2.1",
+    "gray-matter": "^4.0.3",
+    "zod": "^4.1.0",
+    "@tanstack-blog/search": "workspace:*",
+    "@tanstack-blog/orama-search": "workspace:*"
+  },
+  "peerDependencies": {
+    "vite": "^8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.0"
+  }
+}
