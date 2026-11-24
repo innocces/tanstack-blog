@@ -1,0 +1,29 @@
+{
+  "name": "@tanstack-blog/theme-stripe",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Stripe Press theme plugin. Cream paper, serif body, foil-stamp teal.",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@tanstack-blog/core": "workspace:*",
+    "@tanstack-blog/themes": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^6.0.2"
+  }
+}

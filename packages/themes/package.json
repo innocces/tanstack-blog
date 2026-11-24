@@ -1,0 +1,30 @@
+{
+  "name": "@tanstack-blog/themes",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "25 design-token presets derived from the web-design-engineer anchored recipe catalog.",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./registry": "./registry.json"
+  },
+  "files": [
+    "dist",
+    "registry.json"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@tanstack-blog/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^6.0.2"
+  }
+}
