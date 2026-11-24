@@ -1,0 +1,35 @@
+{
+  "name": "tanstack-blog-workspace",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.33.2",
+  "description": "A pluggable, theme-driven documentation and blog framework built on TanStack Start + TanStack Markdown.",
+  "scripts": {
+    "dev": "pnpm --filter @tanstack-blog/docs dev",
+    "build": "pnpm -r --filter './packages/**' build && pnpm --filter @tanstack-blog/docs build",
+    "build:packages": "pnpm -r --filter './packages/**' build",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "test": "pnpm -r --if-present test",
+    "test:e2e": "node e2e/run.mjs",
+    "cli": "pnpm --filter @tanstack-blog/cli exec node dist/index.js",
+    "wiki:sync": "node scripts/sync-wiki.mjs",
+    "screenshot": "node scripts/screenshot.mjs",
+    "screenshot:cli": "python3 scripts/capture-cli.py",
+    "video:record": "node scripts/record-cli-video.mjs",
+    "deploy:cloudflare": "pnpm --filter @tanstack-blog/docs deploy:cloudflare",
+    "api:generate": "node scripts/generate-ui-api.mjs",
+    "registry:generate": "node scripts/generate-theme-registry.mjs",
+    "test:visual": "node scripts/visual-regression.mjs",
+    "test:visual:update": "node scripts/visual-regression.mjs --update"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.5",
+    "ffmpeg-static": "^5.3.0",
+    "puppeteer-core": "^24.43.1",
+    "typescript": "^6.0.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

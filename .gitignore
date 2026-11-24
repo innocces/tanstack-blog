@@ -1,0 +1,31 @@
+# Local demand / planning notes — MUST NOT be committed (framework requirement #1)
+.demand/
+
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+dist-ssr/
+.output/
+.nitro/
+.vinxi/
+.tanstack/
+.wrangler/
+__unconfig*
+
+# Local env & caches
+.env
+.env.*
+!.env.example
+*.local
+.DS_Store
+*.log
+todos.json
+
+# Editors
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
