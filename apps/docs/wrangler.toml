@@ -1,0 +1,9 @@
+name = "tanstack-blog"
+compatibility_date = "2026-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Nitro generates .output/server/wrangler.json with its own main + ASSETS binding
+# for the Workers runtime. Do not set pages_build_output_dir here: that turns the
+# project into a Pages site, where `ASSETS` is a reserved binding name.
+[vars]
+NITRO_PRESET = "cloudflare_module"
