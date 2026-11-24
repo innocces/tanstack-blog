@@ -1,0 +1,72 @@
+<!-- Mirrored from apps/docs/content/en/docs/i18n.md. Edit the source, not this file. -->
+
+---
+title: Internationalization
+description: Locales, dictionaries, routing prefixes and right-to-left support.
+group: Fundamentals
+order: 4
+---
+
+# Internationalization
+
+Localization is built in rather than bolted on. Every content entry carries a locale, every lookup can be scoped to one, and the UI dictionary is overridable.
+
+## Declaring locales
+
+```ts
+i18n: {
+  defaultLocale: 'en',
+  locales: [
+    { code: 'en', label: 'English', dir: 'ltr' },
+    { code: 'zh-CN', label: '简体中文', dir: 'ltr' },
+    { code: 'ar', label: 'العربية', dir: 'rtl' },
+  ],
+  alwaysPrefixLocale: false,
+}
+```
+
+With `alwaysPrefixLocale: false`:
+
+| Locale | Docs route |
+| --- | --- |
+| `en` (default) | `/docs/getting-started` |
+| `zh-CN` | `/zh-CN/docs/getting-started` |
+
+With `true`, even the default locale is prefixed (`/en/docs/getting-started`). Use this when you need CDN-level locale routing.
+
+## Content layout
+
+Mirror your directory structure under each locale code:
+
+```text
+content/
+  en/docs/getting-started.md
+  zh-CN/docs/getting-started.md
+  ar/docs/getting-started.md
+```
+
+A file whose first path segment is not a declared locale is treated as the default locale, so single-language sites need no `en/` folder.
+
+## Dictionaries
+
+The built-in dictionaries cover English and Simplified Chinese. Override or add any key:
+
+```ts
+import { registerDictionary } from '@tanstack-blog/core'
+
+registerDictionary('fr', {
+  'nav.docs': 'Documentation',
+  'search.placeholder': 'Rechercher…',
+  'toc.title': 'Sur cette page',
+})
+```
+
+`createTranslator(locale)` returns a function that falls back to English and then to the key itself, so a partial dictionary never renders `undefined`.
+
+## Right-to-left
+
+Set `dir: 'rtl'` on a locale. The shell applies the direction from the locale definition; the sidebar and table of contents flip naturally because layout uses logical properties. Add per-theme RTL overrides through the theme's `css` field if a recipe needs them.
+
+## Persistence
+
+The selected locale is stored with the theme and color mode in localStorage. `resolveLocale(config, candidate)` picks the best match from a URL segment or browser preference, including base-language matching (`zh` → `zh-CN`).
