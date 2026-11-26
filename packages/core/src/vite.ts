@@ -7,7 +7,7 @@
  *   virtual:tanstack-blog/content      -> serialized content collection
  *   virtual:tanstack-blog/search-data  -> search documents for the active provider
  */
-import { mkdir, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { renderHtml } from '@tanstack/markdown/html'
 import { buildKnowledgeBase } from '@tanstack-blog/kb'
@@ -168,6 +168,13 @@ ${posts
           writeFile(path.join(outDir, 'search-index.json'), serializeIndex(index), 'utf8'),
         )
       }
+      // Theme marketplace metadata for third-party discovery.
+      const registry = await readFile(
+        path.resolve(root, '../packages/themes/registry.json'),
+        'utf8',
+      ).catch(() => null)
+      if (registry)
+        writes.push(writeFile(path.join(outDir, 'theme-registry.json'), registry, 'utf8'))
       await Promise.all(writes)
     },
 

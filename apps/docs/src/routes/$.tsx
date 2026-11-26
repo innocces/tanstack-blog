@@ -25,6 +25,7 @@ import {
   Sidebar,
   ThemePreviewPage,
   Toc,
+  TutorialIndex,
   useSlots,
 } from '@tanstack-blog/ui'
 import { useEffect } from 'react'
@@ -49,6 +50,7 @@ function ContentRoute() {
     NotFound: NotFoundSlot,
     Sidebar: SidebarSlot,
     ThemePreviewPage: ThemePreviewPageSlot,
+    ThemeCompare: ThemeCompareSlot,
     WikiPage: WikiPageSlot,
     Toc: TocSlot,
     Breadcrumbs: BreadcrumbsSlot,
@@ -99,10 +101,25 @@ function ContentRoute() {
 
   if (kind === 'videos') return <VideosPage t={t} />
   // Deterministic, LLM-free knowledge base generated from the repository.
+  if (kind === 'tutorials' && !entry) {
+    const items = entries.filter(
+      (item) => item.locale === locale && item.route.startsWith(`/tutorials`),
+    )
+    return <TutorialIndex entries={items} t={t} />
+  }
+
   if (kind === 'wiki') {
     const page = rest[1] ? wikiPages.find((item) => item.id === rest[1]) : wikiPages[0]
     if (!page) return <NotFoundSlot />
     return <WikiPageSlot pages={wikiPages} activeId={page.id} t={t} />
+  }
+
+  if (kind === 'themes' && rest[1] === 'compare') {
+    const params = new URLSearchParams(window.location.search)
+    const left = getTheme(params.get('a') ?? 'linear')
+    const right = getTheme(params.get('b') ?? 'muji')
+    if (!left || !right) return <NotFoundSlot />
+    return <ThemeCompareSlot left={left} right={right} t={t} />
   }
 
   // Dedicated preview route for every theme: /themes/<id>
@@ -169,6 +186,14 @@ function ContentRoute() {
     return (
       <DocShellSlot toc={<TocSlot headings={entry.headings} t={t} />}>
         <BlogPostSlot entry={entry} t={t} sourceBase={config.editUrlBase} />
+      </DocShellSlot>
+    )
+  }
+
+  if (entry.route.startsWith('/tutorials')) {
+    return (
+      <DocShellSlot toc={<TocSlot headings={entry.headings} t={t} />}>
+        <DocPageSlot entry={entry} config={config} t={t} />
       </DocShellSlot>
     )
   }

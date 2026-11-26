@@ -1,0 +1,231 @@
+{
+  "schema": "tanstack-blog/theme-registry@1",
+  "count": 25,
+  "themes": [
+    {
+      "id": "linear",
+      "name": "Linear",
+      "school": "modern-tool",
+      "description": "Warm near-black, hairline borders, a single violet accent. The default docs theme.",
+      "accent": "#5E6AD2",
+      "package": "@tanstack-blog/theme-linear",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "vercel",
+      "name": "Vercel Mesh",
+      "school": "modern-tool",
+      "description": "True black and white precision with a restrained cyan-to-orange mesh.",
+      "accent": "#5E6AD2",
+      "package": "@tanstack-blog/theme-vercel",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "raycast",
+      "name": "Raycast",
+      "school": "modern-tool",
+      "description": "Glassy command-palette surfaces with a punchy coral-red accent.",
+      "accent": "#5E6AD2",
+      "package": "@tanstack-blog/theme-raycast",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "notion",
+      "name": "Notion (Classic)",
+      "school": "modern-tool",
+      "description": "Warm cream surfaces, soft shadows and quiet ink. Friendly documentation feel.",
+      "accent": "#2383E2",
+      "package": "@tanstack-blog/theme-notion",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "muji",
+      "name": "MUJI / Kenya Hara",
+      "school": "editorial-minimalist",
+      "description": "Emptiness as fullness. Warm paper, hard edges, no shadow, almost no accent.",
+      "accent": "#C8161D",
+      "package": "@tanstack-blog/theme-muji",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "apple",
+      "name": "Apple HIG",
+      "school": "editorial-minimalist",
+      "description": "Paper-pure white, generous space and a single system-blue accent.",
+      "accent": "#0071E3",
+      "package": "@tanstack-blog/theme-apple",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "aesop",
+      "name": "Aesop",
+      "school": "editorial-minimalist",
+      "description": "Apothecary refinement: chamois ground, sage text and an amber seal.",
+      "accent": "#7A4623",
+      "package": "@tanstack-blog/theme-aesop",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "braun",
+      "name": "Dieter Rams / Braun",
+      "school": "editorial-minimalist",
+      "description": "Less but better. Concrete gray, industrial orange, near-zero radius.",
+      "accent": "#E96A26",
+      "package": "@tanstack-blog/theme-braun",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "monocle",
+      "name": "Monocle Magazine",
+      "school": "editorial-minimalist",
+      "description": "Cream paper, magazine-grade hierarchy and a signature editorial red.",
+      "accent": "#C7322E",
+      "package": "@tanstack-blog/theme-monocle",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "pentagram",
+      "name": "Pentagram",
+      "school": "information-architecture",
+      "description": "Bold two-color typographic identity. Type does all the visual work.",
+      "accent": "#1E3FFF",
+      "package": "@tanstack-blog/theme-pentagram",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "swiss",
+      "name": "Vignelli / Swiss",
+      "school": "information-architecture",
+      "description": "Strict grid, Helvetica throughout, one signal red. Static by nature.",
+      "accent": "#E2231A",
+      "package": "@tanstack-blog/theme-swiss",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "bloomberg-terminal",
+      "name": "Bloomberg Terminal",
+      "school": "information-architecture",
+      "description": "Maximum data-ink. Chrome-amber on deep navy with dense monospaced type.",
+      "accent": "#5E6AD2",
+      "package": "@tanstack-blog/theme-bloomberg-terminal",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "tufte",
+      "name": "Edward Tufte",
+      "school": "information-architecture",
+      "description": "Maximum data-ink on warm paper. Two data colors, no ornament, no motion.",
+      "accent": "#A6300E",
+      "package": "@tanstack-blog/theme-tufte",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "nyt",
+      "name": "New York Times",
+      "school": "information-architecture",
+      "description": "Broadsheet authority. Serif body, hairline rules and a sparing breaking-news red.",
+      "accent": "#D0021B",
+      "package": "@tanstack-blog/theme-nyt",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "field-io",
+      "name": "Field.io",
+      "school": "motion-experimental",
+      "description": "Generative identity energy: deep black with cyan-to-violet motion hues.",
+      "accent": "#5E6AD2",
+      "package": "@tanstack-blog/theme-field-io",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "active-theory",
+      "name": "Active Theory",
+      "school": "motion-experimental",
+      "description": "Cinematic stage: deep black, one dramatic signature hue, tinted neutrals.",
+      "accent": "#5E6AD2",
+      "package": "@tanstack-blog/theme-active-theory",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "resn",
+      "name": "Resn Storytelling",
+      "school": "motion-experimental",
+      "description": "Composition-driven storytelling with warm/cool contrast.",
+      "accent": "#D6602E",
+      "package": "@tanstack-blog/theme-resn",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "are-na",
+      "name": "Are.na",
+      "school": "brutalist-raw",
+      "description": "Honest web styling. System fonts, classic browser blue, zero chrome.",
+      "accent": "#0000EE",
+      "package": "@tanstack-blog/theme-are-na",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "businessweek",
+      "name": "Bloomberg Businessweek",
+      "school": "brutalist-raw",
+      "description": "Typographic violence. High-alert orange on white, maximum three colors.",
+      "accent": "#FF3D00",
+      "package": "@tanstack-blog/theme-businessweek",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "balenciaga",
+      "name": "Balenciaga",
+      "school": "brutalist-raw",
+      "description": "Default browser styling weaponized. Helvetica only, no color, no rounding.",
+      "accent": "#000000",
+      "package": "@tanstack-blog/theme-balenciaga",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "stripe-press",
+      "name": "Stripe Press",
+      "school": "warm-humanist",
+      "description": "Books as objects. Cream, warm ink and a single foil-stamp teal.",
+      "accent": "#1B4B5A",
+      "package": "@tanstack-blog/theme-stripe-press",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "mailchimp",
+      "name": "Mailchimp (Freddie)",
+      "school": "warm-humanist",
+      "description": "Warm yellow, personality in microcopy and soft, rounded cards.",
+      "accent": "#FF4D74",
+      "package": "@tanstack-blog/theme-mailchimp",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "headspace",
+      "name": "Headspace",
+      "school": "warm-humanist",
+      "description": "Soft peach, warm teal ink and buoyant, pill-shaped controls.",
+      "accent": "#B0A5D1",
+      "package": "@tanstack-blog/theme-headspace",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "y2k",
+      "name": "Y2K Retrofuturism",
+      "school": "motion-experimental",
+      "description": "Chrome, glassy bubbles and iridescent cyan/magenta. Fully committed.",
+      "accent": "#FF66C4",
+      "package": "@tanstack-blog/theme-y2k",
+      "modes": ["light", "dark"]
+    },
+    {
+      "id": "mid-century",
+      "name": "Mid-Century Modern",
+      "school": "editorial-minimalist",
+      "description": "Paul Rand / Saul Bass geometry: mustard, brick and cream. Flat shapes only.",
+      "accent": "#D9A441",
+      "package": "@tanstack-blog/theme-mid-century",
+      "modes": ["light", "dark"]
+    }
+  ]
+}

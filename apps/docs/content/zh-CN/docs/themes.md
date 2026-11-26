@@ -23,7 +23,7 @@ export const myTheme = defineTheme({
 
 ## 25 套预设
 
-来自 `web-design-engineer` 的 25 个设计配方。六套旗舰主题有手工双模式配色，其余生成互补模式。每套主题都有预览页 `/themes/<id>` 与截图。
+来自 `web-design-engineer` 的 25 个设计配方。六套旗舰主题有手工双模式配色，其余生成互补模式。主题市场支持名称搜索、流派筛选与并排对比（选择两张卡片后点击「对比所选」）。每套主题有 `/themes/<id>` 预览页，含令牌表、安装命令与 CSS 导出；机器可读目录发布在 `/theme-registry.json`。
 
 ```ts
 import { allThemes, getTheme, themesBySchool } from '@tanstack-blog/themes'

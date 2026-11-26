@@ -16,6 +16,9 @@ export default async function run(page, { check }) {
     ['/wiki', 'tb-wiki-page'],
     ['/wiki/architecture', 'tb-wiki-page'],
     ['/wiki/api', 'tb-wiki-page'],
+    ['/tutorials', 'tb-tutorial-list'],
+    ['/tutorials/01-quickstart', 'tb-entry'],
+    ['/themes/compare?a=linear&b=muji', 'tb-compare-grid'],
     ['/zh-CN/docs/getting-started', '快速开始'],
     ['/this-route-does-not-exist', 'Page not found'],
   ]) {

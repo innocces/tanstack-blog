@@ -5,6 +5,7 @@ import type { ContentEntry } from '@tanstack-blog/core/content/collection'
 import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from 'react'
 import { enhanceCodeBlocks } from './code-block.js'
 import { enhanceMarkdownComponents } from './components-enhance.js'
+import { Dropdown } from './Dropdown.js'
 import {
   IconArrowUpRight,
   IconBlog,
@@ -443,6 +444,52 @@ export function ComponentsIndex({
   )
 }
 
+/** Compact token-driven sample used by comparison and previews. */
+export function ThemeSample({
+  theme,
+  mode = 'dark',
+  t,
+}: {
+  theme: PressTheme
+  mode?: 'light' | 'dark'
+  t: (key: string) => string
+}) {
+  const tokens = mode === 'dark' ? theme.dark : theme.light
+  const cssVars = tokensToCssVariables(tokens) as Record<string, string>
+  if (theme.fonts?.body) cssVars['--tb-font-body'] = theme.fonts.body
+  if (theme.fonts?.display) cssVars['--tb-font-display'] = theme.fonts.display
+  return (
+    <div className="tb-theme-sample" style={cssVars as CSSProperties}>
+      <div className="tb-preview-nav">
+        <span className="tb-preview-brand">
+          <IconComponents /> {theme.name}
+        </span>
+        <span>Docs</span>
+        <span>Blog</span>
+        <span>Themes</span>
+      </div>
+      <div className="tb-preview-body">
+        <aside className="tb-preview-sidebar">
+          <small>{t('group.getting-started')}</small>
+          <span className="is-active">Introduction</span>
+          <span>Installation</span>
+          <span>Configuration</span>
+        </aside>
+        <article className="tb-preview-article">
+          <p className="tb-preview-kicker">{t('theme.sample')}</p>
+          <h2>Build something remarkable</h2>
+          <p>A calm, token-driven documentation surface.</p>
+          <div className="tb-preview-callout">Every color comes from this theme.</div>
+          <div className="tb-preview-cards">
+            <span>Type safe</span>
+            <span>Pluggable</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  )
+}
+
 export function ThemeGallery({
   themes,
   activeId,
@@ -454,13 +501,68 @@ export function ThemeGallery({
   onSelect: (id: string) => void
   t: (key: string) => string
 }) {
+  const [query, setQuery] = useState('')
+  const [school, setSchool] = useState('all')
+  const [compare, setCompare] = useState<string[]>([])
+  const schools = [...new Set(themes.map((theme) => theme.school))].sort()
+  const filtered = themes.filter(
+    (theme) =>
+      (school === 'all' || theme.school === school) &&
+      `${theme.name} ${theme.id} ${theme.description}`.toLowerCase().includes(query.toLowerCase()),
+  )
+
+  const toggleCompare = (id: string) =>
+    setCompare((items) =>
+      items.includes(id) ? items.filter((item) => item !== id) : [...items.slice(-1), id],
+    )
+
   return (
     <div className="tb-entry tb-standalone tb-theme-gallery">
       <p className="tb-eyebrow">{t('theme.marketplace')}</p>
       <h1 className="tb-entry-title">{t('nav.themes')}</h1>
       <p className="tb-entry-description">{t('theme.galleryIntro')}</p>
+
+      <div className="tb-theme-filters">
+        <label className="tb-theme-search">
+          <IconSearch />
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder={t('theme.search')}
+            aria-label={t('theme.search')}
+          />
+        </label>
+        <Dropdown
+          label={t('theme.allSchools')}
+          value={school}
+          onChange={setSchool}
+          options={[
+            { value: 'all', label: t('theme.allSchools') },
+            ...schools.map((item) => ({ value: item, label: item.replace(/-/g, ' ') })),
+          ]}
+        />
+        <span className="tb-theme-count">
+          {filtered.length} / {themes.length}
+        </span>
+      </div>
+
+      {compare.length === 2 ? (
+        <div className="tb-compare-bar">
+          <span>{compare.join(' ↔ ')}</span>
+          <a
+            className="tb-button is-primary"
+            href={`/themes/compare?a=${compare[0]}&b=${compare[1]}`}
+          >
+            {t('theme.compareReady')} <IconArrowUpRight />
+          </a>
+          <button type="button" className="tb-button" onClick={() => setCompare([])}>
+            {t('theme.compareClear')}
+          </button>
+        </div>
+      ) : null}
+
       <div className="tb-theme-grid">
-        {themes.map((theme) => (
+        {filtered.map((theme) => (
           <div
             key={theme.id}
             className={`tb-theme-card${theme.id === activeId ? ' is-active' : ''}`}
@@ -485,16 +587,69 @@ export function ThemeGallery({
               </span>
               <IconArrowUpRight />
             </a>
-            <button
-              type="button"
-              className="tb-theme-apply"
-              onClick={() => onSelect(theme.id)}
-              aria-label={`Apply ${theme.name}`}
-            >
-              {theme.id === activeId ? t('theme.apply') : t('theme.apply')}
-            </button>
+            <div className="tb-theme-card-actions">
+              <button
+                type="button"
+                className={`tb-theme-compare${compare.includes(theme.id) ? ' is-selected' : ''}`}
+                onClick={() => toggleCompare(theme.id)}
+                aria-label={`${t('theme.compare')} ${theme.name}`}
+              >
+                {compare.includes(theme.id) ? '✓' : '+'}
+              </button>
+              <button
+                type="button"
+                className="tb-theme-apply"
+                onClick={() => onSelect(theme.id)}
+                aria-label={`Apply ${theme.name}`}
+              >
+                {t('theme.apply')}
+              </button>
+            </div>
           </div>
         ))}
+      </div>
+    </div>
+  )
+}
+
+/** Side-by-side theme comparison. */
+export function ThemeCompare({
+  left,
+  right,
+  t,
+}: {
+  left: PressTheme
+  right: PressTheme
+  t: (key: string) => string
+}) {
+  const [mode, setMode] = useState<'light' | 'dark'>('dark')
+  return (
+    <div className="tb-entry tb-standalone">
+      <p className="tb-eyebrow">{t('theme.compare')}</p>
+      <h1 className="tb-entry-title">
+        {left.name} ↔ {right.name}
+      </h1>
+      <div className="tb-mode-switch">
+        {(['light', 'dark'] as const).map((value) => (
+          <button
+            key={value}
+            type="button"
+            className={mode === value ? 'is-active' : ''}
+            onClick={() => setMode(value)}
+          >
+            {t(`theme.${value}`)}
+          </button>
+        ))}
+      </div>
+      <div className="tb-compare-grid">
+        <section>
+          <h2>{left.name}</h2>
+          <ThemeSample theme={left} mode={mode} t={t} />
+        </section>
+        <section>
+          <h2>{right.name}</h2>
+          <ThemeSample theme={right} mode={mode} t={t} />
+        </section>
       </div>
     </div>
   )
@@ -598,6 +753,66 @@ export function ThemePreviewPage({
         </div>
       </div>
 
+      <section className="tb-theme-detail">
+        <h2>{t('theme.tokens')}</h2>
+        <table className="tb-api-table tb-theme-token-table">
+          <thead>
+            <tr>
+              <th>{t('api.prop')}</th>
+              <th>{t('theme.light')}</th>
+              <th>{t('theme.dark')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(tokensToCssVariables(theme.light)).map(([key, value]) => (
+              <tr key={key}>
+                <td>
+                  <code>{key}</code>
+                </td>
+                <td>
+                  <span className="tb-token-swatch" style={{ background: value }} />{' '}
+                  <code>{value}</code>
+                </td>
+                <td>
+                  <span
+                    className="tb-token-swatch"
+                    style={{
+                      background: (tokensToCssVariables(theme.dark) as Record<string, string>)[key],
+                    }}
+                  />{' '}
+                  <code>{(tokensToCssVariables(theme.dark) as Record<string, string>)[key]}</code>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="tb-theme-install">
+          <code>pnpm add @tanstack-blog/theme-{theme.id}</code>
+          <button
+            type="button"
+            className="tb-button"
+            onClick={() =>
+              void navigator.clipboard.writeText(`pnpm add @tanstack-blog/theme-${theme.id}`)
+            }
+          >
+            {t('theme.copyCommand')}
+          </button>
+          <button
+            type="button"
+            className="tb-button"
+            onClick={() =>
+              void navigator.clipboard.writeText(
+                `:root{${Object.entries(tokensToCssVariables(tokens))
+                  .map(([key, value]) => `${key}:${value};`)
+                  .join('')}}`,
+              )
+            }
+          >
+            {t('theme.exportCss')}
+          </button>
+        </div>
+      </section>
+
       <p className="tb-preview-other">
         {t('theme.other')}:{' '}
         {themes
@@ -610,6 +825,35 @@ export function ThemePreviewPage({
             </span>
           ))}
       </p>
+    </div>
+  )
+}
+
+export function TutorialIndex({
+  entries,
+  t,
+}: {
+  entries: Array<{ id: string; title: string; description: string; route: string; order: number }>
+  t: (key: string) => string
+}) {
+  const sorted = [...entries].sort((a, b) => a.order - b.order)
+  return (
+    <div className="tb-entry tb-standalone">
+      <p className="tb-eyebrow">{t('nav.tutorials')}</p>
+      <h1 className="tb-entry-title">{t('tutorials.title')}</h1>
+      <p className="tb-entry-description">{t('tutorials.intro')}</p>
+      <div className="tb-tutorial-list">
+        {sorted.map((item, index) => (
+          <a key={item.id} href={item.route} className="tb-tutorial-card">
+            <span className="tb-tutorial-number">{String(index + 1).padStart(2, '0')}</span>
+            <span className="tb-tutorial-body">
+              <strong>{item.title}</strong>
+              <span>{item.description}</span>
+            </span>
+            <IconArrowUpRight />
+          </a>
+        ))}
+      </div>
     </div>
   )
 }

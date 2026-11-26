@@ -41,6 +41,7 @@ import {
   Feedback,
   HomeHero,
   NotFound,
+  ThemeCompare,
   ThemeGallery,
   ThemePreviewPage,
   WikiPage,
@@ -81,6 +82,8 @@ export interface ThemeSlots {
   ComponentsIndex: ComponentType<Parameters<typeof ComponentsIndex>[0]>
   ThemeGallery: ComponentType<Parameters<typeof ThemeGallery>[0]>
   ThemePreviewPage: ComponentType<Parameters<typeof ThemePreviewPage>[0]>
+  /** Side-by-side theme comparison. */
+  ThemeCompare: ComponentType<Parameters<typeof ThemeCompare>[0]>
   HomeHero: ComponentType<Parameters<typeof HomeHero>[0]>
   WikiPage: ComponentType<Parameters<typeof WikiPage>[0]>
   NotFound: ComponentType<Record<string, never>>
@@ -112,6 +115,7 @@ export const defaultThemeSlots: ThemeSlots = {
   ComponentsIndex,
   ThemeGallery,
   ThemePreviewPage,
+  ThemeCompare,
   WikiPage,
   HomeHero,
   NotFound,

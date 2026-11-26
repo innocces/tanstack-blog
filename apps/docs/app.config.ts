@@ -13,6 +13,8 @@ export default defineConfig({
     { label: 'Blog', to: '/blog' },
     { label: 'Components', to: '/components' },
     { label: 'Themes', to: '/themes' },
+    { label: 'Tutorials', to: '/tutorials' },
+    { label: 'Wiki', to: '/wiki' },
   ],
   social: [
     { label: 'TanStack', href: 'https://tanstack.com' },

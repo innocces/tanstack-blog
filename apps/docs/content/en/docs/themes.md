@@ -86,7 +86,7 @@ A plugin returns `{ name, theme }`. The `name` is useful for diagnostics and fut
 
 `ThemeProvider` persists `{ themeId, mode, locale }` in localStorage and applies the theme before hydration via an inline script, preventing a flash of the wrong theme. The color-mode control has three states: light, dark and system. `prefers-color-scheme` changes are observed live.
 
-Try it: use the theme selector in the header, or click any card on the [Themes page](/themes). Every theme also has a dedicated live preview at `/themes/<id>` and a committed dark/light diagonal screenshot under `docs/screenshots/themes/`.
+Try it: use the theme selector in the header, or click any card on the [Themes page](/themes). The marketplace supports name search, school filters and side-by-side comparison (select two cards then choose **Compare selected**). Every theme has a live preview at `/themes/<id>` with a token table, `pnpm add` command and CSS export, plus a committed dark/light diagonal screenshot under `docs/screenshots/themes/`. The machine-readable catalog is published at `/theme-registry.json`.
 
 ## Authoring guidelines
 

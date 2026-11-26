@@ -66,6 +66,53 @@ function step(index: number, total: number, label: string) {
   log.info(`${badge}  ${c.bold(label)}`)
 }
 
+/** Scaffold a standalone theme plugin package. */
+async function createTheme(id: string): Promise<boolean> {
+  if (!/^[a-z][a-z0-9-]*$/.test(id)) throw new Error('Theme id must be a lowercase slug')
+  const name = id.replace(/(^|-)([a-z])/g, (_, __, letter: string) => letter.toUpperCase())
+  const dir = path.resolve(process.argv[4] ?? `packages/theme-${id}`)
+  await mkdir(path.join(dir, 'src'), { recursive: true })
+  await writeFile(
+    path.join(dir, 'package.json'),
+    `${JSON.stringify(
+      {
+        name: `@tanstack-blog/theme-${id}`,
+        version: '0.1.0',
+        type: 'module',
+        description: `${name} theme plugin.`,
+        license: 'MIT',
+        exports: { '.': './dist/index.js' },
+        scripts: { build: 'tsc -p tsconfig.json' },
+        dependencies: {
+          '@tanstack-blog/core': 'workspace:*',
+          '@tanstack-blog/themes': 'workspace:*',
+        },
+      },
+      null,
+      2,
+    )}\n`,
+  )
+  await writeFile(
+    path.join(dir, 'tsconfig.json'),
+    '{ "extends": "../../tsconfig.base.json", "compilerOptions": { "noEmit": false, "outDir": "dist", "rootDir": "src" }, "include": ["src"] }\n',
+  )
+  await writeFile(
+    path.join(dir, 'src/index.ts'),
+    `import { defineTheme, type PressTheme } from '@tanstack-blog/core'
+import { getTheme } from '@tanstack-blog/themes'
+
+/** Edit the tokens below to make this theme your own. */
+export const ${name.replace(/^./, (c) => c.toLowerCase())}Theme: PressTheme = defineTheme(
+  getTheme('linear')!,
+)
+
+export default ${name.replace(/^./, (c) => c.toLowerCase())}Theme
+`,
+  )
+  console.log(`created theme plugin at ${dir}`)
+  return true
+}
+
 /** Non-interactive utilities: `sniff` and `kb`. */
 async function runUtility(command: string): Promise<boolean> {
   if (command !== 'sniff' && command !== 'kb') return false
@@ -91,6 +138,10 @@ async function runUtility(command: string): Promise<boolean> {
 }
 
 async function main() {
+  if (process.argv[2] === 'create-theme' && process.argv[3]) {
+    await createTheme(process.argv[3])
+    return
+  }
   if (await runUtility(process.argv[2] ?? '')) return
   banner()
   intro(c.bold('Let’s build something delightful.'))

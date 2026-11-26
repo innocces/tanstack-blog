@@ -136,6 +136,17 @@ export default async function run(page, { check }) {
   )
   check('y2k dialog radius restrained', radius < 40, `${radius}px`)
 
+  // Theme marketplace: filters, compare and registry.
+  await page.goto(`${BASE}/themes`, { waitUntil: 'networkidle0' })
+  check('theme search present', (await page.$('.tb-theme-search input')) !== null)
+  check(
+    'theme filter present',
+    (await page.$('.tb-theme-filters [aria-haspopup="listbox"]')) !== null,
+  )
+  const registry = await fetch(`${BASE}/theme-registry.json`)
+  const registryData = await registry.json()
+  check('theme registry has 25 themes', registryData.count === 25, `${registryData.count}`)
+
   for (const name of ['sitemap.xml', 'rss.xml', 'llms.txt']) {
     const response = await fetch(`${BASE}/${name}`)
     check(`generated ${name}`, response.ok, String(response.status))
