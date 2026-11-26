@@ -4,7 +4,7 @@
 title: 设计系统
 description: 令牌、排版与 TanStack 风格图标。
 group: Guides
-order: 5
+order: 7
 ---
 
 # 设计系统
