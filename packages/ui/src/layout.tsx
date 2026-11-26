@@ -358,3 +358,21 @@ export function BackToTop() {
     </button>
   )
 }
+
+/** Thin top progress bar that tracks document scroll. */
+export function ReadingProgress() {
+  const [progress, setProgress] = useState(0)
+  useEffect(() => {
+    const onScroll = () => {
+      const root = document.documentElement
+      const total = root.scrollHeight - root.clientHeight
+      setProgress(total > 0 ? Math.min(100, (root.scrollTop / total) * 100) : 0)
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+  return (
+    <div className="tb-reading-progress" style={{ width: `${progress}%` }} aria-hidden="true" />
+  )
+}

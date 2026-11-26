@@ -11,6 +11,7 @@ import { createLocalSearchAdapter } from '@tanstack-blog/search'
 import { allThemes } from '@tanstack-blog/themes'
 import {
   ClientNav,
+  ReadingProgress,
   SlotsProvider,
   ThemeProvider,
   themeInitScript,
@@ -117,6 +118,7 @@ function AppChrome({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeProvider store={store} themes={allThemes} storageKey={config.theme.storeKey}>
+      <ReadingProgress />
       <ClientNav store={store} config={config} />
       <BackToTop />
       <div className="tb-app">

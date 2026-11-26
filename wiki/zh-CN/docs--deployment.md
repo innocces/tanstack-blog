@@ -51,6 +51,8 @@ node .output/server/index.mjs
 
 Docker 使用多阶段构建，仅复制 `.output` 到运行镜像。
 
+构建产物除 `sitemap.xml`、`rss.xml`、`llms.txt` 外，还会生成 `robots.txt`（指向 sitemap）与 `llms-full.txt`（文档全文摘录）。
+
 ## 验证清单
 
 检查首页、文档、博客、主题页与本地化路由；验证搜索、主题持久化与 meta 标签。

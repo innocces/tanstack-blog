@@ -43,6 +43,10 @@ The **Apply** button on a card or preview page writes the theme to the TanStack 
 pnpm exec create-tanstack-blog run registry   # regenerate packages/themes/registry.json
 ```
 
+## Theme editor
+
+Open `/themes/editor` to start from any preset, tweak the nine tokens with color pickers, preview both modes and export the resulting CSS. **Apply** registers the edited theme as "Custom" and activates it immediately.
+
 ## Authoring a new theme
 
 ```sh

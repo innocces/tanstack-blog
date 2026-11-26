@@ -22,6 +22,7 @@ export {
   ExternalLink,
   type HeaderProps,
   PageNav,
+  ReadingProgress,
   Sidebar,
   type SidebarProps,
   SiteFooter,
@@ -67,6 +68,7 @@ export {
   type UiState,
   type UiStore,
 } from './store.js'
+export { ThemeEditor, type ThemeEditorProps } from './ThemeEditor.js'
 export {
   ThemeProvider,
   type ThemeProviderProps,

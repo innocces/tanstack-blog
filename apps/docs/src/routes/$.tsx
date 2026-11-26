@@ -23,6 +23,7 @@ import {
   Prose,
   persistUiState,
   Sidebar,
+  ThemeEditor,
   ThemePreviewPage,
   Toc,
   TutorialIndex,
@@ -118,6 +119,28 @@ function ContentRoute() {
     return <WikiPageSlot pages={wikiPages} activeId={page.id} t={t} />
   }
 
+  if (kind === 'themes' && rest[1] === 'editor') {
+    const base = getTheme('linear')!
+    return (
+      <ThemeEditor
+        base={base}
+        themes={allThemes}
+        t={t}
+        onApply={(theme) => {
+          const existing = allThemes.find((item) => item.id === theme.id)
+          if (existing) Object.assign(existing, theme)
+          else allThemes.push(theme)
+          try {
+            window.localStorage.setItem('tb:custom-theme', JSON.stringify(theme))
+          } catch {
+            // storage is optional
+          }
+          store.setState((state) => ({ ...state, themeId: theme.id }))
+        }}
+      />
+    )
+  }
+
   if (kind === 'themes' && rest[1] === 'compare') {
     const params = new URLSearchParams(window.location.search)
     const left = getTheme(params.get('a') ?? 'linear')
@@ -197,9 +220,13 @@ function ContentRoute() {
   const siblings = content.siblings(entry)
 
   if (entry.type === 'blog') {
+    const related = content
+      .byType('blog', locale)
+      .filter((item) => item.id !== entry.id && item.tags.some((tag) => entry.tags.includes(tag)))
+      .slice(0, 3)
     return (
       <DocShellSlot toc={<TocSlot headings={entry.headings} t={t} />}>
-        <BlogPostSlot entry={entry} t={t} sourceBase={config.editUrlBase} />
+        <BlogPostSlot entry={entry} t={t} sourceBase={config.editUrlBase} related={related} />
       </DocShellSlot>
     )
   }

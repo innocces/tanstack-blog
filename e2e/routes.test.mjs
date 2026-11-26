@@ -23,6 +23,7 @@ export default async function run(page, { check }) {
     ['/zh-CN/tutorials/01-quickstart', '快速开始'],
     ['/zh-CN/blog/why-a-tanstack-docs-framework', '为什么要在 TanStack'],
     ['/themes/compare?a=linear&b=muji', 'tb-compare-grid'],
+    ['/themes/editor', 'tb-theme-editor'],
     ['/zh-CN/docs/getting-started', '快速开始'],
     ['/this-route-does-not-exist', 'Page not found'],
   ]) {

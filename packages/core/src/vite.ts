@@ -149,10 +149,14 @@ ${posts
   .join('\n')}
 </channel></rss>
 `
-      const llms = `# ${config.title}\n\n${config.description}\n\n${entries
-        .filter((entry) => entry.type === 'docs')
+      const docs = entries.filter((entry) => entry.type === 'docs')
+      const llms = `# ${config.title}\n\n${config.description}\n\n${docs
         .map((entry) => `- [${entry.title}](${base}${entry.route}): ${entry.description}`)
         .join('\n')}\n`
+      const llmsFull = `# ${config.title} — full documentation\n\n${docs
+        .map((entry) => `## ${entry.title}\n\nSource: ${base}${entry.route}\n\n${entry.excerpt}\n`)
+        .join('\n')}\n`
+      const robots = `User-agent: *\nAllow: /\nSitemap: ${base}/sitemap.xml\n`
 
       const outDir = path.resolve(root, '.output/public')
       await mkdir(outDir, { recursive: true })
@@ -160,6 +164,8 @@ ${posts
         writeFile(path.join(outDir, 'sitemap.xml'), sitemap, 'utf8'),
         writeFile(path.join(outDir, 'rss.xml'), rss, 'utf8'),
         writeFile(path.join(outDir, 'llms.txt'), llms, 'utf8'),
+        writeFile(path.join(outDir, 'llms-full.txt'), llmsFull, 'utf8'),
+        writeFile(path.join(outDir, 'robots.txt'), robots, 'utf8'),
       ]
       // Pre-serialized Orama index for large corpora; clients can skip the build step.
       if (config.search.provider === 'orama') {

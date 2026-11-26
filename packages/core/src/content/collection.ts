@@ -25,6 +25,12 @@ export interface ContentEntry {
   title: string
   description: string
   date?: string
+  /** Optional article author. */
+  author?: string
+  /** Optional cover image path. */
+  cover?: string
+  /** Optional series name. */
+  series?: string
   /** Version code for versioned documentation. */
   version?: string
   /** Optional last-updated date, shown in article footers. */

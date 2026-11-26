@@ -382,10 +382,12 @@ export function BlogPost({
   entry,
   t,
   sourceBase,
+  related = [],
 }: {
   entry: ContentEntry
   t: (key: string) => string
   sourceBase?: string
+  related?: ContentEntry[]
 }) {
   return (
     <div className="tb-entry tb-standalone tb-blog-post">
@@ -404,6 +406,20 @@ export function BlogPost({
         </span>
       </div>
       <Article entry={entry} sourceBase={sourceBase} />
+      {related.length ? (
+        <section className="tb-related-posts">
+          <h2>{t('blog.related')}</h2>
+          <div className="tb-card-grid">
+            {related.map((item) => (
+              <a key={item.id} href={item.route} className="tb-post-card">
+                <span className="tb-post-card-date">{item.date ?? '—'}</span>
+                <h2>{item.title}</h2>
+                <p>{item.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      ) : null}
       <Feedback entryId={entry.id} t={t} />
     </div>
   )

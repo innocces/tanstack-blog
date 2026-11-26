@@ -48,6 +48,7 @@ const builtinDictionaries: Record<string, Dictionary> = {
     'blog.all': 'All posts',
     'blog.tags': 'Tags',
     'blog.readingTime': 'min read',
+    'blog.related': 'Related posts',
     'footer.builtWith': 'Built with TanStack Blog',
     'hero.kicker': 'Built on TanStack Start + TanStack Markdown',
     'hero.description': 'Docs, blogs and component libraries. One framework.',
@@ -85,6 +86,10 @@ const builtinDictionaries: Record<string, Dictionary> = {
     'theme.copyCommand': 'Copy install command',
     'theme.copied': 'Copied',
     'theme.sample': 'Sample',
+    'theme.editor': 'Theme editor',
+    'theme.editor.title': 'Design a theme live',
+    'theme.editor.intro':
+      'Pick a starting preset, tweak the nine tokens, preview both modes and export CSS.',
     'theme.viewScreenshot': 'Screenshot',
 
     'theme.galleryIntro':
@@ -251,6 +256,7 @@ const builtinDictionaries: Record<string, Dictionary> = {
     'blog.all': '全部文章',
     'blog.tags': '标签',
     'blog.readingTime': '分钟阅读',
+    'blog.related': '相关文章',
     'footer.builtWith': '使用 TanStack Blog 构建',
     'hero.kicker': '基于 TanStack Start + TanStack Markdown 构建',
     'hero.description': '文档、博客与组件库，一套框架搞定。',
@@ -287,6 +293,9 @@ const builtinDictionaries: Record<string, Dictionary> = {
     'theme.copyCommand': '复制安装命令',
     'theme.copied': '已复制',
     'theme.sample': '预览',
+    'theme.editor': '主题编辑器',
+    'theme.editor.title': '实时设计主题',
+    'theme.editor.intro': '选择起始预设、调整九个令牌、预览两种模式并导出 CSS。',
     'theme.viewScreenshot': '截图',
 
     'theme.galleryIntro': '每套主题都是独立包。打开预览查看真实文档布局，再一键应用。',
