@@ -79,20 +79,20 @@ export function Feedback({ entryId, t }: { entryId: string; t: (key: string) => 
   }
   return (
     <section className="tb-feedback" aria-label="Page feedback">
-      <span>Was this page helpful?</span>
+      <span>{t('feedback.question')}</span>
       <button
         type="button"
         className={vote === 'yes' ? 'is-selected' : ''}
         onClick={() => cast('yes')}
       >
-        <IconCheck /> Yes
+        <IconCheck /> {t('feedback.yes')}
       </button>
       <button
         type="button"
         className={vote === 'no' ? 'is-selected' : ''}
         onClick={() => cast('no')}
       >
-        <IconClose /> No
+        <IconClose /> {t('feedback.no')}
       </button>
       {vote ? <small>{t('feedback.thanks')}</small> : null}
     </section>
@@ -214,7 +214,7 @@ export function ComponentPage({
       <p className="tb-entry-description">{entry.description}</p>
       {example ? (
         <section className="tb-component-demo" aria-label="Live component example">
-          <p className="tb-eyebrow">{zh ? '实时示例' : 'Live example'}</p>
+          <p className="tb-eyebrow">{t('api.liveExample')}</p>
           {example}
         </section>
       ) : null}
@@ -222,16 +222,16 @@ export function ComponentPage({
       {api ? (
         <section className="tb-api-section">
           <h2>
-            {zh ? '属性' : 'Props'} <code>{api.name}</code>
+            {t('api.props')} <code>{api.name}</code>
           </h2>
           <p>{zh ? api.zh || api.description : api.description}</p>
           <table className="tb-api-table">
             <thead>
               <tr>
-                <th>{zh ? '属性' : 'Prop'}</th>
-                <th>{zh ? '类型' : 'Type'}</th>
-                <th>{zh ? '默认值' : 'Default'}</th>
-                <th>{zh ? '说明' : 'Description'}</th>
+                <th>{t('api.prop')}</th>
+                <th>{t('api.type')}</th>
+                <th>{t('api.default')}</th>
+                <th>{t('api.description')}</th>
               </tr>
             </thead>
             <tbody>
@@ -263,10 +263,10 @@ export function ComponentPage({
                 <table className="tb-api-table">
                   <thead>
                     <tr>
-                      <th>{zh ? '属性' : 'Prop'}</th>
-                      <th>{zh ? '类型' : 'Type'}</th>
-                      <th>{zh ? '默认值' : 'Default'}</th>
-                      <th>{zh ? '说明' : 'Description'}</th>
+                      <th>{t('api.prop')}</th>
+                      <th>{t('api.type')}</th>
+                      <th>{t('api.default')}</th>
+                      <th>{t('api.description')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -289,7 +289,7 @@ export function ComponentPage({
             )
           })}
           <small>
-            {zh ? '由 TSDoc 注释自动生成' : 'Generated from TSDoc comments'} · {api.file}
+            {t('api.generated')} · {api.file}
           </small>
         </section>
       ) : null}
@@ -328,9 +328,7 @@ export function BlogIndex({ entries, t }: { entries: ContentEntry[]; t: (key: st
     <div className="tb-entry tb-standalone tb-blog-index">
       <p className="tb-eyebrow">Journal</p>
       <h1 className="tb-entry-title">{t('nav.blog')}</h1>
-      <p className="tb-entry-description">
-        Notes on building docs, themes and developer tools with TanStack.
-      </p>
+      <p className="tb-entry-description">{t('blog.intro')}</p>
       <div className="tb-tag-row">
         <button
           type="button"
@@ -426,9 +424,7 @@ export function ComponentsIndex({
     <div className="tb-entry tb-standalone tb-components-index">
       <p className="tb-eyebrow">Gallery</p>
       <h1 className="tb-entry-title">{t('nav.components')}</h1>
-      <p className="tb-entry-description">
-        Reusable UI blocks from <code>@tanstack-blog/ui</code>, shown exactly as they render.
-      </p>
+      <p className="tb-entry-description">{t('components.description')}</p>
       <div className="tb-component-grid">
         {entries.map((entry) => {
           const key = entry.meta.example as string | undefined
@@ -454,19 +450,18 @@ export function ThemeGallery({
   themes,
   activeId,
   onSelect,
+  t,
 }: {
   themes: PressTheme[]
   activeId: string
   onSelect: (id: string) => void
+  t: (key: string) => string
 }) {
   return (
     <div className="tb-entry tb-standalone tb-theme-gallery">
-      <p className="tb-eyebrow">Marketplace</p>
-      <h1 className="tb-entry-title">Themes</h1>
-      <p className="tb-entry-description">
-        Every theme is a standalone package built on the same token contract. Open a preview to see
-        it on a real docs layout, then apply it with one click.
-      </p>
+      <p className="tb-eyebrow">{t('theme.marketplace')}</p>
+      <h1 className="tb-entry-title">{t('nav.themes')}</h1>
+      <p className="tb-entry-description">{t('theme.galleryIntro')}</p>
       <div className="tb-theme-grid">
         {themes.map((theme) => (
           <div
@@ -499,7 +494,7 @@ export function ThemeGallery({
               onClick={() => onSelect(theme.id)}
               aria-label={`Apply ${theme.name}`}
             >
-              {theme.id === activeId ? 'Active' : 'Apply'}
+              {theme.id === activeId ? t('theme.apply') : t('theme.apply')}
             </button>
           </div>
         ))}
@@ -562,7 +557,7 @@ export function ThemePreviewPage({
             ))}
           </div>
           <button type="button" className="tb-button is-primary" onClick={() => onApply(theme.id)}>
-            Apply theme
+            {t('theme.apply')}
           </button>
         </div>
       </div>
@@ -607,7 +602,7 @@ export function ThemePreviewPage({
       </div>
 
       <p className="tb-preview-other">
-        Other themes:{' '}
+        {t('theme.other')}:{' '}
         {themes
           .filter((item) => item.id !== theme.id)
           .slice(0, 8)
@@ -628,47 +623,45 @@ export function HomeHero({ config, t }: { config: PressConfig; t: (key: string) 
       label: t('nav.docs'),
       href: '/docs',
       Icon: IconDocs,
-      text: 'A documentation tree generated from your Markdown files.',
+      text: t('hero.cardDocs'),
     },
     {
       label: t('nav.blog'),
       href: '/blog',
       Icon: IconBlog,
-      text: 'Reverse-chronological articles with tags and reading time.',
+      text: t('hero.cardBlog'),
     },
     {
       label: t('nav.themes'),
       href: '/themes',
       Icon: IconThemes,
-      text: 'Swappable design-token packages, no remount required.',
+      text: t('hero.cardThemes'),
     },
     {
       label: 'Search',
       href: '/docs/search',
       Icon: IconSearch,
-      text: 'Orama full-text or zero-dependency local search, offline.',
+      text: t('hero.cardSearch'),
     },
   ]
   return (
     <div className="tb-hero">
-      <p className="tb-eyebrow">Built on TanStack Start + TanStack Markdown</p>
+      <p className="tb-eyebrow">{t('hero.kicker')}</p>
       <h1>{config.title}</h1>
-      <p className="tb-hero-lead">
-        {config.description || 'Docs, blogs and component libraries. One framework.'}
-      </p>
+      <p className="tb-hero-lead">{t('hero.description')}</p>
       <div className="tb-hero-actions">
         <a className="tb-button is-primary" href="/docs">
-          Read the docs <IconArrowUpRight />
+          {t('hero.docs')} <IconArrowUpRight />
         </a>
         <a className="tb-button" href="/themes">
-          Browse themes
+          {t('hero.themes')}
         </a>
         <button
           type="button"
           className="tb-button"
           onClick={() => window.dispatchEvent(new Event('tb:open-search'))}
         >
-          Try search <IconSearch />
+          {t('hero.search')} <IconSearch />
         </button>
       </div>
       <div className="tb-hero-cards">

@@ -33,6 +33,14 @@ export {
 } from './pages.js'
 export { SearchDialog, type SearchDialogProps } from './SearchDialog.js'
 export {
+  defaultThemeSlots,
+  SlotsProvider,
+  type SlotsProviderProps,
+  type ThemeSlots,
+  useSlot,
+  useSlots,
+} from './slots.js'
+export {
   type ColorMode,
   createUiStore,
   persistUiState,
