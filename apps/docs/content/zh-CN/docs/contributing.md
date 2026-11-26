@@ -40,4 +40,4 @@ pnpm dev
 
 发版基于 Conventional Commits。`scripts/release.mjs` 读取上个 tag 以来的提交，计算下一个语义化版本（`feat` → minor、`fix` → patch、`BREAKING CHANGE` → major），更新所有 `package.json`、写入 `CHANGELOG.md` 并创建 tag。
 
-`Release` GitHub Actions 工作流会在 `main` 上 CI 通过后自动执行并发布 GitHub Release。本地可用 `node scripts/release.mjs` 预演。
+`Release` GitHub Actions 工作流会在 `main` 上 CI 通过后自动执行并发布 GitHub Release。本地可用 `pnpm exec create-tanstack-blog run release` 预演。

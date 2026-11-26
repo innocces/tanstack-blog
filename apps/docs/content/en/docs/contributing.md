@@ -83,4 +83,4 @@ Use conventional commits: `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test
 
 Releases are generated from Conventional Commits. `scripts/release.mjs` inspects commits since the last tag, computes the next semver (`feat` → minor, `fix` → patch, `BREAKING CHANGE` → major), bumps every `package.json`, prepends `CHANGELOG.md` and creates a git tag.
 
-The `Release` GitHub Actions workflow runs this automatically on `main` after CI passes and publishes a GitHub release. Use `node scripts/release.mjs` locally for a dry run.
+The `Release` GitHub Actions workflow runs this automatically on `main` after CI passes and publishes a GitHub release. Use `pnpm exec create-tanstack-blog run release` locally for a dry run.

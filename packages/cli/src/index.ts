@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 /** Interactive, Astro-inspired project scaffolder for TanStack Blog. */
+import { spawnSync } from 'node:child_process'
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import {
@@ -114,6 +115,32 @@ export default ${name.replace(/^./, (c) => c.toLowerCase())}Theme
 }
 
 /** Non-interactive utilities: `sniff` and `kb`. */
+/** Delegate maintenance scripts through one stable CLI entry point. */
+function runScript(name: string): boolean {
+  const scripts: Record<string, string> = {
+    themes: 'scripts/generate-theme-packages.mjs',
+    api: 'scripts/generate-ui-api.mjs',
+    registry: 'scripts/generate-theme-registry.mjs',
+    visual: 'scripts/visual-regression.mjs',
+    screenshot: 'scripts/screenshot.mjs',
+    video: 'scripts/record-cli-video.mjs',
+    release: 'scripts/release.mjs',
+  }
+  const script = scripts[name]
+  if (!script) return false
+  const args = name === 'visual' && process.argv.includes('--update') ? ['--update'] : []
+  const result = spawnSync(process.execPath, [script, ...args], {
+    cwd: ROOT_CLI(),
+    stdio: 'inherit',
+  })
+  if (result.status !== 0) process.exitCode = result.status ?? 1
+  return true
+}
+
+function ROOT_CLI(): string {
+  return process.cwd()
+}
+
 async function runUtility(command: string): Promise<boolean> {
   if (command !== 'sniff' && command !== 'kb') return false
   const root = path.resolve(process.argv[3] ?? process.cwd())
@@ -138,6 +165,7 @@ async function runUtility(command: string): Promise<boolean> {
 }
 
 async function main() {
+  if (process.argv[2] === 'run' && runScript(process.argv[3] ?? '')) return
   if (process.argv[2] === 'create-theme' && process.argv[3]) {
     await createTheme(process.argv[3])
     return

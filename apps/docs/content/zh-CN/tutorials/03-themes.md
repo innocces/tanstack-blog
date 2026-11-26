@@ -38,7 +38,7 @@ export const acmeTheme = defineTheme({
 生成独立插件包：
 
 ```sh
-node scripts/generate-theme-packages.mjs
+pnpm exec create-tanstack-blog run themes
 ```
 
 ## 覆盖插槽

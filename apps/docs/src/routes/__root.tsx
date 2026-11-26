@@ -4,7 +4,8 @@ import { createThemeCss } from '@tanstack/highlight/theme'
 import { githubDarkTheme } from '@tanstack/highlight/themes/github-dark'
 import { githubLightTheme } from '@tanstack/highlight/themes/github-light'
 import { createRootRoute, HeadContent, Scripts, useRouter } from '@tanstack/react-router'
-import { switchLocaleRoute } from '@tanstack-blog/core'
+import { useStore } from '@tanstack/react-store'
+import { createTranslator, switchLocaleRoute } from '@tanstack-blog/core'
 import { createOramaSearchAdapter } from '@tanstack-blog/orama-search'
 import { createLocalSearchAdapter } from '@tanstack-blog/search'
 import { allThemes } from '@tanstack-blog/themes'
@@ -15,7 +16,7 @@ import {
   themeInitScript,
   useSlots,
 } from '@tanstack-blog/ui'
-import { store, t } from '../app-state.js'
+import { store } from '../app-state.js'
 import { themeSlots } from '../theme.config.js'
 import '@tanstack-blog/ui/styles.css'
 
@@ -95,6 +96,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 function AppChrome({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const { Header, Footer, SearchDialog, BackToTop } = useSlots()
+  const activeLocale = useStore(store, (state) => state.locale)
+  const t = createTranslator(activeLocale)
   const navigate = (route: string) => void router.navigate({ to: route as never })
   const onLocaleChange = (locale: string) => {
     store.setState((state) => ({ ...state, locale }))

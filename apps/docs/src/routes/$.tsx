@@ -103,7 +103,9 @@ function ContentRoute() {
   // Deterministic, LLM-free knowledge base generated from the repository.
   if (kind === 'tutorials' && !entry) {
     const items = entries.filter(
-      (item) => item.locale === locale && item.route.startsWith(`/tutorials`),
+      (item) =>
+        item.locale === locale &&
+        item.route.startsWith(`${localePrefix(config, locale)}/tutorials`),
     )
     return <TutorialIndex entries={items} t={t} />
   }
@@ -190,10 +192,17 @@ function ContentRoute() {
     )
   }
 
-  if (entry.route.startsWith('/tutorials')) {
+  if (entry.route.includes('/tutorials/')) {
+    const siblings = content.siblings(entry)
     return (
       <DocShellSlot toc={<TocSlot headings={entry.headings} t={t} />}>
-        <DocPageSlot entry={entry} config={config} t={t} />
+        <DocPageSlot
+          entry={entry}
+          prev={siblings.prev}
+          next={siblings.next}
+          config={config}
+          t={t}
+        />
       </DocShellSlot>
     )
   }

@@ -3,7 +3,19 @@
  * package. These double as documentation for the UI subpackage.
  */
 
-import { Dropdown, Feedback, IconThemes } from '@tanstack-blog/ui'
+import { allThemes } from '@tanstack-blog/themes'
+import {
+  Breadcrumbs,
+  createUiStore,
+  Dropdown,
+  Feedback,
+  IconThemes,
+  LocaleSwitcher,
+  PageNav,
+  SearchTrigger,
+  ThemeSwitcher,
+  Toc,
+} from '@tanstack-blog/ui'
 import { type ReactNode, useState } from 'react'
 
 function DemoFrame({ children }: { children: ReactNode }) {
@@ -49,10 +61,77 @@ export function FeedbackDemo({ t }: { t: (key: string) => string }) {
   )
 }
 
+function DemoStore({
+  children,
+}: {
+  children: (store: ReturnType<typeof createUiStore>) => ReactNode
+}) {
+  const [store] = useState(() => createUiStore({ themeId: 'linear' }))
+  return <>{children(store)}</>
+}
+
 export const componentExamples: Record<
   string,
   (props: { t: (key: string) => string }) => ReactNode
 > = {
   dropdown: () => <DropdownDemo />,
   feedback: ({ t }) => <FeedbackDemo t={t} />,
+  'search-trigger': () => (
+    <DemoStore>
+      {(store) => (
+        <SearchTrigger
+          store={store}
+          config={{ search: { placeholder: 'Search docs…', hotkey: '⌘K' } } as never}
+          t={(key) => key}
+        />
+      )}
+    </DemoStore>
+  ),
+  'theme-switcher': () => (
+    <DemoStore>
+      {(store) => <ThemeSwitcher store={store} themes={allThemes} t={(key) => key} allowSwitch />}
+    </DemoStore>
+  ),
+  'locale-switcher': () => (
+    <DemoStore>
+      {(store) => (
+        <LocaleSwitcher
+          store={store}
+          locales={[
+            { code: 'en', label: 'English', dir: 'ltr' },
+            { code: 'zh-CN', label: '简体中文', dir: 'ltr' },
+          ]}
+          t={() => 'Language'}
+          onLocaleChange={() => {}}
+        />
+      )}
+    </DemoStore>
+  ),
+  breadcrumbs: () => (
+    <DemoFrame>
+      <Breadcrumbs
+        items={[{ label: 'Docs', to: '/docs' }, { label: 'Components' }, { label: 'Dropdown' }]}
+      />
+    </DemoFrame>
+  ),
+  'page-nav': () => (
+    <DemoFrame>
+      <PageNav
+        prev={{ id: 'a', title: 'Previous page' } as never}
+        next={{ id: 'b', title: 'Next page' } as never}
+        t={() => ''}
+      />
+    </DemoFrame>
+  ),
+  toc: ({ t }) => (
+    <DemoFrame>
+      <Toc
+        headings={[
+          { id: 'usage', text: 'Usage', level: 2 },
+          { id: 'behaviour', text: 'Behaviour', level: 2 },
+        ]}
+        t={t}
+      />
+    </DemoFrame>
+  ),
 }

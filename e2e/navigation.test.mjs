@@ -136,6 +136,17 @@ export default async function run(page, { check }) {
   )
   check('y2k dialog radius restrained', radius < 40, `${radius}px`)
 
+  // Single Wiki link and a populated component gallery.
+  await page.goto(`${BASE}/docs`, { waitUntil: 'networkidle0' })
+  const navWikiLinks = await page.$$eval(
+    '.tb-main-nav a',
+    (nodes) => nodes.filter((node) => node.getAttribute('href') === '/wiki').length,
+  )
+  check('single wiki nav link', navWikiLinks === 1, `${navWikiLinks}`)
+  await page.goto(`${BASE}/components`, { waitUntil: 'networkidle0' })
+  const cards = await page.$$eval('.tb-component-card', (nodes) => nodes.length)
+  check('component gallery covers ui package', cards >= 10, `${cards} cards`)
+
   // Theme marketplace: filters, compare and registry.
   await page.goto(`${BASE}/themes`, { waitUntil: 'networkidle0' })
   check('theme search present', (await page.$('.tb-theme-search input')) !== null)

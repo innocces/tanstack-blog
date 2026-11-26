@@ -75,7 +75,7 @@ export function SiteHeader({ store, config, themes, locales, t, onLocaleChange }
 
         <a href="/" className="tb-brand">
           <BrandMark />
-          <span>{config.title}</span>
+          <span>{t('site.title') || config.title}</span>
         </a>
 
         <Nav config={config} t={t} />

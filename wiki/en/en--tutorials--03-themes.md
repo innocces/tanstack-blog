@@ -40,7 +40,7 @@ export const acmeTheme = defineTheme({
 Generate a standalone plugin package with:
 
 ```sh
-node scripts/generate-theme-packages.mjs
+pnpm exec create-tanstack-blog run themes
 ```
 
 ## Override a slot
