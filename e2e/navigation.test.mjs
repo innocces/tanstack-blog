@@ -76,6 +76,35 @@ export default async function run(page, { check }) {
   )
   check('code playground actions', actions > 0, `${actions} actions`)
 
+  // Header controls stay inside the header row.
+  await page.goto(`${BASE}/docs/getting-started`, { waitUntil: 'networkidle0' })
+  const headerOk = await page.evaluate(() => {
+    const header = document.querySelector('.tb-header')?.getBoundingClientRect()
+    const tools = document.querySelector('.tb-header-tools')?.getBoundingClientRect()
+    return header && tools ? tools.top >= header.top && tools.bottom <= header.bottom + 1 : false
+  })
+  check('header tools fit header', headerOk)
+
+  // StrictMode must not create nested code wrappers.
+  const nested = await page.$$eval(
+    '.tb-code-block',
+    (nodes) => nodes.filter((node) => node.querySelector('.tb-code-block')).length,
+  )
+  check('code blocks not nested', nested === 0, `${nested} nested`)
+
+  // Component gallery is a real multi-column grid.
+  await page.goto(`${BASE}/components`, { waitUntil: 'networkidle0' })
+  const gridColumns = await page.$eval(
+    '.tb-component-grid',
+    (node) => getComputedStyle(node).gridTemplateColumns.split(' ').length,
+  )
+  check('component grid has multiple columns', gridColumns > 1, `${gridColumns} columns`)
+
+  // Wiki has generated navigation and rendered content.
+  await page.goto(`${BASE}/wiki`, { waitUntil: 'networkidle0' })
+  const wikiLinks = await page.$$eval('.tb-wiki-nav a', (nodes) => nodes.length)
+  check('wiki navigation rendered', wikiLinks === 5, `${wikiLinks} links`)
+
   // Roadmap and other docs share the same reading-column width.
   await page.goto(`${BASE}/docs/roadmap`, { waitUntil: 'networkidle0' })
   const roadmapWidth = await page.$eval('.tb-main', (node) =>

@@ -49,6 +49,7 @@ function ContentRoute() {
     NotFound: NotFoundSlot,
     Sidebar: SidebarSlot,
     ThemePreviewPage: ThemePreviewPageSlot,
+    WikiPage: WikiPageSlot,
     Toc: TocSlot,
     Breadcrumbs: BreadcrumbsSlot,
   } = slots
@@ -78,7 +79,7 @@ function ContentRoute() {
     if (store.state.locale !== desired) store.setState((state) => ({ ...state, locale: desired }))
     const definition = config.i18n.locales.find((item) => item.code === desired)
     document.documentElement.dir = definition?.dir ?? 'ltr'
-  }, [hasLocalePrefix, locale, router])
+  }, [hasLocalePrefix, locale])
 
   const t = createTranslator(locale)
   const fullRoute = `${localePrefix(config, locale)}/${rest.join('/')}`.replace(/\/$/, '') || '/'
@@ -101,21 +102,7 @@ function ContentRoute() {
   if (kind === 'wiki') {
     const page = rest[1] ? wikiPages.find((item) => item.id === rest[1]) : wikiPages[0]
     if (!page) return <NotFoundSlot />
-    const htmlProps = { dangerouslySetInnerHTML: { __html: page.html } }
-    return (
-      <div className="tb-entry tb-standalone tb-wiki-page">
-        <BreadcrumbsSlot items={[{ label: t('nav.wiki'), to: '/wiki' }, { label: page.title }]} />
-        <h1 className="tb-entry-title">{page.title}</h1>
-        <nav className="tb-wiki-nav" aria-label="Knowledge base">
-          {wikiPages.map((item) => (
-            <a key={item.id} href={item.route} className={item.id === page.id ? 'is-active' : ''}>
-              {item.title}
-            </a>
-          ))}
-        </nav>
-        <div className="tb-prose" {...htmlProps} />
-      </div>
-    )
+    return <WikiPageSlot pages={wikiPages} activeId={page.id} t={t} />
   }
 
   // Dedicated preview route for every theme: /themes/<id>

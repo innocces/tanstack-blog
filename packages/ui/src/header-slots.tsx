@@ -42,7 +42,6 @@ export function Nav({ config, t }: NavProps) {
             </a>
           ))
         : null}
-      <a href="/themes">{t('nav.themes')}</a>
       {config.wiki ? <a href="/wiki">{t('nav.wiki')}</a> : null}
     </nav>
   )

@@ -42,6 +42,9 @@ export {
   Prose,
   ThemeGallery,
   ThemePreviewPage,
+  WikiPage,
+  type WikiPageData,
+  type WikiPageProps,
 } from './pages.js'
 export { SearchDialog, type SearchDialogProps } from './SearchDialog.js'
 export {

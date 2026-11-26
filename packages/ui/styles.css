@@ -1748,7 +1748,9 @@ html.light .tb-brand-wordmark {
   font-family: var(--tb-font-mono);
   font-size: 10px;
 }
-.tb-code-tabs button:last-child { border-right: 0; }
+.tb-code-tabs button:last-child {
+  border-right: 0;
+}
 .tb-code-tabs button.is-active {
   background: color-mix(in srgb, var(--tb-accent) 18%, transparent);
   color: var(--tb-text);
@@ -1806,4 +1808,139 @@ html.light .tb-brand-wordmark {
   font-family: var(--tb-font-mono);
   font-size: 13px;
   line-height: 1.7;
+}
+
+/* ------------------------------------------------------- header tool group */
+.tb-header-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ------------------------------------------- component gallery grid */
+.tb-components-index .tb-component-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+.tb-component-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 260px;
+  border: 1px solid var(--tb-border);
+  border-radius: var(--tb-radius-md);
+  background: var(--tb-surface);
+  overflow: hidden;
+  color: var(--tb-text);
+  transition:
+    border-color 150ms ease,
+    transform 150ms ease;
+}
+.tb-component-card:hover {
+  border-color: var(--tb-accent);
+  transform: translateY(-2px);
+}
+.tb-component-card-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 130px;
+  padding: 16px;
+  border-bottom: 1px solid var(--tb-border);
+  background: var(--tb-bg);
+  color: var(--tb-accent);
+  overflow: hidden;
+}
+.tb-component-card-preview .tb-demo-frame {
+  width: 100%;
+  padding: 8px;
+  background: transparent;
+  border: 0;
+}
+.tb-component-card-preview .tb-demo-dot {
+  display: none;
+}
+.tb-component-card-preview .tb-demo-body {
+  margin-top: 0;
+  justify-content: center;
+}
+.tb-component-card-preview .tb-feedback {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.tb-component-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  flex: 1;
+}
+.tb-component-card-body strong {
+  font-size: 15px;
+}
+.tb-component-card-body p {
+  margin: 0;
+  color: var(--tb-text-muted);
+  font-size: 12.5px;
+}
+.tb-component-card-body span {
+  margin-top: auto;
+  color: var(--tb-accent);
+  font-family: var(--tb-font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.tb-api-nested {
+  margin-top: 22px;
+  padding: 14px 16px;
+  border: 1px solid var(--tb-border);
+  border-left: 2px solid var(--tb-accent);
+  border-radius: var(--tb-radius-sm);
+  background: color-mix(in srgb, var(--tb-accent) 4%, transparent);
+}
+.tb-api-nested h3 {
+  margin: 0 0 6px;
+  font-size: 14px;
+}
+.tb-api-nested p {
+  margin: 0 0 10px;
+  color: var(--tb-text-muted);
+  font-size: 12px;
+}
+.tb-wiki-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 26px;
+}
+.tb-wiki-nav a {
+  padding: 6px 12px;
+  border: 1px solid var(--tb-border);
+  border-radius: 999px;
+  background: var(--tb-surface);
+  color: var(--tb-text-muted);
+  font-size: 12px;
+  text-decoration: none;
+}
+.tb-wiki-nav a:hover,
+.tb-wiki-nav a.is-active {
+  border-color: var(--tb-accent);
+  color: var(--tb-accent);
+}
+
+/* Official brand mark: no filled box, just the emblem in the accent color. */
+.tb-brand-mark {
+  width: 20px;
+  height: 26px;
+  background: transparent;
+  border-radius: 0;
+  color: var(--tb-accent);
+}
+
+/* Avoid duplicate nav labels when config.nav already lists Themes. */
+.tb-main-nav a[href="/themes"] {
+  display: none;
 }

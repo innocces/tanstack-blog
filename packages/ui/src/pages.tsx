@@ -614,6 +614,48 @@ export function ThemePreviewPage({
   )
 }
 
+export interface WikiPageData {
+  id: string
+  title: string
+  route: string
+  html: string
+  headings: string[]
+}
+
+/**
+ * Auto-generated knowledge base page. @zh 自动生成的知识库页面
+ */
+export interface WikiPageProps {
+  /** All generated pages for the side navigation. @zh 侧边导航中的全部页面 */
+  pages: WikiPageData[]
+  /** Active page id. @zh 当前页面 id */
+  activeId: string
+  /** Translation function. @zh 翻译函数 */
+  t: (key: string) => string
+}
+
+export function WikiPage({ pages, activeId, t }: WikiPageProps) {
+  const active = pages.find((page) => page.id === activeId) ?? pages[0]
+  if (!active) return <NotFound />
+  const htmlProps = { dangerouslySetInnerHTML: { __html: active.html } }
+  return (
+    <div className="tb-entry tb-standalone tb-wiki-page">
+      <Breadcrumbs items={[{ label: t('nav.wiki'), to: '/wiki' }, { label: active.title }]} />
+      <p className="tb-eyebrow">{t('wiki.kicker')}</p>
+      <h1 className="tb-entry-title">{active.title}</h1>
+      <p className="tb-entry-description">{t('wiki.intro')}</p>
+      <nav className="tb-wiki-nav" aria-label={t('nav.wiki')}>
+        {pages.map((page) => (
+          <a key={page.id} href={page.route} className={page.id === active.id ? 'is-active' : ''}>
+            {page.title}
+          </a>
+        ))}
+      </nav>
+      <div className="tb-prose" {...htmlProps} />
+    </div>
+  )
+}
+
 export function HomeHero({ config, t }: { config: PressConfig; t: (key: string) => string }) {
   const cards = [
     {

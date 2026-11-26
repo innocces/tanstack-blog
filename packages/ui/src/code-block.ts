@@ -82,7 +82,7 @@ export function enhanceCodeBlocks(root: HTMLElement, options: CodeBlockOptions):
 
   root.querySelectorAll('pre').forEach((block) => {
     const code = block.querySelector('code')
-    if (!code) return
+    if (!code || block.parentElement?.classList.contains('tb-code-block')) return
     const original = code.textContent ?? ''
     const lang = block.getAttribute('data-lang') ?? 'text'
     const meta = block.getAttribute('data-meta') ?? ''

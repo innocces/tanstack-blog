@@ -43,6 +43,7 @@ import {
   NotFound,
   ThemeGallery,
   ThemePreviewPage,
+  WikiPage,
 } from './pages.js'
 import { SearchDialog, type SearchDialogProps } from './SearchDialog.js'
 
@@ -81,7 +82,7 @@ export interface ThemeSlots {
   ThemeGallery: ComponentType<Parameters<typeof ThemeGallery>[0]>
   ThemePreviewPage: ComponentType<Parameters<typeof ThemePreviewPage>[0]>
   HomeHero: ComponentType<Parameters<typeof HomeHero>[0]>
-  WikiPage: ComponentType<{ title: string; html: string; route?: string }>
+  WikiPage: ComponentType<Parameters<typeof WikiPage>[0]>
   NotFound: ComponentType<Record<string, never>>
   /** Floating controls. */
   BackToTop: ComponentType<Record<string, never>>
@@ -111,16 +112,8 @@ export const defaultThemeSlots: ThemeSlots = {
   ComponentsIndex,
   ThemeGallery,
   ThemePreviewPage,
+  WikiPage,
   HomeHero,
-  WikiPage: ({ title, html }) => {
-    const props = { dangerouslySetInnerHTML: { __html: html } }
-    return (
-      <section>
-        <h1>{title}</h1>
-        <div {...props} />
-      </section>
-    )
-  },
   NotFound,
   BackToTop,
   Feedback,

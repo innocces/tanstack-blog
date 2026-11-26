@@ -73,6 +73,8 @@ const builtinDictionaries: Record<string, Dictionary> = {
     'blog.intro': 'Notes on building docs, themes and developer tools with TanStack.',
     'nav.videos': 'Tutorials',
     'videos.title': 'Video guides',
+    'wiki.kicker': 'Auto-generated from source',
+    'wiki.intro': 'A deterministic, LLM-free map of this repository.',
     'videos.zhLink': '中文视频教程',
     'videos.intro':
       'Real terminal sessions: the scaffolder is driven through a pseudo-terminal, captured frame by frame and encoded to MP4.',
@@ -247,6 +249,8 @@ const builtinDictionaries: Record<string, Dictionary> = {
     'blog.intro': '关于用 TanStack 构建文档、主题与开发者工具的笔记。',
     'nav.videos': '视频教程',
     'videos.title': '视频教程',
+    'wiki.kicker': '由源码自动生成',
+    'wiki.intro': '基于仓库静态分析的确定性知识库，无需 LLM。',
     'videos.zhLink': 'English guide',
     'videos.intro': '真实终端会话：通过伪终端驱动脚手架，逐帧捕获后编码为 MP4。',
 

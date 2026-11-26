@@ -19,6 +19,8 @@ function attributes(node: Element): Record<string, unknown> {
 
 /** Upgrade preset custom elements into accessible widgets. Returns cleanup. */
 export function enhanceMarkdownComponents(root: HTMLElement): () => void {
+  if (root.dataset.tbComponents === 'enhanced') return () => {}
+  root.dataset.tbComponents = 'enhanced'
   const added: HTMLElement[] = []
 
   root.querySelectorAll('md-comment-component[data-component="separator"]').forEach((node) => {
