@@ -598,7 +598,7 @@ const recipes: Recipe[] = [
       accent: '#FF66C4',
       codeText: '#5FC9F8',
     },
-    radii: [16, 24, 999],
+    radii: [12, 18, 24],
   },
   {
     id: 'mid-century',
