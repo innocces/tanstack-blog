@@ -136,6 +136,12 @@ export default async function run(page, { check }) {
   )
   check('y2k dialog radius restrained', radius < 40, `${radius}px`)
 
+  // API guide documents the actual multiline TSDoc convention.
+  await page.goto(`${BASE}/docs/component-api`, { waitUntil: 'networkidle0' })
+  const apiGuide = await page.content()
+  check('API guide uses @description.zh', apiGuide.includes('@description.zh'))
+  check('API guide uses CLI command', apiGuide.includes('create-tanstack-blog run api'))
+
   // Single Wiki link and a populated component gallery.
   await page.goto(`${BASE}/docs`, { waitUntil: 'networkidle0' })
   const navWikiLinks = await page.$$eval(

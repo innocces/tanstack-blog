@@ -36,7 +36,9 @@ All four are independent. You can ship a token-only theme, a slot-only theme, or
 | `BlogIndex` / `ComponentsIndex` / `ThemeGallery` / `ThemePreviewPage` | index pages | Listing and gallery layouts |
 | `HomeHero` | `HomeHero` | Landing hero |
 | `WikiPage` | built-in | Auto-generated knowledge base renderer |
+| `BrandMark` / `Nav` / `ThemeSwitcher` / `LocaleSwitcher` / `SearchTrigger` / `VersionSwitcher` | Header pieces | Independently replaceable header elements |
 | `Breadcrumbs` / `PageNav` / `DocShell` / `Feedback` / `BackToTop` | UI pieces | Small reusable elements |
+| `ThemeCompare` / `ThemeSample` / `TutorialIndex` / `WikiPage` | Discovery pages | Comparison, samples, tutorial hub, generated KB |
 | `NotFound` | `NotFound` | 404 page |
 
 ## Registering overrides

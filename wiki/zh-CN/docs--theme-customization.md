@@ -38,7 +38,9 @@ TanStack Blog 借鉴 dumi 的组合模型。dumi 将主题分为三层：`builti
 | `BlogIndex` / `ComponentsIndex` / `ThemeGallery` / `ThemePreviewPage` | 列表页 | 列表与画廊布局 |
 | `HomeHero` | `HomeHero` | 首页 Hero |
 | `WikiPage` | 内置 | 自动生成知识库渲染器 |
+| `BrandMark` / `Nav` / `ThemeSwitcher` / `LocaleSwitcher` / `SearchTrigger` / `VersionSwitcher` | 顶部组件 | 可独立替换的 header 元素 |
 | `Breadcrumbs` / `PageNav` / `DocShell` / `Feedback` / `BackToTop` | 小组件 | 可复用元素 |
+| `ThemeCompare` / `ThemeSample` / `TutorialIndex` / `WikiPage` | 发现页 | 对比、样例、教程中心、生成知识库 |
 | `NotFound` | `NotFound` | 404 页面 |
 
 ## 注册覆盖
