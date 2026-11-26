@@ -1,5 +1,6 @@
 /** Video gallery shared by the static route and the localized catch-all route. */
 
+/** Video gallery, localized through the shared dictionary. */
 const videos = [
   {
     src: '/videos/quickstart.mp4',
@@ -14,15 +15,12 @@ const videos = [
   },
 ]
 
-export function VideosPage() {
+export function VideosPage({ t }: { t: (key: string) => string }) {
   return (
     <div className="tb-entry tb-standalone">
-      <p className="tb-eyebrow">Tutorials</p>
-      <h1 className="tb-entry-title">Video guides</h1>
-      <p className="tb-entry-description">
-        Real terminal sessions: the scaffolder is driven through a pseudo-terminal, the output is
-        captured frame by frame, and encoded to MP4. No scripted reenactment.
-      </p>
+      <p className="tb-eyebrow">{t('nav.videos')}</p>
+      <h1 className="tb-entry-title">{t('videos.title')}</h1>
+      <p className="tb-entry-description">{t('videos.intro')}</p>
       <div className="tb-card-grid">
         {videos.map((video) => (
           <article key={video.src} className="tb-video-card">
@@ -34,7 +32,7 @@ export function VideosPage() {
         ))}
       </div>
       <p className="tb-entry-description" style={{ marginTop: 24 }}>
-        Chinese guide: <a href="/zh-CN/videos">中文视频教程</a>
+        <a href="/zh-CN/videos">{t('videos.zhLink')}</a>
       </p>
     </div>
   )

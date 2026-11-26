@@ -9,17 +9,15 @@ import { createOramaSearchAdapter } from '@tanstack-blog/orama-search'
 import { createLocalSearchAdapter } from '@tanstack-blog/search'
 import { allThemes } from '@tanstack-blog/themes'
 import {
-  BackToTop,
   ClientNav,
-  SearchDialog,
-  SiteFooter,
-  SiteHeader,
+  SlotsProvider,
   ThemeProvider,
   themeInitScript,
+  useSlots,
 } from '@tanstack-blog/ui'
-import '@tanstack-blog/ui/styles.css'
-
 import { store, t } from '../app-state.js'
+import { themeSlots } from '../theme.config.js'
+import '@tanstack-blog/ui/styles.css'
 
 /** Search is a swappable package, not part of core. */
 const searchAdapter =
@@ -64,14 +62,6 @@ export const Route = createRootRoute({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const router = useRouter()
-  const navigate = (route: string) => void router.navigate({ to: route as never })
-
-  const onLocaleChange = (locale: string) => {
-    store.setState((state) => ({ ...state, locale }))
-    navigate(switchLocaleRoute(config, window.location.pathname, locale))
-  }
-
   return (
     <html lang={config.i18n.defaultLocale} suppressHydrationWarning>
       <head>
@@ -83,33 +73,51 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         data-analytics={config.analytics.provider}
         data-analytics-domain={config.analytics.domain}
       >
-        <ThemeProvider store={store} themes={allThemes} storageKey={config.theme.storeKey}>
-          <ClientNav />
-          <BackToTop />
-          <div className="tb-app">
-            <SiteHeader
-              store={store}
-              config={config}
-              themes={allThemes}
-              locales={config.i18n.locales}
-              t={t}
-              onLocaleChange={onLocaleChange}
-            />
-            <div className="tb-app-body">{children}</div>
-            <SiteFooter config={config} t={t} />
-          </div>
-          {config.search.provider !== 'none' ? (
-            <SearchDialog
-              store={store}
-              adapter={searchAdapter}
-              config={config}
-              t={t}
-              onNavigate={navigate}
-            />
-          ) : null}
-        </ThemeProvider>
+        {/* dumi-style slot layer: custom themes override individual components. */}
+        <SlotsProvider slots={themeSlots}>
+          <AppChrome>{children}</AppChrome>
+        </SlotsProvider>
         <Scripts />
       </body>
     </html>
+  )
+}
+
+/** Chrome consumes resolved slots so a theme can replace any single element. */
+function AppChrome({ children }: { children: React.ReactNode }) {
+  const router = useRouter()
+  const { Header, Footer, SearchDialog, BackToTop } = useSlots()
+  const navigate = (route: string) => void router.navigate({ to: route as never })
+  const onLocaleChange = (locale: string) => {
+    store.setState((state) => ({ ...state, locale }))
+    navigate(switchLocaleRoute(config, window.location.pathname, locale))
+  }
+
+  return (
+    <ThemeProvider store={store} themes={allThemes} storageKey={config.theme.storeKey}>
+      <ClientNav />
+      <BackToTop />
+      <div className="tb-app">
+        <Header
+          store={store}
+          config={config}
+          themes={allThemes}
+          locales={config.i18n.locales}
+          t={t}
+          onLocaleChange={onLocaleChange}
+        />
+        <div className="tb-app-body">{children}</div>
+        <Footer config={config} t={t} />
+      </div>
+      {config.search.provider !== 'none' ? (
+        <SearchDialog
+          store={store}
+          adapter={searchAdapter}
+          config={config}
+          t={t}
+          onNavigate={navigate}
+        />
+      ) : null}
+    </ThemeProvider>
   )
 }

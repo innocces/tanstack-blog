@@ -19,3 +19,15 @@ declare module 'virtual:tanstack-blog/search-data' {
   const documents: SearchDocument[]
   export default documents
 }
+
+declare module 'virtual:tanstack-blog/wiki' {
+  interface WikiPage {
+    id: string
+    title: string
+    route: string
+    html: string
+    headings: string[]
+  }
+  const pages: WikiPage[]
+  export default pages
+}

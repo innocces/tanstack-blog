@@ -9,6 +9,8 @@
  */
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import { renderHtml } from '@tanstack/markdown/html'
+import { buildKnowledgeBase } from '@tanstack-blog/kb'
 import { createSearchIndex, serializeIndex } from '@tanstack-blog/orama-search'
 import { type SearchDocument, toSearchDocuments } from '@tanstack-blog/search'
 import type { Plugin } from 'vite'
@@ -19,12 +21,14 @@ export const virtualModules = {
   config: 'virtual:tanstack-blog/config',
   content: 'virtual:tanstack-blog/content',
   search: 'virtual:tanstack-blog/search-data',
+  wiki: 'virtual:tanstack-blog/wiki',
 } as const
 
 const resolvedIds: Record<string, string> = {
   [virtualModules.config]: `\0${virtualModules.config}`,
   [virtualModules.content]: `\0${virtualModules.content}`,
   [virtualModules.search]: `\0${virtualModules.search}`,
+  [virtualModules.wiki]: `\0${virtualModules.wiki}`,
 }
 
 export interface BlogPluginOptions {
@@ -39,6 +43,7 @@ interface Snapshot {
   entries: ContentEntry[]
   collection: Pick<ContentCollection, 'entries' | 'get' | 'byType' | 'siblings'>
   search: SearchDocument[]
+  wiki: Array<{ id: string; title: string; route: string; html: string; headings: string[] }>
 }
 
 export function tanstackBlog(options: BlogPluginOptions): Plugin {
@@ -52,11 +57,30 @@ export function tanstackBlog(options: BlogPluginOptions): Plugin {
   async function buildSnapshot(): Promise<void> {
     const collection = await collectContent(config, contentRoot)
     const search = toSearchDocuments(collection.entries, config.search.includeContent)
+    const wiki = (await buildKnowledgeBase(contentRoot)).map((page) => ({
+      id: page.id,
+      title: page.title,
+      route: page.route,
+      html: renderHtml(page.markdown, { headingAnchors: true }),
+      headings: page.headings,
+    }))
+    search.push(
+      ...wiki.map((page) => ({
+        id: `wiki:${page.id}`,
+        title: page.title,
+        description: page.headings[0] ?? '',
+        content: page.html.replace(/<[^>]+>/g, ' ').slice(0, 400),
+        section: 'wiki',
+        locale: config.i18n.defaultLocale,
+        route: page.route,
+      })),
+    )
     snapshot = {
       config,
       entries: collection.entries,
       collection,
       search,
+      wiki,
     }
     modules[resolvedIds[virtualModules.config]!] = `export default ${JSON.stringify(config)}`
     modules[resolvedIds[virtualModules.content]!] =
@@ -65,6 +89,7 @@ export const entries = ${JSON.stringify(collection.entries)};
 export const content = createCollection(entries);
 export default content;`
     modules[resolvedIds[virtualModules.search]!] = `export default ${JSON.stringify(search)}`
+    modules[resolvedIds[virtualModules.wiki]!] = `export default ${JSON.stringify(wiki)}`
   }
 
   async function ensureSnapshot(): Promise<void> {
@@ -105,7 +130,10 @@ export default content;`
 
       const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${entries.map((entry) => `  <url><loc>${base}${entry.route}</loc></url>`).join('\n')}
+${[
+  ...entries.map((entry) => `  <url><loc>${base}${entry.route}</loc></url>`),
+  ...snapshot.wiki.map((page) => `  <url><loc>${base}${page.route}</loc></url>`),
+].join('\n')}
 </urlset>
 `
       const posts = entries.filter((entry) => entry.type === 'blog')

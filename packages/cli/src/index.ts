@@ -14,6 +14,7 @@ import {
   spinner,
   text,
 } from '@clack/prompts'
+import { buildKnowledgeBase, sniffProject } from '@tanstack-blog/kb'
 import * as c from 'kolorist'
 import { projectFiles, type ScaffoldOptions } from './templates.js'
 
@@ -65,7 +66,32 @@ function step(index: number, total: number, label: string) {
   log.info(`${badge}  ${c.bold(label)}`)
 }
 
+/** Non-interactive utilities: `sniff` and `kb`. */
+async function runUtility(command: string): Promise<boolean> {
+  if (command !== 'sniff' && command !== 'kb') return false
+  const root = path.resolve(process.argv[3] ?? process.cwd())
+  const snapshot = await sniffProject(root)
+  if (command === 'sniff') {
+    console.log(`name: ${snapshot.name}`)
+    console.log(`stack: ${snapshot.frameworks.join(', ') || '(unknown)'}`)
+    console.log(`scripts: ${Object.keys(snapshot.scripts).join(', ')}`)
+    console.log(`packages: ${snapshot.packages.length}`)
+    console.log(
+      `suggested config: ${JSON.stringify({ title: snapshot.name, description: snapshot.description, modes: { docs: true, blog: false, components: false } })}`,
+    )
+    return true
+  }
+  const out = path.resolve(process.argv[4] ?? 'wiki-generated')
+  await mkdir(out, { recursive: true })
+  for (const page of await buildKnowledgeBase(root)) {
+    await writeFile(path.join(out, `${page.id}.md`), page.markdown, 'utf8')
+  }
+  console.log(`generated ${out}`)
+  return true
+}
+
 async function main() {
+  if (await runUtility(process.argv[2] ?? '')) return
   banner()
   intro(c.bold('Let’s build something delightful.'))
 

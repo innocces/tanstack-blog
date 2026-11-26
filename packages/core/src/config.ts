@@ -76,6 +76,8 @@ export const pressConfigSchema = z.object({
   /** Social links rendered in the footer. */
   social: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
   modes: modesSchema.prefault({}),
+  /** Auto-generated LLM-free knowledge base at /wiki. */
+  wiki: z.boolean().default(true),
   theme: themeSchema.prefault({}),
   search: searchSchema.prefault({}),
   i18n: i18nSchema.prefault({}),

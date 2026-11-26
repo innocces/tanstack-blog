@@ -5,6 +5,7 @@
 
 import config from 'virtual:tanstack-blog/config'
 import { content, entries } from 'virtual:tanstack-blog/content'
+import wikiPages from 'virtual:tanstack-blog/wiki'
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { createTranslator, localePrefix } from '@tanstack-blog/core'
 import { allThemes, getTheme } from '@tanstack-blog/themes'
@@ -24,6 +25,7 @@ import {
   Sidebar,
   ThemePreviewPage,
   Toc,
+  useSlots,
 } from '@tanstack-blog/ui'
 import { useEffect } from 'react'
 import uiApi from '../../../../packages/ui/api.json'
@@ -35,6 +37,21 @@ export const Route = createFileRoute('/$')({ component: ContentRoute })
 
 function ContentRoute() {
   const router = useRouter()
+  const slots = useSlots()
+  const {
+    BlogIndex: BlogIndexSlot,
+    BlogPost: BlogPostSlot,
+    ComponentPage: ComponentPageSlot,
+    ComponentsIndex: ComponentsIndexSlot,
+    DocPage: DocPageSlot,
+    DocShell: DocShellSlot,
+    HomeHero: HomeHeroSlot,
+    NotFound: NotFoundSlot,
+    Sidebar: SidebarSlot,
+    ThemePreviewPage: ThemePreviewPageSlot,
+    Toc: TocSlot,
+    Breadcrumbs: BreadcrumbsSlot,
+  } = slots
   const { _splat = '' } = Route.useParams()
   const segments = _splat.split('/').filter(Boolean)
 
@@ -54,20 +71,47 @@ function ContentRoute() {
   const t = createTranslator(locale)
   const fullRoute = `${localePrefix(config, locale)}/${rest.join('/')}`.replace(/\/$/, '') || '/'
   const entry = content.get(fullRoute, locale)
+  useEffect(() => {
+    if (entry) {
+      document.title = `${entry.title} — ${config.title}`
+      document.querySelector('meta[name="description"]')?.setAttribute('content', entry.description)
+    }
+  }, [entry])
+
   const [kind = ''] = rest
 
-  if (kind === 'blog' && !config.modes.blog) return <NotFound />
-  if (kind === 'components' && !config.modes.components) return <NotFound />
-  if (kind === 'docs' && !config.modes.docs) return <NotFound />
+  if (kind === 'blog' && !config.modes.blog) return <NotFoundSlot />
+  if (kind === 'components' && !config.modes.components) return <NotFoundSlot />
+  if (kind === 'docs' && !config.modes.docs) return <NotFoundSlot />
 
-  if (kind === 'videos') return <VideosPage />
+  if (kind === 'videos') return <VideosPage t={t} />
+  // Deterministic, LLM-free knowledge base generated from the repository.
+  if (kind === 'wiki') {
+    const page = rest[1] ? wikiPages.find((item) => item.id === rest[1]) : wikiPages[0]
+    if (!page) return <NotFoundSlot />
+    const htmlProps = { dangerouslySetInnerHTML: { __html: page.html } }
+    return (
+      <div className="tb-entry tb-standalone tb-wiki-page">
+        <BreadcrumbsSlot items={[{ label: t('nav.wiki'), to: '/wiki' }, { label: page.title }]} />
+        <h1 className="tb-entry-title">{page.title}</h1>
+        <nav className="tb-wiki-nav" aria-label="Knowledge base">
+          {wikiPages.map((item) => (
+            <a key={item.id} href={item.route} className={item.id === page.id ? 'is-active' : ''}>
+              {item.title}
+            </a>
+          ))}
+        </nav>
+        <div className="tb-prose" {...htmlProps} />
+      </div>
+    )
+  }
 
   // Dedicated preview route for every theme: /themes/<id>
   if (kind === 'themes' && rest[1]) {
     const theme = getTheme(rest[1])
-    if (!theme) return <NotFound />
+    if (!theme) return <NotFoundSlot />
     return (
-      <ThemePreviewPage
+      <ThemePreviewPageSlot
         theme={theme}
         themes={allThemes}
         t={t}
@@ -81,15 +125,15 @@ function ContentRoute() {
   }
 
   if (rest.length === 0) {
-    return <HomeHero config={config} t={t} />
+    return <HomeHeroSlot config={config} t={t} />
   }
 
   if (kind === 'docs' && !entry) {
     const docs = content.byType('docs', locale)
     return (
-      <DocShell sidebar={<Sidebar store={store} entries={entries} locale={locale} t={t} />}>
+      <DocShellSlot sidebar={<SidebarSlot store={store} entries={entries} locale={locale} t={t} />}>
         <Prose>
-          <Breadcrumbs items={[{ label: t('nav.docs') }]} />
+          <BreadcrumbsSlot items={[{ label: t('nav.docs') }]} />
           <h1 className="tb-entry-title">Documentation</h1>
           <p className="tb-entry-description">
             Everything you need to configure, theme and deploy the framework.
@@ -102,12 +146,12 @@ function ContentRoute() {
             ))}
           </ul>
         </Prose>
-      </DocShell>
+      </DocShellSlot>
     )
   }
 
   if (kind === 'blog' && !entry) {
-    return <BlogIndex entries={content.byType('blog', locale)} t={t} />
+    return <BlogIndexSlot entries={content.byType('blog', locale)} t={t} />
   }
 
   if (kind === 'components' && !entry) {
@@ -115,18 +159,18 @@ function ContentRoute() {
     const examples = Object.fromEntries(
       Object.entries(componentExamples).map(([key, factory]) => [key, factory({ t })]),
     )
-    return <ComponentsIndex entries={items} t={t} examples={examples} />
+    return <ComponentsIndexSlot entries={items} t={t} examples={examples} />
   }
 
-  if (!entry) return <NotFound />
+  if (!entry) return <NotFoundSlot />
 
   const siblings = content.siblings(entry)
 
   if (entry.type === 'blog') {
     return (
-      <DocShell toc={<Toc headings={entry.headings} t={t} />}>
-        <BlogPost entry={entry} t={t} sourceBase={config.editUrlBase} />
-      </DocShell>
+      <DocShellSlot toc={<TocSlot headings={entry.headings} t={t} />}>
+        <BlogPostSlot entry={entry} t={t} sourceBase={config.editUrlBase} />
+      </DocShellSlot>
     )
   }
 
@@ -138,8 +182,8 @@ function ContentRoute() {
       ? (uiApi[apiName as keyof typeof uiApi] as ComponentApi | undefined)
       : undefined
     return (
-      <DocShell toc={<Toc headings={entry.headings} t={t} />}>
-        <ComponentPage
+      <DocShellSlot toc={<TocSlot headings={entry.headings} t={t} />}>
+        <ComponentPageSlot
           entry={entry}
           t={t}
           locale={locale}
@@ -148,20 +192,26 @@ function ContentRoute() {
           catalog={uiApi as Record<string, ComponentApi>}
           example={Example ? <Example t={t} /> : undefined}
         />
-      </DocShell>
+      </DocShellSlot>
     )
   }
 
   if (entry.type === 'docs') {
     return (
-      <DocShell
-        sidebar={<Sidebar store={store} entries={entries} locale={locale} t={t} />}
-        toc={<Toc headings={entry.headings} t={t} />}
+      <DocShellSlot
+        sidebar={<SidebarSlot store={store} entries={entries} locale={locale} t={t} />}
+        toc={<TocSlot headings={entry.headings} t={t} />}
       >
-        <DocPage entry={entry} prev={siblings.prev} next={siblings.next} config={config} t={t} />
-      </DocShell>
+        <DocPageSlot
+          entry={entry}
+          prev={siblings.prev}
+          next={siblings.next}
+          config={config}
+          t={t}
+        />
+      </DocShellSlot>
     )
   }
 
-  return <DocPage entry={entry} config={config} t={t} />
+  return <DocPageSlot entry={entry} config={config} t={t} />
 }
