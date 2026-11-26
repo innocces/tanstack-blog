@@ -13,7 +13,11 @@ const ROOT = process.cwd()
 
 function git(...args) {
   try {
-    return execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim()
+    return execFileSync('git', args, {
+      cwd: ROOT,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
+    }).trim()
   } catch {
     return ''
   }
@@ -30,7 +34,9 @@ const packageJson = JSON.parse(readFileSync(path.join(ROOT, 'package.json'), 'ut
 const current = packageJson.version ?? '0.0.0'
 const lastTag = git('describe', '--tags', '--abbrev=0')
 const logArgs = lastTag ? [`${lastTag}..HEAD`] : []
-const commits = git('log', ...logArgs, '--pretty=format:%s%n%b').split('\n').filter(Boolean)
+const commits = git('log', ...logArgs, '--pretty=format:%s%n%b')
+  .split('\n')
+  .filter(Boolean)
 
 let type = 'patch'
 for (const line of commits) {
