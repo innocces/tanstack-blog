@@ -40,6 +40,17 @@ export default defineConfig({
 | `contentDir` | `'content'` | Markdown 根目录 |
 | `nav` / `social` | `[]` | 顶部与底部链接 |
 
+## 文档版本
+
+在配置中声明版本，并把内容放在 `content/<version>/<locale>/`：
+
+```ts
+currentVersion: 'current',
+versions: [{ code: 'v1.0', label: 'v1.0' }],
+```
+
+`content/v1.0/en/docs/api.md` 对应 `/v/v1.0/docs/api`。顶部版本选择器负责切换路由，侧边栏只显示当前版本的条目。
+
 ## 内容模式
 
 - `docs`：侧边栏文档树、上一篇/下一篇、目录

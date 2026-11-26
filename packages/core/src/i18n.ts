@@ -15,6 +15,8 @@ const builtinDictionaries: Record<string, Dictionary> = {
     'nav.wiki': 'Wiki',
     'site.title': 'TanStack Blog',
     'nav.tutorials': 'Tutorials',
+    'version.selector': 'Version',
+    'version.current': 'Current',
     'tutorials.title': 'Step-by-step tutorials',
     'tutorials.intro': 'Five guided lessons covering content, themes, search, i18n and deployment.',
     'language.selector': 'Language',
@@ -150,6 +152,8 @@ const builtinDictionaries: Record<string, Dictionary> = {
     'nav.wiki': 'Wiki',
     'site.title': 'TanStack Blog',
     'nav.tutorials': 'Tutorials',
+    'version.selector': 'Version',
+    'version.current': 'Current',
     'tutorials.title': 'Step-by-step tutorials',
     'tutorials.intro': 'Five guided lessons covering content, themes, search, i18n and deployment.',
     'language.selector': 'Language',
@@ -214,6 +218,8 @@ const builtinDictionaries: Record<string, Dictionary> = {
     'nav.wiki': '知识库',
     'site.title': 'TanStack 博客',
     'nav.tutorials': '教程',
+    'version.selector': '版本',
+    'version.current': '当前版本',
     'tutorials.title': '分步教程',
     'tutorials.intro': '五节引导式课程，覆盖内容、主题、搜索、多语言与部署。',
     'language.selector': '语言',
@@ -319,6 +325,28 @@ export function switchLocaleRoute(config: PressConfig, pathname: string, toLocal
   const rest = from ? segments.slice(1) : segments
   const prefix = localePrefix(config, toLocale)
   return `${prefix}/${rest.join('/')}`.replace(/\/$/, '') || '/'
+}
+
+/** Switch a pathname to a different documentation version. */
+export function switchVersionRoute(
+  pathname: string,
+  version: string,
+  current: string,
+  locales: string[] = [],
+): string {
+  const segments = pathname.split('/').filter(Boolean)
+  const vIndex = segments.indexOf('v')
+  const withoutVersion =
+    vIndex >= 0 ? segments.slice(0, vIndex).concat(segments.slice(vIndex + 2)) : segments
+  if (version === current) return `/${withoutVersion.join('/')}` || '/'
+  const candidate = withoutVersion[0]
+  const locale = locales.includes(candidate ?? '') ? candidate : undefined
+  const rest = locale ? withoutVersion.slice(1) : withoutVersion
+  return `/${locale ? `${locale}/` : ''}v/${version}/${rest.join('/')}`.replace(/\/$/, '')
+}
+
+function configLocale(segments: string[]): string | undefined {
+  return segments[0]
 }
 
 /** Resolve the best matching locale from a URL segment or browser preference. */

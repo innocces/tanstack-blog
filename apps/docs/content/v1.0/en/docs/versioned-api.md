@@ -1,0 +1,14 @@
+---
+title: Legacy API (v1.0)
+description: A page from the frozen v1.0 documentation set.
+group: Reference
+order: 1
+---
+
+# Legacy API (v1.0)
+
+This page lives under `content/v1.0/en/`, so it is only visible when the **v1.0** version is selected in the header. Its route is `/v/v1.0/docs/versioned-api`.
+
+## Upgrade note
+
+The current documentation describes the latest API. Use the version selector to switch back to the live docs at any time.

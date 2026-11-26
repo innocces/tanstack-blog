@@ -11,6 +11,7 @@ export const store = createUiStore({
   themeId: config.theme.default,
   mode: 'system',
   locale: config.i18n.defaultLocale,
+  version: config.currentVersion,
 })
 
 export const t = createTranslator(config.i18n.defaultLocale)

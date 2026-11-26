@@ -40,12 +40,33 @@ export interface SearchDialogProps {
   onNavigate?: (route: string) => void
 }
 
+function Highlight({ text, term }: { text: string; term: string }) {
+  if (!term.trim()) return <>{text}</>
+  const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const parts = text.split(new RegExp(`(${escaped})`, 'ig'))
+  return (
+    <>
+      {parts.map((part, index) =>
+        part.toLowerCase() === term.toLowerCase() ? <mark key={part}>{part}</mark> : part,
+      )}
+    </>
+  )
+}
+
 export function SearchDialog({ store, adapter, config, t, onNavigate }: SearchDialogProps) {
   const open = useStore(store, (state) => state.searchOpen)
   const locale = useStore(store, (state) => state.locale)
   const [query, setQuery] = useState('')
   const [hits, setHits] = useState<SearchHit[]>([])
   const [active, setActive] = useState(0)
+  const [recent, setRecent] = useState<string[]>(() => {
+    if (typeof window === 'undefined') return []
+    try {
+      return JSON.parse(window.localStorage.getItem('tb:recent-searches') ?? '[]') as string[]
+    } catch {
+      return []
+    }
+  })
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -85,6 +106,15 @@ export function SearchDialog({ store, adapter, config, t, onNavigate }: SearchDi
       setHits([])
       return
     }
+    setRecent((items) => {
+      const next = [query, ...items.filter((item) => item !== query)].slice(0, 5)
+      try {
+        window.localStorage.setItem('tb:recent-searches', JSON.stringify(next))
+      } catch {
+        // storage is optional
+      }
+      return next
+    })
     let cancelled = false
     void Promise.resolve(adapter.search(query, { locale, limit: 8 })).then((result) => {
       if (!cancelled) {
@@ -153,6 +183,16 @@ export function SearchDialog({ store, adapter, config, t, onNavigate }: SearchDi
         </div>
 
         <div className="tb-search-results">
+          {!query && recent.length ? (
+            <div className="tb-search-recent">
+              <small>{t('search.recent')}</small>
+              {recent.map((item) => (
+                <button key={item} type="button" onClick={() => setQuery(item)}>
+                  {item}
+                </button>
+              ))}
+            </div>
+          ) : null}
           {query && hits.length === 0 ? (
             <p className="tb-search-empty">{t('search.noResults')}</p>
           ) : (
@@ -165,9 +205,13 @@ export function SearchDialog({ store, adapter, config, t, onNavigate }: SearchDi
                 onClick={() => navigate(hit)}
               >
                 <span className="tb-search-result-section">{hit.section}</span>
-                <span className="tb-search-result-title">{hit.title}</span>
+                <span className="tb-search-result-title">
+                  <Highlight text={hit.title} term={query} />
+                </span>
                 {hit.description ? (
-                  <span className="tb-search-result-desc">{hit.description}</span>
+                  <span className="tb-search-result-desc">
+                    <Highlight text={hit.description} term={query} />
+                  </span>
                 ) : null}
               </button>
             ))

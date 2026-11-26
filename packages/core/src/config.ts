@@ -76,6 +76,10 @@ export const pressConfigSchema = z.object({
   /** Social links rendered in the footer. */
   social: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
   modes: modesSchema.prefault({}),
+  /** Optional version list; entries under `content/<version>/...` become versioned docs. */
+  versions: z.array(z.object({ code: z.string(), label: z.string() })).default([]),
+  /** Code treated as the unprefixed current version. */
+  currentVersion: z.string().default('current'),
   /** Auto-generated LLM-free knowledge base at /wiki. */
   wiki: z.boolean().default(true),
   theme: themeSchema.prefault({}),

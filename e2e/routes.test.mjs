@@ -16,6 +16,7 @@ export default async function run(page, { check }) {
     ['/wiki', 'tb-wiki-page'],
     ['/wiki/architecture', 'tb-wiki-page'],
     ['/wiki/api', 'tb-wiki-page'],
+    ['/v/v1.0/docs/versioned-api', 'tb-markdown'],
     ['/tutorials', 'tb-tutorial-list'],
     ['/tutorials/01-quickstart', 'tb-entry'],
     ['/zh-CN/tutorials', 'tb-tutorial-list'],

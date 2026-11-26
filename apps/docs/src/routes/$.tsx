@@ -62,6 +62,7 @@ function ContentRoute() {
   const hasLocalePrefix = Boolean(urlLocale)
   const locale = urlLocale?.code ?? config.i18n.defaultLocale
   const rest = hasLocalePrefix ? segments.slice(1) : segments
+  const activeVersion = rest[0] === 'v' && rest[1] ? rest[1] : config.currentVersion
 
   useEffect(() => {
     // A stored locale wins on unprefixed URLs, so language survives a reload.
@@ -78,10 +79,11 @@ function ContentRoute() {
         // ignore malformed storage
       }
     }
-    if (store.state.locale !== desired) store.setState((state) => ({ ...state, locale: desired }))
+    if (store.state.locale !== desired || store.state.version !== activeVersion)
+      store.setState((state) => ({ ...state, locale: desired, version: activeVersion }))
     const definition = config.i18n.locales.find((item) => item.code === desired)
     document.documentElement.dir = definition?.dir ?? 'ltr'
-  }, [hasLocalePrefix, locale])
+  }, [activeVersion, hasLocalePrefix, locale])
 
   const t = createTranslator(locale)
   const fullRoute = `${localePrefix(config, locale)}/${rest.join('/')}`.replace(/\/$/, '') || '/'
@@ -149,7 +151,17 @@ function ContentRoute() {
   if (kind === 'docs' && !entry) {
     const docs = content.byType('docs', locale)
     return (
-      <DocShellSlot sidebar={<SidebarSlot store={store} entries={entries} locale={locale} t={t} />}>
+      <DocShellSlot
+        sidebar={
+          <SidebarSlot
+            store={store}
+            entries={entries}
+            locale={locale}
+            t={t}
+            version={activeVersion}
+          />
+        }
+      >
         <Prose>
           <BreadcrumbsSlot items={[{ label: t('nav.docs') }]} />
           <h1 className="tb-entry-title">Documentation</h1>
@@ -232,7 +244,15 @@ function ContentRoute() {
   if (entry.type === 'docs') {
     return (
       <DocShellSlot
-        sidebar={<SidebarSlot store={store} entries={entries} locale={locale} t={t} />}
+        sidebar={
+          <SidebarSlot
+            store={store}
+            entries={entries}
+            locale={locale}
+            t={t}
+            version={activeVersion}
+          />
+        }
         toc={<TocSlot headings={entry.headings} t={t} />}
       >
         <DocPageSlot

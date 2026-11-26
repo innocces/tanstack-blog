@@ -2103,3 +2103,34 @@ html.light .tb-brand-wordmark {
   color: var(--tb-text-muted);
   font-size: 13px;
 }
+
+/* Search result highlighting and recent queries. */
+.tb-search-result mark {
+  background: color-mix(in srgb, var(--tb-accent) 32%, transparent);
+  color: var(--tb-text);
+  border-radius: 3px;
+  padding: 0 2px;
+}
+.tb-search-recent {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px 12px;
+}
+.tb-search-recent small {
+  width: 100%;
+  color: var(--tb-text-muted);
+  font-family: var(--tb-font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.tb-search-recent button {
+  padding: 4px 10px;
+  border: 1px solid var(--tb-border);
+  border-radius: 999px;
+  background: var(--tb-surface);
+  color: var(--tb-text-muted);
+  font-size: 11px;
+}

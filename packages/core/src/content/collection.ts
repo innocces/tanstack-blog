@@ -25,6 +25,8 @@ export interface ContentEntry {
   title: string
   description: string
   date?: string
+  /** Version code for versioned documentation. */
+  version?: string
   /** Optional last-updated date, shown in article footers. */
   updated?: string
   tags: string[]

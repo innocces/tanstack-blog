@@ -13,6 +13,10 @@ export default async function run(page, { check }) {
   await sleep(500)
   const hits = await page.$$eval('.tb-search-result', (nodes) => nodes.length)
   check('search returns results', hits > 0, `${hits} hits`)
+  check(
+    'matched term highlighted',
+    (await page.$$eval('.tb-search-result mark', (nodes) => nodes.length)) > 0,
+  )
   const first = await page.$eval('.tb-search-result-title', (node) => node.textContent)
   check('top result is relevant', /theme/i.test(first ?? ''), first ?? '')
 

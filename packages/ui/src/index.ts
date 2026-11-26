@@ -11,6 +11,8 @@ export {
   type SearchTriggerProps,
   ThemeSwitcher,
   type ThemeSwitcherProps,
+  VersionSwitcher,
+  type VersionSwitcherProps,
 } from './header-slots.js'
 export * from './icons.js'
 export {

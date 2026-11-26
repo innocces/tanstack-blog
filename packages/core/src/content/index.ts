@@ -116,9 +116,11 @@ function buildRoute(
   type: ContentType,
   rest: string[],
   metaType: unknown,
+  version?: string,
 ): { route: string; section: string } {
   const typeFromMeta = typeof metaType === 'string' ? (metaType as ContentType) : type
-  const prefix = localePrefix(config, locale)
+  const base = localePrefix(config, locale)
+  const prefix = version ? `${base}/v/${version}` : base
   const withoutExt = (item: string) => item.replace(/\.md$/, '')
   const tail = rest.map(withoutExt)
   const isIndex = tail.at(-1) === 'index'
@@ -151,9 +153,14 @@ export async function collectContent(
     const relative = path.relative(contentRoot, file).split(path.sep).join('/')
     const raw = await fs.readFile(file, 'utf8')
     const { data, content } = matter(raw)
-    const { locale, rest } = inferLocale(config, relative)
+    const segments = relative.split(path.sep)
+    let version: string | undefined
+    if (config.versions.some((item) => item.code === segments[0])) {
+      version = segments.shift()
+    }
+    const { locale, rest } = inferLocale(config, segments.join(path.sep))
     const type = inferType(rest)
-    const { route, section } = buildRoute(config, locale, type, rest, data.type)
+    const { route, section } = buildRoute(config, locale, type, rest, data.type, version)
 
     const document = parseMarkdown(content, { extensions })
     const renderedHeadingList = (document.headings ?? []) as Heading[]
@@ -188,6 +195,7 @@ export async function collectContent(
       tags: toArray(data.tags),
       section,
       group: data.group ? String(data.group) : undefined,
+      version,
       order: Number(data.order ?? 999),
       draft: Boolean(data.draft ?? false),
       headings,

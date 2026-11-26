@@ -5,7 +5,7 @@ import { githubDarkTheme } from '@tanstack/highlight/themes/github-dark'
 import { githubLightTheme } from '@tanstack/highlight/themes/github-light'
 import { createRootRoute, HeadContent, Scripts, useRouter } from '@tanstack/react-router'
 import { useStore } from '@tanstack/react-store'
-import { createTranslator, switchLocaleRoute } from '@tanstack-blog/core'
+import { createTranslator, switchLocaleRoute, switchVersionRoute } from '@tanstack-blog/core'
 import { createOramaSearchAdapter } from '@tanstack-blog/orama-search'
 import { createLocalSearchAdapter } from '@tanstack-blog/search'
 import { allThemes } from '@tanstack-blog/themes'
@@ -103,6 +103,17 @@ function AppChrome({ children }: { children: React.ReactNode }) {
     store.setState((state) => ({ ...state, locale }))
     navigate(switchLocaleRoute(config, window.location.pathname, locale))
   }
+  const onVersionChange = (version: string) => {
+    store.setState((state) => ({ ...state, version }))
+    navigate(
+      switchVersionRoute(
+        window.location.pathname,
+        version,
+        config.currentVersion,
+        config.i18n.locales.map((item) => item.code),
+      ),
+    )
+  }
 
   return (
     <ThemeProvider store={store} themes={allThemes} storageKey={config.theme.storeKey}>
@@ -116,6 +127,9 @@ function AppChrome({ children }: { children: React.ReactNode }) {
           locales={config.i18n.locales}
           t={t}
           onLocaleChange={onLocaleChange}
+          versions={config.versions}
+          currentVersion={config.currentVersion}
+          onVersionChange={onVersionChange}
         />
         <div className="tb-app-body">{children}</div>
         <Footer config={config} t={t} />

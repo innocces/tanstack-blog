@@ -36,6 +36,10 @@ const adapter = createOramaSearchAdapter(searchData)
 
 Orama 适配器在首次查询时延迟建索引，字段权重为 title ×3、description ×2、content ×1。
 
+## 结果高亮
+
+命中的关键词会在标题与描述中高亮。最近五次查询保存在本地，输入框为空时以胶囊按钮展示。
+
 ## 快捷键
 
 `⌘K` 打开，`↑↓` 选择，`Enter` 打开，`Esc` 关闭；支持 `?search=1&q=...` 深链。

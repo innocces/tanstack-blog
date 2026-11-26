@@ -47,6 +47,10 @@ The index is built lazily on first query. Field boosts are title ×3, descriptio
 
 `none` hides the search trigger. The dialog component simply will not be wired up.
 
+## Result highlighting
+
+Matched terms are highlighted in titles and descriptions. The last five queries are stored locally and shown as chips when the input is empty.
+
 ## Keyboard and UX
 
 - `⌘K` / `Ctrl+K` opens the palette from anywhere.

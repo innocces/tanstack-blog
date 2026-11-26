@@ -17,6 +17,7 @@ import {
   type SearchTriggerProps,
   ThemeSwitcher,
   type ThemeSwitcherProps,
+  VersionSwitcher,
 } from './header-slots.js'
 import {
   BackToTop,
@@ -55,6 +56,8 @@ export interface ThemeSlots {
   Nav: ComponentType<NavProps>
   /** Theme / color mode controls. */
   ThemeSwitcher: ComponentType<ThemeSwitcherProps>
+  /** Documentation version selector. */
+  VersionSwitcher: ComponentType<Parameters<typeof VersionSwitcher>[0]>
   /** Locale selector. */
   LocaleSwitcher: ComponentType<LocaleSwitcherProps>
   /** Header search button. */
@@ -100,6 +103,7 @@ export const defaultThemeSlots: ThemeSlots = {
   BrandMark,
   Nav,
   ThemeSwitcher,
+  VersionSwitcher,
   LocaleSwitcher,
   SearchTrigger,
   Header: SiteHeader,

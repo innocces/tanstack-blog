@@ -21,6 +21,8 @@ export default defineConfig({
     { label: 'GitHub', href: 'https://github.com/innocces/tanstack-blog' },
   ],
   modes: { blog: true, docs: true, components: true },
+  currentVersion: 'current',
+  versions: [{ code: 'v1.0', label: 'v1.0' }],
   theme: { default: 'linear', allowSwitch: true },
   search: {
     provider: 'orama',

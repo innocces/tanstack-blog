@@ -116,6 +116,40 @@ export function LocaleSwitcher({ store, locales, t, onLocaleChange }: LocaleSwit
   )
 }
 
+/** @description Documentation version selector. @description.zh 文档版本选择器 */
+export interface VersionSwitcherProps {
+  store: UiStore
+  versions: Array<{ code: string; label: string }>
+  currentVersion: string
+  t: (key: string) => string
+  onVersionChange: (version: string) => void
+}
+
+export function VersionSwitcher({
+  store,
+  versions,
+  currentVersion,
+  t,
+  onVersionChange,
+}: VersionSwitcherProps) {
+  const version = useStore(store, (state) => state.version)
+  if (versions.length < 2) return null
+  return (
+    <Dropdown
+      label={t('version.selector')}
+      value={version}
+      onChange={(next) => {
+        store.setState((state) => ({ ...state, version: next }))
+        onVersionChange(next)
+      }}
+      options={[
+        { value: currentVersion, label: t('version.current') },
+        ...versions.map((item) => ({ value: item.code, label: item.label })),
+      ]}
+    />
+  )
+}
+
 /** @description Search button in the header. @description.zh 顶部搜索触发按钮 */
 export interface SearchTriggerProps {
   store: UiStore

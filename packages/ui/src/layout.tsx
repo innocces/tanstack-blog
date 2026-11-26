@@ -55,11 +55,25 @@ export interface HeaderProps {
   t: (key: string) => string
   /** Navigate to the equivalent route in the chosen locale. */
   onLocaleChange?: (locale: string) => void
+  versions?: Array<{ code: string; label: string }>
+  currentVersion?: string
+  onVersionChange?: (version: string) => void
 }
 
-export function SiteHeader({ store, config, themes, locales, t, onLocaleChange }: HeaderProps) {
+export function SiteHeader({
+  store,
+  config,
+  themes,
+  locales,
+  t,
+  onLocaleChange,
+  versions = [],
+  currentVersion = 'current',
+  onVersionChange,
+}: HeaderProps) {
   const sidebarOpen = useStore(store, (state) => state.sidebarOpen)
-  const { BrandMark, Nav, ThemeSwitcher, LocaleSwitcher, SearchTrigger } = useSlots()
+  const { BrandMark, Nav, ThemeSwitcher, LocaleSwitcher, SearchTrigger, VersionSwitcher } =
+    useSlots()
 
   return (
     <header className="tb-header">
@@ -125,13 +139,27 @@ export interface SidebarProps {
   locale: string
   t: (key: string) => string
   extraLinks?: { label: string; to: string }[]
+  /** Version filter for versioned docs. */
+  version?: string
 }
 
-export function Sidebar({ store, entries, locale, t, extraLinks = [] }: SidebarProps) {
+export function Sidebar({
+  store,
+  entries,
+  locale,
+  t,
+  extraLinks = [],
+  version = 'current',
+}: SidebarProps) {
   const open = useStore(store, (state) => state.sidebarOpen)
   const [collapsed, setCollapsed] = useState<string[]>([])
   const docs = entries
-    .filter((entry) => entry.type === 'docs' && entry.locale === locale)
+    .filter(
+      (entry) =>
+        entry.type === 'docs' &&
+        entry.locale === locale &&
+        (entry.version ?? 'current') === version,
+    )
     .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title))
   const groupRank = ['Getting Started', 'Fundamentals', 'Guides', 'Reference', 'Community']
   const groups = [...new Set(docs.map((entry) => entry.group ?? entry.section))].sort((a, b) => {

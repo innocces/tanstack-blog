@@ -14,6 +14,7 @@ export {
   registerDictionary,
   resolveLocale,
   switchLocaleRoute,
+  switchVersionRoute,
 } from './i18n.js'
 export {
   type ColorMode,
