@@ -5,7 +5,6 @@ import { useStore } from '@tanstack/react-store'
 import type { LocaleDefinition, PressConfig, PressTheme } from '@tanstack-blog/core'
 import type { ContentEntry, Heading } from '@tanstack-blog/core/content/collection'
 import { type ReactNode, useEffect, useState } from 'react'
-import { Dropdown } from './Dropdown.js'
 import {
   IconChevronDown,
   IconChevronLeft,
@@ -21,6 +20,7 @@ import {
   IconThemes,
   TanStackMark,
 } from './icons.js'
+import { useSlot, useSlots } from './slots.js'
 import type { UiStore } from './store.js'
 
 /** TanStack Router is fully typed; content-driven routes are cast at the boundary. */
@@ -58,14 +58,8 @@ export interface HeaderProps {
 }
 
 export function SiteHeader({ store, config, themes, locales, t, onLocaleChange }: HeaderProps) {
-  const themeId = useStore(store, (state) => state.themeId)
-  const mode = useStore(store, (state) => state.mode)
-  const locale = useStore(store, (state) => state.locale)
   const sidebarOpen = useStore(store, (state) => state.sidebarOpen)
-
-  const setTheme = (id: string) => store.setState((state) => ({ ...state, themeId: id }))
-  const setMode = (next: 'light' | 'dark' | 'system') =>
-    store.setState((state) => ({ ...state, mode: next }))
+  const { BrandMark, Nav, ThemeSwitcher, LocaleSwitcher, SearchTrigger } = useSlots()
 
   return (
     <header className="tb-header">
@@ -79,85 +73,27 @@ export function SiteHeader({ store, config, themes, locales, t, onLocaleChange }
           <IconMenu />
         </button>
 
-        <SmartLink to="/" className="tb-brand">
-          <TanStackMark className="tb-brand-mark" />
+        <a href="/" className="tb-brand">
+          <BrandMark />
           <span>{config.title}</span>
-        </SmartLink>
+        </a>
 
-        <nav className="tb-main-nav" aria-label="Main navigation">
-          {config.nav.length
-            ? config.nav.map((item) =>
-                item.external ? (
-                  <a key={item.to} href={item.to} target="_blank" rel="noreferrer">
-                    {item.label}
-                  </a>
-                ) : (
-                  <SmartLink key={item.to} to={item.to}>
-                    {item.label}
-                  </SmartLink>
-                ),
-              )
-            : null}
-        </nav>
+        <Nav config={config} t={t} />
 
         <div className="tb-header-actions">
-          <button
-            className="tb-search-trigger"
-            type="button"
-            onClick={() => store.setState((state) => ({ ...state, searchOpen: true }))}
-          >
-            <IconSearch />
-            <span>{config.search.placeholder || t('search.placeholder')}</span>
-            <kbd>{config.search.hotkey}</kbd>
-          </button>
-
-          <div className="tb-mode-switch">
-            {(['light', 'dark', 'system'] as const).map((value) => {
-              const Icon = value === 'light' ? IconSun : value === 'dark' ? IconMoon : IconSystem
-              return (
-                <button
-                  key={value}
-                  type="button"
-                  className={mode === value ? 'is-active' : ''}
-                  title={t(`theme.${value}`)}
-                  aria-label={t(`theme.${value}`)}
-                  aria-pressed={mode === value}
-                  onClick={() => setMode(value)}
-                >
-                  <Icon />
-                </button>
-              )
-            })}
-          </div>
-
-          {config.theme.allowSwitch ? (
-            <Dropdown
-              label="Theme"
-              icon={<IconThemes />}
-              value={themeId}
-              onChange={setTheme}
-              options={themes.map((theme) => ({
-                value: theme.id,
-                label: theme.name,
-                hint: theme.school.replace(/-/g, ' '),
-              }))}
-            />
-          ) : null}
-
-          {locales.length > 1 ? (
-            <Dropdown
-              label="Language"
-              icon={<IconLanguages />}
-              value={locale}
-              onChange={(next) => {
-                store.setState((state) => ({ ...state, locale: next }))
-                onLocaleChange?.(next)
-              }}
-              options={locales.map((item) => ({ value: item.code, label: item.label }))}
-              className="tb-locale-dropdown"
-            />
-          ) : null}
-
+          <SearchTrigger store={store} config={config} t={t} />
+          <ThemeSwitcher
+            store={store}
+            themes={themes}
+            t={t}
+            allowSwitch={config.theme.allowSwitch}
+          />
+          <LocaleSwitcher
+            store={store}
+            locales={locales}
+            t={t}
+            onLocaleChange={onLocaleChange ?? (() => {})}
+          />
           {config.repoUrl ? (
             <a
               className="tb-icon-button"
@@ -233,7 +169,7 @@ export function Sidebar({ store, entries, locale, t, extraLinks = [] }: SidebarP
                   )
                 }
               >
-                <span>{group.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}</span>
+                <span>{t(`group.${group.toLowerCase().replace(/\s+/g, '-')}`)}</span>
                 <IconChevronDown className={isCollapsed ? 'is-collapsed' : ''} />
               </button>
               {!isCollapsed ? (

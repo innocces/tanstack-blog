@@ -240,7 +240,7 @@ function AppChrome({ children }: { children: React.ReactNode }) {
   }
   return (
     <ThemeProvider store={store} themes={allThemes} storageKey={config.theme.storeKey}>
-      <ClientNav />
+      <ClientNav store={store} config={config} />
       <BackToTop />
       <div className="tb-app">
         <Header store={store} config={config} themes={allThemes} locales={config.i18n.locales} t={t} onLocaleChange={onLocaleChange} />

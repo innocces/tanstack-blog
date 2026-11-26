@@ -1,5 +1,17 @@
 export { ClientNav } from './ClientNav.js'
 export { Dropdown, type DropdownOption, type DropdownProps } from './Dropdown.js'
+export {
+  BrandMark,
+  type BrandMarkProps,
+  LocaleSwitcher,
+  type LocaleSwitcherProps,
+  Nav,
+  type NavProps,
+  SearchTrigger,
+  type SearchTriggerProps,
+  ThemeSwitcher,
+  type ThemeSwitcherProps,
+} from './header-slots.js'
 export * from './icons.js'
 export {
   BackToTop,

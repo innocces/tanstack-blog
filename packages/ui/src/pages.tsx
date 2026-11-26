@@ -25,12 +25,9 @@ export function Article({ entry, sourceBase }: { entry: ContentEntry; sourceBase
   useEffect(() => {
     const element = root.current
     if (!element || !entry.html) return
-    const cleanCode = enhanceCodeBlocks(element, { sourceBase, file: entry.file })
-    const cleanComponents = enhanceMarkdownComponents(element)
-    return () => {
-      cleanCode()
-      cleanComponents()
-    }
+    enhanceCodeBlocks(element, { sourceBase, file: entry.file })
+    enhanceMarkdownComponents(element)
+    return undefined
   }, [entry.file, entry.html, sourceBase])
 
   // Build-time TanStack Markdown escapes raw HTML; keep the injected value out of JSX lint.
@@ -207,7 +204,7 @@ export function ComponentPage({
           <IconComponents />
         </span>
         <div>
-          <p className="tb-eyebrow">Component</p>
+          <p className="tb-eyebrow">{t('label.component')}</p>
           <h1 className="tb-entry-title">{entry.title}</h1>
         </div>
       </div>
@@ -326,7 +323,7 @@ export function BlogIndex({ entries, t }: { entries: ContentEntry[]; t: (key: st
 
   return (
     <div className="tb-entry tb-standalone tb-blog-index">
-      <p className="tb-eyebrow">Journal</p>
+      <p className="tb-eyebrow">{t('label.journal')}</p>
       <h1 className="tb-entry-title">{t('nav.blog')}</h1>
       <p className="tb-entry-description">{t('blog.intro')}</p>
       <div className="tb-tag-row">
@@ -422,7 +419,7 @@ export function ComponentsIndex({
 }) {
   return (
     <div className="tb-entry tb-standalone tb-components-index">
-      <p className="tb-eyebrow">Gallery</p>
+      <p className="tb-eyebrow">{t('label.gallery')}</p>
       <h1 className="tb-entry-title">{t('nav.components')}</h1>
       <p className="tb-entry-description">{t('components.description')}</p>
       <div className="tb-component-grid">

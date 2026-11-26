@@ -7,6 +7,18 @@
  */
 import { type ComponentType, createContext, type ReactNode, useContext, useMemo } from 'react'
 import {
+  BrandMark,
+  type BrandMarkProps,
+  LocaleSwitcher,
+  type LocaleSwitcherProps,
+  Nav,
+  type NavProps,
+  SearchTrigger,
+  type SearchTriggerProps,
+  ThemeSwitcher,
+  type ThemeSwitcherProps,
+} from './header-slots.js'
+import {
   BackToTop,
   Breadcrumbs,
   DocShell,
@@ -35,6 +47,16 @@ import {
 import { SearchDialog, type SearchDialogProps } from './SearchDialog.js'
 
 export interface ThemeSlots {
+  /** Brand glyph at the left of the header. */
+  BrandMark: ComponentType<BrandMarkProps>
+  /** Primary navigation links. */
+  Nav: ComponentType<NavProps>
+  /** Theme / color mode controls. */
+  ThemeSwitcher: ComponentType<ThemeSwitcherProps>
+  /** Locale selector. */
+  LocaleSwitcher: ComponentType<LocaleSwitcherProps>
+  /** Header search button. */
+  SearchTrigger: ComponentType<SearchTriggerProps>
   /** Site header, including brand, nav and controls. */
   Header: ComponentType<HeaderProps>
   /** Site footer. */
@@ -71,6 +93,11 @@ export interface ThemeSlots {
 
 /** Built-in defaults; every key has an implementation. */
 export const defaultThemeSlots: ThemeSlots = {
+  BrandMark,
+  Nav,
+  ThemeSwitcher,
+  LocaleSwitcher,
+  SearchTrigger,
   Header: SiteHeader,
   Footer: SiteFooter,
   Sidebar,

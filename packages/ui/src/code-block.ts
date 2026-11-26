@@ -214,8 +214,15 @@ export function enhanceCodeBlocks(root: HTMLElement, options: CodeBlockOptions):
     actions.appendChild(copy)
     toolbar.appendChild(actions)
 
-    block.parentNode?.insertBefore(toolbar, block)
-    cleanups.push(() => toolbar.remove())
+    const parent = block.parentNode
+    if (!parent) return
+    const wrapper = document.createElement('div')
+    wrapper.className = 'tb-code-block'
+    parent.insertBefore(wrapper, block)
+    wrapper.append(toolbar, block)
+    cleanups.push(() => {
+      wrapper.remove()
+    })
   })
 
   return () => {

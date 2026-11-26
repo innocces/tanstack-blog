@@ -41,6 +41,13 @@ const staticBootScript = {
     __html: themeInitScript('system', config.theme.storeKey, allThemes, config.theme.default),
   },
 }
+/** Redirect unprefixed URLs to the persisted locale before the app boots. */
+const localeBootScript = {
+  dangerouslySetInnerHTML: {
+    __html: `(function(){try{var k=${JSON.stringify(config.theme.storeKey)};var s=JSON.parse(localStorage.getItem(k)||'null');var l=s&&s.locale;var d=${JSON.stringify(config.i18n.defaultLocale)};var p=location.pathname;if(l&&l!==d&&!new RegExp('^/'+l+'($|/)').test(p)){location.replace('/'+l+(p==='/'?'':p)+location.search+location.hash)}}catch(e){}})()`,
+  },
+}
+
 const highlightStyle = {
   dangerouslySetInnerHTML: { __html: highlightCss },
 }
@@ -65,6 +72,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang={config.i18n.defaultLocale} suppressHydrationWarning>
       <head>
+        <script {...localeBootScript} />
         <script {...staticBootScript} />
         <style {...highlightStyle} />
         <HeadContent />
@@ -95,7 +103,7 @@ function AppChrome({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeProvider store={store} themes={allThemes} storageKey={config.theme.storeKey}>
-      <ClientNav />
+      <ClientNav store={store} config={config} />
       <BackToTop />
       <div className="tb-app">
         <Header

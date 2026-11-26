@@ -55,18 +55,30 @@ function ContentRoute() {
   const { _splat = '' } = Route.useParams()
   const segments = _splat.split('/').filter(Boolean)
 
-  let locale = config.i18n.defaultLocale
-  let rest = segments
-  if (segments[0] && config.i18n.locales.some((item) => item.code === segments[0])) {
-    locale = segments[0]!
-    rest = segments.slice(1)
-  }
+  const urlLocale = config.i18n.locales.find((item) => item.code === segments[0])
+  const hasLocalePrefix = Boolean(urlLocale)
+  const locale = urlLocale?.code ?? config.i18n.defaultLocale
+  const rest = hasLocalePrefix ? segments.slice(1) : segments
 
   useEffect(() => {
-    if (store.state.locale !== locale) store.setState((state) => ({ ...state, locale }))
-    const definition = config.i18n.locales.find((item) => item.code === locale)
+    // A stored locale wins on unprefixed URLs, so language survives a reload.
+    let desired = locale
+    if (!hasLocalePrefix) {
+      try {
+        const stored = JSON.parse(window.localStorage.getItem(config.theme.storeKey) ?? 'null') as {
+          locale?: string
+        } | null
+        if (stored?.locale && config.i18n.locales.some((item) => item.code === stored.locale)) {
+          desired = stored.locale
+        }
+      } catch {
+        // ignore malformed storage
+      }
+    }
+    if (store.state.locale !== desired) store.setState((state) => ({ ...state, locale: desired }))
+    const definition = config.i18n.locales.find((item) => item.code === desired)
     document.documentElement.dir = definition?.dir ?? 'ltr'
-  }, [locale])
+  }, [hasLocalePrefix, locale, router])
 
   const t = createTranslator(locale)
   const fullRoute = `${localePrefix(config, locale)}/${rest.join('/')}`.replace(/\/$/, '') || '/'
