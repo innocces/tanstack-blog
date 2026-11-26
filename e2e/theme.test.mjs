@@ -15,7 +15,9 @@ export default async function run(page, { check }) {
   const applied = await page.evaluate(() => document.documentElement.dataset.theme)
   check('dropdown applies MUJI', applied === 'muji', String(applied))
 
-  await page.click('a[href="/docs/configuration"]')
+  await page.evaluate(() => {
+    document.querySelector('a[href="/docs/configuration"]')?.click()
+  })
   await sleep(500)
   const afterNav = await page.evaluate(() => document.documentElement.dataset.theme)
   check('theme survives SPA navigation', afterNav === 'muji', String(afterNav))

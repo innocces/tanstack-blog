@@ -20,10 +20,14 @@ export function createChecker(suite) {
 }
 
 export async function startServer() {
-  const server = spawn('pnpm', ['dev'], {
-    cwd: new URL('../apps/docs', import.meta.url).pathname,
-    stdio: 'ignore',
-  })
+  const server = spawn(
+    process.execPath,
+    ['node_modules/vite/bin/vite.js', 'dev', '--port', '3000', '--strictPort'],
+    {
+      cwd: new URL('../apps/docs', import.meta.url).pathname,
+      stdio: 'ignore',
+    },
+  )
   for (let i = 0; i < 60; i += 1) {
     try {
       const response = await fetch(BASE)

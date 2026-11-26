@@ -50,6 +50,22 @@ export default async function run(page, { check }) {
   check('props table generated from TSDoc', rows >= 3, `${rows} rows`)
   check('live ui example rendered', (await page.$('.tb-demo-frame')) !== null)
 
+  // Code toolbar and code share one aligned container.
+  await page.goto(`${BASE}/docs/getting-started`, { waitUntil: 'networkidle0' })
+  const aligned = await page.evaluate(() => {
+    const bar = document.querySelector('.tb-code-toolbar')
+    const code = bar?.nextElementSibling
+    if (!bar || !code) return null
+    const a = bar.getBoundingClientRect()
+    const b = code.getBoundingClientRect()
+    return { left: Math.abs(a.left - b.left), right: Math.abs(a.right - b.right) }
+  })
+  check(
+    'code toolbar aligned with code',
+    aligned !== null && aligned.left < 1 && aligned.right < 1,
+    JSON.stringify(aligned),
+  )
+
   // Package-manager tabs and playground actions.
   await page.goto(`${BASE}/docs/cli`, { waitUntil: 'networkidle0' })
   const tabs = await page.$$eval('.tb-code-tabs', (nodes) => nodes.length)

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /** Run each feature suite in its own page against one dev server. */
-import { createChecker, launchBrowser, startServer } from './helpers.mjs'
+import { BASE, createChecker, launchBrowser, startServer } from './helpers.mjs'
 
 const suites = [
   ['routes', './routes.test.mjs'],
@@ -18,6 +18,9 @@ try {
   for (const [name, file] of suites) {
     const page = await browser.newPage()
     await page.setViewport({ width: 1440, height: 900 })
+    // Each suite starts from a clean storage state; suites must be independent.
+    await page.goto(BASE, { waitUntil: 'domcontentloaded' })
+    await page.evaluate(() => window.localStorage.clear())
     const checker = createChecker(name)
     const suite = await import(file)
     await suite.default(page, checker)
