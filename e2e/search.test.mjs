@@ -20,8 +20,8 @@ export default async function run(page, { check }) {
   await sleep(150)
   check('escape closes dialog', (await page.$('.tb-search-dialog')) === null)
 
-  await page.goto(`${BASE}/docs?search=1&q=deploy`, { waitUntil: 'networkidle0' })
+  await page.goto(`${BASE}/docs?search=1&q=architecture`, { waitUntil: 'networkidle0' })
   await sleep(400)
   const deepHits = await page.$$eval('.tb-search-result', (nodes) => nodes.length)
-  check('deep-linked search pre-fills query', deepHits > 0, `${deepHits} hits`)
+  check('wiki pages are searchable', deepHits > 0, `${deepHits} hits`)
 }

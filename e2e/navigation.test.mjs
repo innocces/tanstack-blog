@@ -60,6 +60,37 @@ export default async function run(page, { check }) {
   )
   check('code playground actions', actions > 0, `${actions} actions`)
 
+  // Roadmap and other docs share the same reading-column width.
+  await page.goto(`${BASE}/docs/roadmap`, { waitUntil: 'networkidle0' })
+  const roadmapWidth = await page.$eval('.tb-main', (node) =>
+    Math.round(node.getBoundingClientRect().width),
+  )
+  await page.goto(`${BASE}/docs/getting-started`, { waitUntil: 'networkidle0' })
+  const docsWidth = await page.$eval('.tb-main', (node) =>
+    Math.round(node.getBoundingClientRect().width),
+  )
+  check('roadmap width matches docs', roadmapWidth === docsWidth, `${roadmapWidth} vs ${docsWidth}`)
+
+  // Brand mark is visible (icon color differs from its background).
+  const mark = await page.evaluate(() => {
+    const node = document.querySelector('.tb-brand-mark')
+    return node
+      ? { color: getComputedStyle(node).color, bg: getComputedStyle(node).backgroundColor }
+      : null
+  })
+  check(
+    'brand mark has contrasting glyph',
+    mark !== null && mark.color !== mark.bg,
+    JSON.stringify(mark),
+  )
+
+  // Y2K keeps restrained radii even on the search dialog.
+  await page.goto(`${BASE}/docs?theme=y2k&search=1&q=theme`, { waitUntil: 'networkidle0' })
+  const radius = await page.$eval('.tb-search-dialog', (node) =>
+    parseFloat(getComputedStyle(node).borderRadius),
+  )
+  check('y2k dialog radius restrained', radius < 40, `${radius}px`)
+
   for (const name of ['sitemap.xml', 'rss.xml', 'llms.txt']) {
     const response = await fetch(`${BASE}/${name}`)
     check(`generated ${name}`, response.ok, String(response.status))

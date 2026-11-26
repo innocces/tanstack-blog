@@ -46,4 +46,21 @@ export default async function run(page, { check }) {
       'stripe-press',
     ),
   )
+
+  // Dark mode must still apply token changes from the header dropdown.
+  await page.goto(`${BASE}/docs/getting-started?mode=dark`, { waitUntil: 'networkidle0' })
+  const before = await page.evaluate(() =>
+    getComputedStyle(document.documentElement).getPropertyValue('--tb-bg').trim(),
+  )
+  await page.click('.tb-dropdown-trigger[aria-label="Theme"]')
+  await page.evaluate(() => {
+    ;[...document.querySelectorAll('[role="option"]')]
+      .find((node) => node.textContent?.includes('MUJI'))
+      ?.click()
+  })
+  await sleep(300)
+  const after = await page.evaluate(() =>
+    getComputedStyle(document.documentElement).getPropertyValue('--tb-bg').trim(),
+  )
+  check('dark-mode dropdown applies tokens', before !== after, `${before} -> ${after}`)
 }

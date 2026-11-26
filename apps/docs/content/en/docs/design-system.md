@@ -2,7 +2,7 @@
 title: Design System
 description: Tokens, typography, spacing and the TanStack-style icon set.
 group: Guides
-order: 5
+order: 7
 ---
 
 # Design System

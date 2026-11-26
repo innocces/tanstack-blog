@@ -13,6 +13,9 @@ export default async function run(page, { check }) {
     ['/themes', 'tb-theme-gallery'],
     ['/themes/linear', 'tb-theme-preview'],
     ['/videos', 'tb-video-card'],
+    ['/wiki', 'tb-wiki-page'],
+    ['/wiki/architecture', 'tb-wiki-page'],
+    ['/wiki/api', 'tb-wiki-page'],
     ['/zh-CN/docs/getting-started', '快速开始'],
     ['/this-route-does-not-exist', 'Page not found'],
   ]) {

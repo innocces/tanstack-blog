@@ -25,4 +25,8 @@ export default async function run(page, { check }) {
 
   const dir = await page.evaluate(() => document.documentElement.dir)
   check('direction set for locale', dir === 'ltr', dir)
+
+  await page.goto(`${BASE}/zh-CN`, { waitUntil: 'networkidle0' })
+  const hero = await page.$eval('.tb-hero-lead', (node) => node.textContent ?? '')
+  check('hero localized', /[\u4e00-\u9fff]/.test(hero), hero)
 }

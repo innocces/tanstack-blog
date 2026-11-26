@@ -22,7 +22,8 @@
     "api:generate": "node scripts/generate-ui-api.mjs",
     "registry:generate": "node scripts/generate-theme-registry.mjs",
     "test:visual": "node scripts/visual-regression.mjs",
-    "test:visual:update": "node scripts/visual-regression.mjs --update"
+    "test:visual:update": "node scripts/visual-regression.mjs --update",
+    "kb:generate": "node packages/cli/dist/index.js kb . wiki-generated"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.5",
