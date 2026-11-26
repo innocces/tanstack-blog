@@ -41,6 +41,10 @@ export interface PressTheme {
   name: string
   /** One-line description shown as a tooltip. */
   description: string
+  /** Chinese display name. */
+  nameZh?: string
+  /** Chinese description. */
+  descriptionZh?: string
   /** Design-school classification from the web-design-engineer recipe catalog. */
   school: DesignSchool
   /** Which color modes have hand-tuned tokens. */

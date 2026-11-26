@@ -4,6 +4,7 @@
 title: 搜索与国际化
 description: 配置离线搜索并发布第二种语言。
 order: 4
+updated: 2026-02-01
 ---
 
 # 搜索与国际化

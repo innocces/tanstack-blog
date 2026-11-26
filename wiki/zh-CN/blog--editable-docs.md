@@ -5,6 +5,7 @@ title: 在 GitHub 上也能读的文档
 description: 让同一份 Markdown 同时服务于站点与仓库 Wiki。
 date: 2026-01-28
 tags: [docs, workflow]
+updated: 2026-02-01
 ---
 
 # 在 GitHub 上也能读的文档

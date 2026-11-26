@@ -1,6 +1,7 @@
 /** Live token editor with preview, CSS export and one-click apply. */
 
 import { type PressTheme, type ThemeTokens, tokensToCssVariables } from '@tanstack-blog/core'
+import { localizedThemeName } from '@tanstack-blog/themes'
 import { useState } from 'react'
 import { Dropdown } from './Dropdown.js'
 import { IconCheck } from './icons.js'
@@ -26,9 +27,10 @@ export interface ThemeEditorProps {
   t: (key: string) => string
   /** Register the edited theme and activate it. */
   onApply: (theme: PressTheme) => void
+  locale?: string
 }
 
-export function ThemeEditor({ base, themes, t, onApply }: ThemeEditorProps) {
+export function ThemeEditor({ base, themes, t, onApply, locale = 'en' }: ThemeEditorProps) {
   const [sourceId, setSourceId] = useState(base.id)
   const [mode, setMode] = useState<'light' | 'dark'>('dark')
   const [tokens, setTokens] = useState<{ light: ThemeTokens; dark: ThemeTokens }>({
@@ -83,7 +85,10 @@ export function ThemeEditor({ base, themes, t, onApply }: ThemeEditorProps) {
           label={t('theme.allSchools')}
           value={sourceId}
           onChange={changeSource}
-          options={themes.map((theme) => ({ value: theme.id, label: theme.name }))}
+          options={themes.map((theme) => ({
+            value: theme.id,
+            label: localizedThemeName(theme, locale),
+          }))}
         />
         <div className="tb-mode-switch">
           {(['light', 'dark'] as const).map((value) => (

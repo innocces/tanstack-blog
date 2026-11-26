@@ -2,6 +2,7 @@
 title: Quickstart
 description: Create a site, add a page and verify it locally.
 order: 1
+updated: 2026-02-01
 ---
 
 # Quickstart

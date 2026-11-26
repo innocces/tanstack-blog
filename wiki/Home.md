@@ -3,6 +3,7 @@
 ---
 title: Home
 description: TanStack Blog — docs, blogs and component libraries on TanStack Start.
+updated: 2026-02-01
 ---
 
 # TanStack Blog

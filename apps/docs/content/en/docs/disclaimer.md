@@ -3,6 +3,7 @@ title: Disclaimer & Licenses
 description: What this framework is, what it is not, and the licenses of everything it uses.
 group: Reference
 order: 4
+updated: 2026-02-01
 ---
 
 # Disclaimer & Licenses

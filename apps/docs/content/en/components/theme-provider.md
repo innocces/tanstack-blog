@@ -3,6 +3,7 @@ title: Theme provider
 description: Applies tokens before hydration and persists choices.
 order: 10
 api: ThemeProviderProps
+updated: 2026-02-01
 ---
 
 # Theme provider

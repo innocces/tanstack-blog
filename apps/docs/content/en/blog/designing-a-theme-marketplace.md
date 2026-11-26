@@ -3,6 +3,7 @@ title: Designing a theme marketplace with nine colors
 description: How a small token contract makes 25 anchored design recipes interchangeable.
 date: 2026-02-11
 tags: [themes, design]
+updated: 2026-02-01
 ---
 
 # Designing a theme marketplace with nine colors

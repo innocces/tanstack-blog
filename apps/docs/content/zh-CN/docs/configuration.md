@@ -3,6 +3,7 @@ title: 配置
 description: app.config.ts 的全部选项与默认值。
 group: Getting Started
 order: 2
+updated: 2026-02-01
 ---
 
 # 配置

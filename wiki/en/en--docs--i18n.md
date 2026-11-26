@@ -5,6 +5,7 @@ title: Internationalization
 description: Locales, dictionaries, routing prefixes and right-to-left support.
 group: Fundamentals
 order: 4
+updated: 2026-02-01
 ---
 
 # Internationalization

@@ -2,6 +2,7 @@
 title: 提示块
 description: 由 TanStack Markdown 文档预设解析的提示组件。
 order: 1
+updated: 2026-02-01
 ---
 
 # 提示块

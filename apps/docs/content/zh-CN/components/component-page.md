@@ -3,6 +3,7 @@ title: 组件页面
 description: 带实时示例与 TSDoc 属性表的文档页。
 order: 10
 api: ComponentPageProps
+updated: 2026-02-01
 ---
 
 # 组件页面

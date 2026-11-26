@@ -5,6 +5,7 @@ title: Auto-Sniff & Knowledge Base
 description: Detect a project automatically and publish an LLM-free DeepWiki-style knowledge base.
 group: Guides
 order: 5
+updated: 2026-02-01
 ---
 
 # Auto-Sniff & Knowledge Base

@@ -3,6 +3,7 @@ title: 主题切换器
 description: 明暗模式与主题选择器。
 order: 10
 example: theme-switcher
+updated: 2026-02-01
 ---
 
 # 主题切换器

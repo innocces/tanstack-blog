@@ -5,6 +5,7 @@ title: 目录
 description: 右侧固定标题列表。
 order: 10
 example: toc
+updated: 2026-02-01
 ---
 
 # 目录

@@ -5,6 +5,7 @@ title: Architecture
 description: How the Vite plugin, content pipeline and UI layer fit together.
 group: Reference
 order: 1
+updated: 2026-02-01
 ---
 
 # Architecture

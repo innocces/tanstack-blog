@@ -5,6 +5,7 @@ title: GitHub Wiki
 description: 文档同步到仓库 Wiki。
 group: Guides
 order: 2
+updated: 2026-02-01
 ---
 
 # GitHub Wiki

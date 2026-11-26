@@ -615,6 +615,9 @@ importers:
       '@tanstack-blog/search':
         specifier: workspace:*
         version: link:../search
+      '@tanstack-blog/themes':
+        specifier: workspace:*
+        version: link:../themes
       '@tanstack/react-store':
         specifier: ^0.11.2
         version: 0.11.2(react-dom@19.3.1(react@19.3.1))(react@19.3.1)

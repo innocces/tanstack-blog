@@ -6,6 +6,7 @@ description: 用于替代原生 select 的无障碍自定义下拉菜单。
 order: 3
 api: DropdownProps
 example: dropdown
+updated: 2026-02-01
 ---
 
 # 下拉菜单

@@ -4,6 +4,7 @@
 title: Callout
 description: A highlighted note parsed by the TanStack Markdown docs preset.
 order: 1
+updated: 2026-02-01
 ---
 
 # Callout

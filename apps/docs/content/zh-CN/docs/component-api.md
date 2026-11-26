@@ -3,6 +3,7 @@ title: 组件 API 表格
 description: 从 ui 子包的多行 TSDoc 注释生成 dumi 式属性表。
 group: Guides
 order: 4
+updated: 2026-02-01
 ---
 
 # 组件 API 表格

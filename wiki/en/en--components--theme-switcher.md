@@ -5,6 +5,7 @@ title: Theme switcher
 description: Color mode and theme selector.
 order: 10
 example: theme-switcher
+updated: 2026-02-01
 ---
 
 # Theme switcher

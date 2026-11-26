@@ -3,6 +3,7 @@ title: 用九个颜色设计主题市场
 description: 一套小令牌契约如何让 25 套锚定设计配方可互换。
 date: 2026-02-11
 tags: [themes, design]
+updated: 2026-02-01
 ---
 
 # 用九个颜色设计主题市场

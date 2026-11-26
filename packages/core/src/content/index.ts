@@ -191,7 +191,7 @@ export async function collectContent(
       title: String(data.title ?? headings[0]?.text ?? path.basename(relative, '.md')),
       description,
       date: data.date ? String(data.date) : undefined,
-      updated: data.updated ? String(data.updated) : undefined,
+      updated: data.updated ? String(data.updated).slice(0, 10) : undefined,
       tags: toArray(data.tags),
       section,
       group: data.group ? String(data.group) : undefined,

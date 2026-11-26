@@ -3,6 +3,7 @@ title: Component page
 description: Doc page with live example and TSDoc props table.
 order: 10
 api: ComponentPageProps
+updated: 2026-02-01
 ---
 
 # Component page

@@ -2,6 +2,7 @@
 
 import { type PressConfig, type PressTheme, tokensToCssVariables } from '@tanstack-blog/core'
 import type { ContentEntry } from '@tanstack-blog/core/content/collection'
+import { localizedThemeDescription, localizedThemeName } from '@tanstack-blog/themes'
 import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from 'react'
 import { enhanceCodeBlocks } from './code-block.js'
 import { enhanceMarkdownComponents } from './components-enhance.js'
@@ -118,7 +119,11 @@ export function DocPage({ entry, prev, next, config, t }: DocPageProps) {
       <h1 className="tb-entry-title">{entry.title}</h1>
       {entry.description ? <p className="tb-entry-description">{entry.description}</p> : null}
       <Article entry={entry} sourceBase={config?.editUrlBase} />
-      {entry.updated ? <p className="tb-updated">Last updated: {entry.updated}</p> : null}
+      {entry.updated ? (
+        <p className="tb-updated">
+          {t('page.updated')}: {entry.updated}
+        </p>
+      ) : null}
       <Feedback entryId={entry.id} t={t} />
       {config.editUrlBase ? (
         <ExternalLink href={`${config.editUrlBase.replace(/\/$/, '')}/${entry.file}`}>
@@ -465,10 +470,12 @@ export function ThemeSample({
   theme,
   mode = 'dark',
   t,
+  locale = 'en',
 }: {
   theme: PressTheme
   mode?: 'light' | 'dark'
   t: (key: string) => string
+  locale?: string
 }) {
   const tokens = mode === 'dark' ? theme.dark : theme.light
   const cssVars = tokensToCssVariables(tokens) as Record<string, string>
@@ -478,7 +485,7 @@ export function ThemeSample({
     <div className="tb-theme-sample" style={cssVars as CSSProperties}>
       <div className="tb-preview-nav">
         <span className="tb-preview-brand">
-          <IconComponents /> {theme.name}
+          <IconComponents /> {localizedThemeName(theme, locale)}
         </span>
         <span>Docs</span>
         <span>Blog</span>
@@ -511,11 +518,13 @@ export function ThemeGallery({
   activeId,
   onSelect,
   t,
+  locale = 'en',
 }: {
   themes: PressTheme[]
   activeId: string
   onSelect: (id: string) => void
   t: (key: string) => string
+  locale?: string
 }) {
   const [query, setQuery] = useState('')
   const [school, setSchool] = useState('all')
@@ -586,7 +595,7 @@ export function ThemeGallery({
             <a
               href={`/themes/${theme.id}`}
               className="tb-theme-card-link"
-              aria-label={`Preview ${theme.name}`}
+              aria-label={`${t('theme.sample')} ${localizedThemeName(theme, locale)}`}
             >
               <span className="tb-theme-swatches">
                 <span style={{ background: theme.light.background }} />
@@ -597,9 +606,9 @@ export function ThemeGallery({
                 <span style={{ background: theme.dark.accent }} />
               </span>
               <span className="tb-theme-card-body">
-                <strong>{theme.name}</strong>
-                <small>{theme.school.replace(/-/g, ' ')}</small>
-                <span>{theme.description}</span>
+                <strong>{localizedThemeName(theme, locale)}</strong>
+                <small>{t(`school.${theme.school}`)}</small>
+                <span>{localizedThemeDescription(theme, locale)}</span>
               </span>
               <IconArrowUpRight />
             </a>
@@ -616,7 +625,7 @@ export function ThemeGallery({
                 type="button"
                 className="tb-theme-apply"
                 onClick={() => onSelect(theme.id)}
-                aria-label={`Apply ${theme.name}`}
+                aria-label={`${t('theme.apply')} ${localizedThemeName(theme, locale)}`}
               >
                 {t('theme.apply')}
               </button>
@@ -633,10 +642,12 @@ export function ThemeCompare({
   left,
   right,
   t,
+  locale = 'en',
 }: {
   left: PressTheme
   right: PressTheme
   t: (key: string) => string
+  locale?: string
 }) {
   const [mode, setMode] = useState<'light' | 'dark'>('dark')
   return (
@@ -659,12 +670,12 @@ export function ThemeCompare({
       </div>
       <div className="tb-compare-grid">
         <section>
-          <h2>{left.name}</h2>
-          <ThemeSample theme={left} mode={mode} t={t} />
+          <h2>{localizedThemeName(left, locale)}</h2>
+          <ThemeSample theme={left} mode={mode} t={t} locale={locale} />
         </section>
         <section>
-          <h2>{right.name}</h2>
-          <ThemeSample theme={right} mode={mode} t={t} />
+          <h2>{localizedThemeName(right, locale)}</h2>
+          <ThemeSample theme={right} mode={mode} t={t} locale={locale} />
         </section>
       </div>
     </div>
@@ -677,11 +688,13 @@ export function ThemePreviewPage({
   themes,
   onApply,
   t,
+  locale = 'en',
 }: {
   theme: PressTheme
   themes: PressTheme[]
   onApply: (id: string) => void
   t: (key: string) => string
+  locale?: string
 }) {
   const [mode, setMode] = useState<'light' | 'dark'>(() =>
     typeof window !== 'undefined' &&
@@ -707,8 +720,8 @@ export function ThemePreviewPage({
       <div className="tb-preview-heading">
         <div>
           <p className="tb-eyebrow">{theme.school.replace(/-/g, ' ')} preview</p>
-          <h1 className="tb-entry-title">{theme.name}</h1>
-          <p className="tb-entry-description">{theme.description}</p>
+          <h1 className="tb-entry-title">{localizedThemeName(theme, locale)}</h1>
+          <p className="tb-entry-description">{localizedThemeDescription(theme, locale)}</p>
         </div>
         <div className="tb-preview-actions">
           <div className="tb-mode-switch">
@@ -837,7 +850,7 @@ export function ThemePreviewPage({
           .map((item, index) => (
             <span key={item.id}>
               {index > 0 ? ' · ' : ''}
-              <a href={`/themes/${item.id}`}>{item.name}</a>
+              <a href={`/themes/${item.id}`}>{localizedThemeName(item, locale)}</a>
             </span>
           ))}
       </p>

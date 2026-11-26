@@ -5,6 +5,7 @@ title: Contributing
 description: Local development, workspace layout and the pull-request checklist.
 group: Community
 order: 1
+updated: 2026-02-01
 ---
 
 # Contributing

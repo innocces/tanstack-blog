@@ -8,12 +8,14 @@ export const Route = createFileRoute('/themes')({ component: ThemesPage })
 
 function ThemesPage() {
   const themeId = useStore(store, (state) => state.themeId)
+  const locale = useStore(store, (state) => state.locale)
   return (
     <ThemeGallery
       themes={allThemes}
       activeId={themeId}
       onSelect={(id) => store.setState((state) => ({ ...state, themeId: id }))}
       t={t}
+      locale={locale}
     />
   )
 }

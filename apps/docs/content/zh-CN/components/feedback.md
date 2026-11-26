@@ -4,6 +4,7 @@ description: 存储在 localStorage 中的轻量是/否反馈组件。
 order: 4
 api: FeedbackProps
 example: feedback
+updated: 2026-02-01
 ---
 
 # 页面反馈

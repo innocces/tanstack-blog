@@ -2,6 +2,7 @@
 title: 代码块
 description: 支持复制、命令切换与在线平台跳转的代码块。
 order: 2
+updated: 2026-02-01
 ---
 
 # 代码块

@@ -3,6 +3,7 @@ title: Design System
 description: Tokens, typography, spacing and the TanStack-style icon set.
 group: Guides
 order: 7
+updated: 2026-02-01
 ---
 
 # Design System

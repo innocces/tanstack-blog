@@ -5,6 +5,7 @@ title: 主题市场
 description: 搜索、筛选、对比、预览、安装与导出 25 套主题预设。
 group: Fundamentals
 order: 5
+updated: 2026-02-01
 ---
 
 # 主题市场

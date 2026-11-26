@@ -3,6 +3,7 @@ title: Breadcrumbs
 description: Hierarchical navigation trail.
 order: 10
 example: breadcrumbs
+updated: 2026-02-01
 ---
 
 # Breadcrumbs

@@ -5,6 +5,7 @@ title: 搜索
 description: 独立搜索包、Orama 全文索引与本地回退。
 group: Fundamentals
 order: 3
+updated: 2026-02-01
 ---
 
 # 搜索

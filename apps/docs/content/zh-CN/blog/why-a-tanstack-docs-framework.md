@@ -3,6 +3,7 @@ title: 为什么要在 TanStack 之上构建文档框架？
 description: TanStack Markdown 解析得很漂亮，但一个文档站需要的远不止解析器。
 date: 2026-02-18
 tags: [tanstack, architecture]
+updated: 2026-02-01
 ---
 
 # 为什么要在 TanStack 之上构建文档框架？

@@ -5,6 +5,7 @@ title: Theme Marketplace
 description: Search, filter, compare, preview, install and export any of the 25 presets.
 group: Fundamentals
 order: 5
+updated: 2026-02-01
 ---
 
 # Theme Marketplace

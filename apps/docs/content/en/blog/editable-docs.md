@@ -3,6 +3,7 @@ title: Docs that work on GitHub, not just on the site
 description: Why the wiki mirror is a first-class output of the content pipeline.
 date: 2026-01-28
 tags: [docs, workflow]
+updated: 2026-02-01
 ---
 
 # Docs that work on GitHub, not just on the site

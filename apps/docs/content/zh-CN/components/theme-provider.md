@@ -3,6 +3,7 @@ title: 主题 Provider
 description: 水合前应用令牌并持久化选择。
 order: 10
 api: ThemeProviderProps
+updated: 2026-02-01
 ---
 
 # 主题 Provider

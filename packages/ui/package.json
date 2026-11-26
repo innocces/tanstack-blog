@@ -25,7 +25,8 @@
     "@tanstack/store": "^0.11.2",
     "@tanstack-blog/core": "workspace:*",
     "@tanstack-blog/search": "workspace:*",
-    "lz-string": "^1.5.0"
+    "lz-string": "^1.5.0",
+    "@tanstack-blog/themes": "workspace:*"
   },
   "peerDependencies": {
     "@tanstack/react-router": "^1.120.0",

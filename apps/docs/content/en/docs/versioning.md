@@ -3,6 +3,7 @@ title: Versioned Documentation
 description: Publish frozen versions alongside current docs with a header switcher.
 group: Guides
 order: 3
+updated: 2026-02-01
 ---
 
 # Versioned Documentation

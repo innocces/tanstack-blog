@@ -3,6 +3,7 @@ title: 免责声明与许可证
 description: 项目状态与第三方依赖。
 group: Reference
 order: 4
+updated: 2026-02-01
 ---
 
 # 免责声明与许可证

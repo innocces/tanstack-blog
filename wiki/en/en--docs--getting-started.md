@@ -5,6 +5,7 @@ title: Getting Started
 description: Create a docs, blog or component-library site in a few minutes.
 group: Getting Started
 order: 1
+updated: 2026-02-01
 ---
 
 # Getting Started

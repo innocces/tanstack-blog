@@ -6,6 +6,7 @@ description: Command-palette search with adapter injection.
 order: 10
 api: SearchDialogProps
 example: search-trigger
+updated: 2026-02-01
 ---
 
 # Search dialog

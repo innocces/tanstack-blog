@@ -3,6 +3,7 @@ title: CLI
 description: 交互式 TUI 脚手架与全部提示项。
 group: Getting Started
 order: 3
+updated: 2026-02-01
 ---
 
 # CLI

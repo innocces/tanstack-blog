@@ -4,6 +4,7 @@
 title: 内容与 Markdown
 description: 掌握 frontmatter、提示块、代码块与组件插槽。
 order: 2
+updated: 2026-02-01
 ---
 
 # 内容与 Markdown

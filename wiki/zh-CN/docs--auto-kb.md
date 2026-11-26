@@ -5,6 +5,7 @@ title: 自动嗅探与知识库
 description: 自动识别项目并生成无需 LLM 的 DeepWiki 式知识库。
 group: Guides
 order: 5
+updated: 2026-02-01
 ---
 
 # 自动嗅探与知识库

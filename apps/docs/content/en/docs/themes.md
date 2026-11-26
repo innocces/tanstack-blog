@@ -3,6 +3,7 @@ title: Themes
 description: The token contract, the 25 anchored presets and how to ship a theme plugin.
 group: Fundamentals
 order: 2
+updated: 2026-02-01
 ---
 
 # Themes

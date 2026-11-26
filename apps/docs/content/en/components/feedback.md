@@ -4,6 +4,7 @@ description: A lightweight yes/no page feedback widget persisted in localStorage
 order: 4
 api: FeedbackProps
 example: feedback
+updated: 2026-02-01
 ---
 
 # Feedback

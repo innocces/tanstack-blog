@@ -2,6 +2,7 @@
 title: Themes
 description: Author, preview, compare and export a theme.
 order: 3
+updated: 2026-02-01
 ---
 
 # Themes

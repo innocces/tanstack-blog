@@ -5,6 +5,7 @@ title: CLI
 description: The interactive TUI scaffolder and every prompt it asks.
 group: Getting Started
 order: 3
+updated: 2026-02-01
 ---
 
 # CLI

@@ -4,6 +4,7 @@
 title: Deployment
 description: Ship to Cloudflare and other Nitro presets.
 order: 5
+updated: 2026-02-01
 ---
 
 # Deployment

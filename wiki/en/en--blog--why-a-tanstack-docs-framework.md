@@ -5,6 +5,7 @@ title: Why a docs framework on top of TanStack?
 description: TanStack Markdown parses beautifully, but a documentation site needs more than a parser.
 date: 2026-02-18
 tags: [tanstack, architecture]
+updated: 2026-02-01
 ---
 
 # Why a docs framework on top of TanStack?

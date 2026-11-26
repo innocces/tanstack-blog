@@ -2,6 +2,7 @@
 title: Code Block
 description: Fenced code with file metadata and build-time syntax highlighting.
 order: 2
+updated: 2026-02-01
 ---
 
 # Code Block

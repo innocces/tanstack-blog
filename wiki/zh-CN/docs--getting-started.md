@@ -5,6 +5,7 @@ title: 快速开始
 description: 使用 TanStack Blog 创建文档、博客或组件库站点。
 group: Getting Started
 order: 1
+updated: 2026-02-01
 ---
 
 # 快速开始

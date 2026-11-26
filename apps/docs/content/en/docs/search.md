@@ -3,6 +3,7 @@ title: Search
 description: Standalone search packages, Orama indexing, local fallback and the command palette.
 group: Fundamentals
 order: 3
+updated: 2026-02-01
 ---
 
 # Search

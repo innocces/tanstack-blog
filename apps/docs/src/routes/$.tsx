@@ -52,6 +52,7 @@ function ContentRoute() {
     Sidebar: SidebarSlot,
     ThemePreviewPage: ThemePreviewPageSlot,
     ThemeCompare: ThemeCompareSlot,
+    ThemeGallery: ThemeGallerySlot,
     WikiPage: WikiPageSlot,
     Toc: TocSlot,
     Breadcrumbs: BreadcrumbsSlot,
@@ -119,6 +120,19 @@ function ContentRoute() {
     return <WikiPageSlot pages={wikiPages} activeId={page.id} t={t} />
   }
 
+  if (kind === 'themes' && rest.length === 1) {
+    const { ThemeGallery: GallerySlot } = slots
+    return (
+      <GallerySlot
+        themes={allThemes}
+        activeId={store.state.themeId}
+        locale={locale}
+        t={t}
+        onSelect={(id) => store.setState((state) => ({ ...state, themeId: id }))}
+      />
+    )
+  }
+
   if (kind === 'themes' && rest[1] === 'editor') {
     const base = getTheme('linear')!
     return (
@@ -126,6 +140,7 @@ function ContentRoute() {
         base={base}
         themes={allThemes}
         t={t}
+        locale={locale}
         onApply={(theme) => {
           const existing = allThemes.find((item) => item.id === theme.id)
           if (existing) Object.assign(existing, theme)
@@ -146,7 +161,7 @@ function ContentRoute() {
     const left = getTheme(params.get('a') ?? 'linear')
     const right = getTheme(params.get('b') ?? 'muji')
     if (!left || !right) return <NotFoundSlot />
-    return <ThemeCompareSlot left={left} right={right} t={t} />
+    return <ThemeCompareSlot left={left} right={right} t={t} locale={locale} />
   }
 
   // Dedicated preview route for every theme: /themes/<id>
@@ -158,6 +173,7 @@ function ContentRoute() {
         theme={theme}
         themes={allThemes}
         t={t}
+        locale={locale}
         onApply={(id) => {
           store.setState((state) => ({ ...state, themeId: id }))
           persistUiState(store, config.theme.storeKey)

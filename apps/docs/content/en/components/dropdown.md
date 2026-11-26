@@ -4,6 +4,7 @@ description: An accessible custom select used by the header instead of a native 
 order: 3
 api: DropdownProps
 example: dropdown
+updated: 2026-02-01
 ---
 
 # Dropdown

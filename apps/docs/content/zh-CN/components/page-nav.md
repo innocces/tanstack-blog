@@ -3,6 +3,7 @@ title: 翻页导航
 description: 上一篇/下一篇链接。
 order: 10
 example: page-nav
+updated: 2026-02-01
 ---
 
 # 翻页导航

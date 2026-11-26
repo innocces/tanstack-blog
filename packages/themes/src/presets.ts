@@ -14,6 +14,7 @@ import {
   type PressTheme,
   type ThemeTokens,
 } from '@tanstack-blog/core'
+import { themeZh } from './zh.js'
 
 type Mode = 'light' | 'dark'
 
@@ -86,9 +87,12 @@ function build(recipe: Recipe): PressTheme {
   const isLight = recipe.base === 'light'
   const native = toTokens(recipe.palette)
   const generated = toTokens(recipe.inverse ?? (isLight ? DARK_INVERSE : LIGHT_INVERSE))
+  const zh = themeZh[recipe.id]
   return defineTheme({
     id: recipe.id,
     name: recipe.name,
+    nameZh: zh?.name,
+    descriptionZh: zh?.description,
     school: recipe.school,
     description: recipe.description,
     modes: ['light', 'dark'],

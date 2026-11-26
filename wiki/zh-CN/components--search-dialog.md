@@ -6,6 +6,7 @@ description: 通过适配器注入的命令面板搜索。
 order: 10
 api: SearchDialogProps
 example: search-trigger
+updated: 2026-02-01
 ---
 
 # 搜索面板

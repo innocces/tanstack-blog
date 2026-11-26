@@ -3,6 +3,7 @@ title: Locale switcher
 description: Language dropdown that preserves the current route.
 order: 10
 example: locale-switcher
+updated: 2026-02-01
 ---
 
 # Locale switcher

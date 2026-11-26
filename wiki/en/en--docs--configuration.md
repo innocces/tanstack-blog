@@ -5,6 +5,7 @@ title: Configuration
 description: Every option in app.config.ts, with defaults and when to change it.
 group: Getting Started
 order: 2
+updated: 2026-02-01
 ---
 
 # Configuration

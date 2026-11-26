@@ -51,6 +51,30 @@ export default async function run(page, { check }) {
     'header title localized',
     (await page.$eval('.tb-brand span', (node) => node.textContent ?? '')).includes('博客'),
   )
+  await page.goto(`${BASE}/zh-CN/docs/getting-started`, { waitUntil: 'networkidle0' })
+  const nav = await page.$$eval('.tb-main-nav a', (nodes) => nodes.map((node) => node.textContent))
+  check('nav localized', nav.includes('文档') && nav.includes('主题编辑器'), nav.join(','))
+  const updated = await page.$$eval('.tb-updated', (nodes) => nodes.map((node) => node.textContent))
+  check(
+    'last update localized',
+    updated.some((text) => text.includes('最后更新')),
+    updated.join(','),
+  )
+  const editLinks = await page.$$eval(
+    'a[href*="github.com/innocces/tanstack-blog/edit"]',
+    (nodes) => nodes.length,
+  )
+  check('edit link present', editLinks > 0, `${editLinks}`)
+  await page.goto(`${BASE}/zh-CN/themes`, { waitUntil: 'networkidle0' })
+  const names = await page.$$eval('.tb-theme-card-body strong', (nodes) =>
+    nodes.slice(0, 6).map((node) => node.textContent),
+  )
+  check(
+    'theme names localized',
+    names.some((name) => /[\u4e00-\u9fff]/.test(name ?? '')),
+    names.join(','),
+  )
+
   await page.goto(`${BASE}/zh-CN/tutorials/01-quickstart`, { waitUntil: 'networkidle0' })
   check(
     'tutorial has next link',

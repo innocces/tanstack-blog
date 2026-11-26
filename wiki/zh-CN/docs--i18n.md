@@ -5,6 +5,7 @@ title: 国际化
 description: 语言路由、字典与 RTL 支持。
 group: Fundamentals
 order: 4
+updated: 2026-02-01
 ---
 
 # 国际化

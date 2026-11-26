@@ -5,6 +5,7 @@ title: 面包屑
 description: 层级导航路径。
 order: 10
 example: breadcrumbs
+updated: 2026-02-01
 ---
 
 # 面包屑

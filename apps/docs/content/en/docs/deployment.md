@@ -3,6 +3,7 @@ title: Deployment
 description: Cloudflare, Vercel, Netlify, Node, Docker and other Nitro presets.
 group: Guides
 order: 1
+updated: 2026-02-01
 ---
 
 # Deployment

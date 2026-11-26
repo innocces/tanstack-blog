@@ -5,6 +5,7 @@ title: 架构
 description: Vite 插件、内容管线与 UI 层。
 group: Reference
 order: 1
+updated: 2026-02-01
 ---
 
 # 架构

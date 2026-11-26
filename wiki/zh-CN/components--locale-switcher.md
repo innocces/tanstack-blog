@@ -5,6 +5,7 @@ title: 语言切换器
 description: 保留当前路由的语言下拉。
 order: 10
 example: locale-switcher
+updated: 2026-02-01
 ---
 
 # 语言切换器

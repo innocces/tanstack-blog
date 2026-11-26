@@ -3,6 +3,7 @@ title: Custom Theme Development
 description: "A dumi-inspired, layered theming system: tokens, slots, dictionaries and CSS."
 group: Guides
 order: 6
+updated: 2026-02-01
 ---
 
 # Custom Theme Development

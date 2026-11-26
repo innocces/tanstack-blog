@@ -3,6 +3,7 @@ title: Legacy API (v1.0)
 description: A page from the frozen v1.0 documentation set.
 group: Reference
 order: 1
+updated: 2026-02-01
 ---
 
 # Legacy API (v1.0)

@@ -5,6 +5,7 @@ title: 文档版本
 description: 与当前文档并存发布冻结版本，并在顶部切换。
 group: Guides
 order: 3
+updated: 2026-02-01
 ---
 
 # 文档版本

@@ -5,6 +5,7 @@ title: GitHub Wiki
 description: Keeping documentation readable both on the site and in the repository wiki.
 group: Guides
 order: 2
+updated: 2026-02-01
 ---
 
 # GitHub Wiki

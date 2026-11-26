@@ -3,6 +3,7 @@ title: 自定义主题开发
 description: 借鉴 dumi 的分层主题体系：令牌、插槽、字典与 CSS。
 group: Guides
 order: 6
+updated: 2026-02-01
 ---
 
 # 自定义主题开发

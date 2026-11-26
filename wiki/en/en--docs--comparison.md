@@ -5,6 +5,7 @@ title: Feature Comparison
 description: What the leading docs platforms ship, and how TanStack Blog compares.
 group: Reference
 order: 3
+updated: 2026-02-01
 ---
 
 # Feature Comparison

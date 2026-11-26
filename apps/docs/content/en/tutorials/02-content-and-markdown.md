@@ -2,6 +2,7 @@
 title: Content & Markdown
 description: Master frontmatter, callouts, code fences and component slots.
 order: 2
+updated: 2026-02-01
 ---
 
 # Content & Markdown

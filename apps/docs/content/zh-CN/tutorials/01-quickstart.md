@@ -2,6 +2,7 @@
 title: 快速开始
 description: 五分钟内创建站点、添加页面并在本地验证。
 order: 1
+updated: 2026-02-01
 ---
 
 # 快速开始

@@ -3,6 +3,7 @@ title: 部署
 description: Cloudflare、Vercel、Netlify、Node 与 Docker。
 group: Guides
 order: 1
+updated: 2026-02-01
 ---
 
 # 部署

@@ -2,6 +2,7 @@
 title: 部署
 description: 发布到 Cloudflare 与其他 Nitro 预设。
 order: 5
+updated: 2026-02-01
 ---
 
 # 部署

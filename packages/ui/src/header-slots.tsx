@@ -1,6 +1,7 @@
 /** Header sub-components exposed as dumi-style slots. */
 import { useStore } from '@tanstack/react-store'
 import type { LocaleDefinition, PressConfig, PressTheme } from '@tanstack-blog/core'
+import { localizedThemeName } from '@tanstack-blog/themes'
 import { Dropdown } from './Dropdown.js'
 import {
   IconLanguages,
@@ -38,7 +39,7 @@ export function Nav({ config, t }: NavProps) {
       {config.nav.length
         ? config.nav.map((item) => (
             <a key={item.to} href={item.to} target={item.external ? '_blank' : undefined}>
-              {item.label}
+              {t(`nav.${item.label}`) === `nav.${item.label}` ? item.label : t(`nav.${item.label}`)}
             </a>
           ))
         : null}
@@ -57,6 +58,7 @@ export interface ThemeSwitcherProps {
 export function ThemeSwitcher({ store, themes, t, allowSwitch }: ThemeSwitcherProps) {
   const mode = useStore(store, (state) => state.mode)
   const themeId = useStore(store, (state) => state.themeId)
+  const locale = useStore(store, (state) => state.locale)
   return (
     <div className="tb-header-tools">
       <div className="tb-mode-switch">
@@ -84,7 +86,10 @@ export function ThemeSwitcher({ store, themes, t, allowSwitch }: ThemeSwitcherPr
           icon={<IconThemes />}
           value={themeId}
           onChange={(id) => store.setState((state) => ({ ...state, themeId: id }))}
-          options={themes.map((theme) => ({ value: theme.id, label: theme.name }))}
+          options={themes.map((theme) => ({
+            value: theme.id,
+            label: localizedThemeName(theme, locale),
+          }))}
         />
       ) : null}
     </div>

@@ -4,6 +4,7 @@
 title: Search & i18n
 description: Configure offline search and ship a second language.
 order: 4
+updated: 2026-02-01
 ---
 
 # Search & i18n

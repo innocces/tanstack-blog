@@ -5,6 +5,7 @@ title: Roadmap
 description: Shipped capabilities and what comes next.
 group: Reference
 order: 5
+updated: 2026-02-01
 ---
 
 # Roadmap

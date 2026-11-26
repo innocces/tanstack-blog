@@ -3,6 +3,7 @@ title: Component API Tables
 description: Generate dumi-style props tables from multiline TSDoc comments in the ui package.
 group: Guides
 order: 4
+updated: 2026-02-01
 ---
 
 # Component API Tables

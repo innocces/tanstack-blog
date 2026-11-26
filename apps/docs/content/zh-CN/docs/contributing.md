@@ -3,6 +3,7 @@ title: 参与贡献
 description: 本地开发与 PR 检查清单。
 group: Community
 order: 1
+updated: 2026-02-01
 ---
 
 # 参与贡献

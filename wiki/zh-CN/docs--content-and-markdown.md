@@ -5,6 +5,7 @@ title: 内容与 Markdown
 description: Frontmatter、文件约定与文档预设。
 group: Fundamentals
 order: 1
+updated: 2026-02-01
 ---
 
 # 内容与 Markdown

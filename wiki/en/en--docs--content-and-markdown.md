@@ -5,6 +5,7 @@ title: Content & Markdown
 description: Frontmatter, file conventions and the TanStack Markdown docs preset.
 group: Fundamentals
 order: 1
+updated: 2026-02-01
 ---
 
 # Content & Markdown

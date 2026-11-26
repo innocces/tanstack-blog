@@ -5,6 +5,7 @@ title: Page navigation
 description: Previous / next page links.
 order: 10
 example: page-nav
+updated: 2026-02-01
 ---
 
 # Page navigation
