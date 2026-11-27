@@ -96,6 +96,8 @@ pnpm video:record        # 录制真实 CLI 会话为 MP4
 pnpm api:generate        # TSDoc -> 属性表
 pnpm registry:generate   # 重新生成主题注册表
 pnpm kb:generate         # 重新生成知识库
+pnpm exec create-tanstack-blog doctor   # 项目健康检查
+pnpm exec create-tanstack-blog hooks all # 生成 lefthook/husky/lint-staged 钩子
 pnpm deploy:cloudflare   # 通过 Nitro 部署
 ```
 

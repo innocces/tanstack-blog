@@ -21,6 +21,28 @@ pnpm dlx @tanstack-blog/cli my-docs
 
 项目名称、包管理器、内容模式（多选）、默认主题、语言（多选）、搜索后端、部署目标、是否初始化 git。按 `Ctrl+C` 随时取消。
 
+## 健康检查
+
+```sh
+pnpm exec create-tanstack-blog doctor
+pnpm exec create-tanstack-blog doctor --quick   # 适合 pre-commit 钩子
+```
+
+Doctor 检查 Node 版本、锁文件、必需文件、`.demand` 隔离、内容数量、中英对齐与框架依赖。在 monorepo 中会自动识别 `apps/docs` 为应用根目录。出现硬性失败时返回非零退出码，可用于 CI 或钩子拦截。
+
+## Git 钩子
+
+为三种主流工具生成可直接使用的钩子：
+
+```sh
+pnpm exec create-tanstack-blog hooks lefthook
+pnpm exec create-tanstack-blog hooks husky
+pnpm exec create-tanstack-blog hooks lint-staged
+pnpm exec create-tanstack-blog hooks all
+```
+
+生成器会写入配置文件、添加 `scripts.doctor`、安装对应 devDependency（lefthook 还会添加 `postinstall`）。Lefthook 在提交时运行 `pnpm check` 与快速 doctor；husky 通过 `.husky/pre-commit` 执行同样检查；lint-staged 用 Biome 格式化暂存的 `ts/tsx/js/jsx/json/css/md` 文件。
+
 ## 工具命令
 
 同一个二进制还提供维护工具，文档中无需出现裸的 `node scripts/...` 命令：

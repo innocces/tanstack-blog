@@ -97,6 +97,8 @@ pnpm video:record        # record real CLI sessions to MP4
 pnpm api:generate        # TSDoc -> props tables
 pnpm registry:generate   # regenerate theme registry
 pnpm kb:generate         # regenerate the knowledge base
+pnpm exec create-tanstack-blog doctor   # project health check
+pnpm exec create-tanstack-blog hooks all # generate lefthook/husky/lint-staged hooks
 pnpm deploy:cloudflare   # deploy via Nitro
 ```
 

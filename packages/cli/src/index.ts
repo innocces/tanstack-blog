@@ -17,6 +17,7 @@ import {
 } from '@clack/prompts'
 import { buildKnowledgeBase, sniffProject } from '@tanstack-blog/kb'
 import * as c from 'kolorist'
+import { doctor, hooks } from './doctor.js'
 import { projectFiles, type ScaffoldOptions } from './templates.js'
 
 const PM_CHOICES = [
@@ -59,6 +60,24 @@ function banner() {
   )
   console.log(`  ${c.dim('Docs, blogs and component libraries on TanStack Start.')}`)
   console.log('')
+}
+
+/** Command surface; keeps the CLI discoverable without external docs. */
+function help() {
+  console.log(`
+  ${c.bold(c.cyan('create-tanstack-blog'))} ${c.dim('— TanStack Blog project tooling')}
+
+  ${c.bold('Usage')}
+    create-tanstack-blog [project-name]       Interactive project scaffolder
+    create-tanstack-blog doctor [dir]         Check project health (--quick for hooks)
+    create-tanstack-blog hooks [tool] [dir]   Generate git hooks: lefthook | husky | lint-staged | all
+    create-tanstack-blog sniff [dir]          Auto-detect an existing repository
+    create-tanstack-blog kb [dir] [out]       Generate the LLM-free knowledge base
+    create-tanstack-blog create-theme <id>    Scaffold a theme plugin package
+    create-tanstack-blog run <name>           Run a maintenance script (api, registry, themes, visual, release…)
+    create-tanstack-blog help                 Show this help
+    create-tanstack-blog --version            Print version
+`)
 }
 
 /** Print a numbered stage label before a prompt. */
@@ -165,12 +184,38 @@ async function runUtility(command: string): Promise<boolean> {
 }
 
 async function main() {
-  if (process.argv[2] === 'run' && runScript(process.argv[3] ?? '')) return
+  const command = process.argv[2] ?? ''
+  if (command === 'help' || command === '--help' || command === '-h') {
+    help()
+    return
+  }
+  if (command === '--version' || command === '-v') {
+    console.log('0.1.0')
+    return
+  }
+  if (command === 'doctor') {
+    const exitCode = await doctor(
+      path.resolve(process.argv[3] ?? process.cwd()),
+      process.argv.includes('--quick'),
+    )
+    if (exitCode) process.exitCode = exitCode
+    return
+  }
+  if (command === 'hooks') {
+    await hooks(process.argv[3] ?? 'all', path.resolve(process.argv[4] ?? process.cwd()))
+    return
+  }
+  if (command === 'run' && runScript(process.argv[3] ?? '')) return
   if (process.argv[2] === 'create-theme' && process.argv[3]) {
     await createTheme(process.argv[3])
     return
   }
-  if (await runUtility(process.argv[2] ?? '')) return
+  if (await runUtility(command)) return
+  if (command && !command.startsWith('-')) {
+    console.error(c.red(`Unknown command: ${command}`))
+    help()
+    process.exit(1)
+  }
   banner()
   intro(c.bold('Let’s build something delightful.'))
 

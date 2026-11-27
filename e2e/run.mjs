@@ -8,6 +8,7 @@ const suites = [
   ['i18n', './i18n.test.mjs'],
   ['search', './search.test.mjs'],
   ['navigation', './navigation.test.mjs'],
+  ['cli', './cli.test.mjs'],
 ]
 
 const server = await startServer()
