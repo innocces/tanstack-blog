@@ -24,7 +24,8 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "@tanstack-blog/orama-search": "workspace:*",
-    "@tanstack-blog/search": "workspace:*"
+    "@tanstack-blog/search": "workspace:*",
+    "@tanstack-blog/algolia-search": "workspace:*"
   },
   "devDependencies": {
     "@tanstack/router-plugin": "^1.169.0",

@@ -88,7 +88,25 @@ function ContentRoute() {
   }, [activeVersion, hasLocalePrefix, locale])
 
   const t = createTranslator(locale)
-  const fullRoute = `${localePrefix(config, locale)}/${rest.join('/')}`.replace(/\/$/, '') || '/'
+  const routeTail = rest.join('/')
+  const fullRoute = `${localePrefix(config, locale)}/${routeTail}`.replace(/\/$/, '') || '/'
+
+  useEffect(() => {
+    if (!config.siteUrl) return
+    document.querySelectorAll('link[data-tb-hreflang]').forEach((node) => {
+      node.remove()
+    })
+    for (const item of config.i18n.locales) {
+      const prefix = localePrefix(config, item.code)
+      const href = `${config.siteUrl.replace(/\/$/, '')}${prefix}/${routeTail}`.replace(/\/$/, '')
+      const link = document.createElement('link')
+      link.rel = 'alternate'
+      link.hreflang = item.code
+      link.href = href
+      link.dataset.tbHreflang = 'true'
+      document.head.appendChild(link)
+    }
+  }, [routeTail])
   const entry = content.get(fullRoute, locale)
   useEffect(() => {
     if (entry) {

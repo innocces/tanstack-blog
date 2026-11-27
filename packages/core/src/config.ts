@@ -36,7 +36,9 @@ const themeSchema = z.object({
 
 const searchSchema = z.object({
   /** `orama` builds an in-memory index, `local` is a dependency-free substring search. */
-  provider: z.enum(['orama', 'local', 'none']).default('orama'),
+  provider: z.enum(['orama', 'local', 'algolia', 'none']).default('orama'),
+  /** Algolia credentials, used when provider is `algolia`. */
+  algolia: z.object({ appId: z.string(), apiKey: z.string(), indexName: z.string() }).optional(),
   /** Placeholder text inside the command palette. */
   placeholder: z.string().default('Search documentation…'),
   /** Keyboard shortcut used to open search (display only). */

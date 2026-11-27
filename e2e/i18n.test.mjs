@@ -75,6 +75,15 @@ export default async function run(page, { check }) {
     names.join(','),
   )
 
+  const hreflang = await page.$$eval('link[hreflang]', (nodes) =>
+    nodes.map((node) => node.getAttribute('hreflang')),
+  )
+  check(
+    'hreflang links emitted',
+    hreflang.includes('en') && hreflang.includes('zh-CN'),
+    hreflang.join(','),
+  )
+
   await page.goto(`${BASE}/zh-CN/tutorials/01-quickstart`, { waitUntil: 'networkidle0' })
   check(
     'tutorial has next link',

@@ -59,6 +59,7 @@ export function SearchDialog({ store, adapter, config, t, onNavigate }: SearchDi
   const [query, setQuery] = useState('')
   const [hits, setHits] = useState<SearchHit[]>([])
   const [active, setActive] = useState(0)
+  const [section, setSection] = useState('all')
   const [recent, setRecent] = useState<string[]>(() => {
     if (typeof window === 'undefined') return []
     try {
@@ -182,6 +183,26 @@ export function SearchDialog({ store, adapter, config, t, onNavigate }: SearchDi
           </button>
         </div>
 
+        <div className="tb-search-sections">
+          <button
+            type="button"
+            className={section === 'all' ? 'is-active' : ''}
+            onClick={() => setSection('all')}
+          >
+            {t('search.allSections')}
+          </button>
+          {[...new Set(hits.map((hit) => hit.section))].map((value) => (
+            <button
+              key={value}
+              type="button"
+              className={section === value ? 'is-active' : ''}
+              onClick={() => setSection(value)}
+            >
+              {value}
+            </button>
+          ))}
+        </div>
+
         <div className="tb-search-results">
           {!query && recent.length ? (
             <div className="tb-search-recent">
@@ -196,25 +217,27 @@ export function SearchDialog({ store, adapter, config, t, onNavigate }: SearchDi
           {query && hits.length === 0 ? (
             <p className="tb-search-empty">{t('search.noResults')}</p>
           ) : (
-            hits.map((hit, index) => (
-              <button
-                key={hit.id}
-                type="button"
-                className={`tb-search-result${index === active ? ' is-active' : ''}`}
-                onMouseEnter={() => setActive(index)}
-                onClick={() => navigate(hit)}
-              >
-                <span className="tb-search-result-section">{hit.section}</span>
-                <span className="tb-search-result-title">
-                  <Highlight text={hit.title} term={query} />
-                </span>
-                {hit.description ? (
-                  <span className="tb-search-result-desc">
-                    <Highlight text={hit.description} term={query} />
+            hits
+              .filter((hit) => section === 'all' || hit.section === section)
+              .map((hit, index) => (
+                <button
+                  key={hit.id}
+                  type="button"
+                  className={`tb-search-result${index === active ? ' is-active' : ''}`}
+                  onMouseEnter={() => setActive(index)}
+                  onClick={() => navigate(hit)}
+                >
+                  <span className="tb-search-result-section">{hit.section}</span>
+                  <span className="tb-search-result-title">
+                    <Highlight text={hit.title} term={query} />
                   </span>
-                ) : null}
-              </button>
-            ))
+                  {hit.description ? (
+                    <span className="tb-search-result-desc">
+                      <Highlight text={hit.description} term={query} />
+                    </span>
+                  ) : null}
+                </button>
+              ))
           )}
         </div>
 

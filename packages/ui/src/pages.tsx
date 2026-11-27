@@ -21,7 +21,15 @@ import {
 import { Breadcrumbs, ExternalLink, PageNav, Toc } from './layout.js'
 
 /** Build-time rendered Markdown injected as HTML; TanStack Markdown escapes raw HTML by default. */
-export function Article({ entry, sourceBase }: { entry: ContentEntry; sourceBase?: string }) {
+export function Article({
+  entry,
+  sourceBase,
+  t,
+}: {
+  entry: ContentEntry
+  sourceBase?: string
+  t?: (key: string) => string
+}) {
   const root = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -29,8 +37,26 @@ export function Article({ entry, sourceBase }: { entry: ContentEntry; sourceBase
     if (!element || !entry.html) return
     enhanceCodeBlocks(element, { sourceBase, file: entry.file })
     enhanceMarkdownComponents(element)
+    element.querySelectorAll('a.heading-anchor').forEach((anchor) => {
+      anchor.setAttribute('title', t?.('page.copyLink') ?? 'Copy link')
+      anchor.addEventListener('click', async (event) => {
+        event.preventDefault()
+        const hash = anchor.getAttribute('href') ?? ''
+        try {
+          await navigator.clipboard.writeText(
+            `${window.location.origin}${window.location.pathname}${hash}`,
+          )
+          anchor.textContent = '✓'
+        } catch {
+          anchor.textContent = '!'
+        }
+        window.setTimeout(() => {
+          anchor.textContent = '#'
+        }, 1400)
+      })
+    })
     return undefined
-  }, [entry.file, entry.html, sourceBase])
+  }, [entry.file, entry.html, sourceBase, t])
 
   // Build-time TanStack Markdown escapes raw HTML; keep the injected value out of JSX lint.
   const htmlProps = { dangerouslySetInnerHTML: { __html: entry.html } }
@@ -118,7 +144,7 @@ export function DocPage({ entry, prev, next, config, t }: DocPageProps) {
       />
       <h1 className="tb-entry-title">{entry.title}</h1>
       {entry.description ? <p className="tb-entry-description">{entry.description}</p> : null}
-      <Article entry={entry} sourceBase={config?.editUrlBase} />
+      <Article entry={entry} sourceBase={config?.editUrlBase} t={t} />
       {entry.updated ? (
         <p className="tb-updated">
           {t('page.updated')}: {entry.updated}
@@ -221,7 +247,7 @@ export function ComponentPage({
           {example}
         </section>
       ) : null}
-      <Article entry={entry} sourceBase={sourceBase} />
+      <Article entry={entry} sourceBase={sourceBase} t={t} />
       {api ? (
         <section className="tb-api-section">
           <h2>
@@ -410,7 +436,7 @@ export function BlogPost({
           <IconClock /> {entry.readingTime} {t('blog.readingTime')}
         </span>
       </div>
-      <Article entry={entry} sourceBase={sourceBase} />
+      <Article entry={entry} sourceBase={sourceBase} t={t} />
       {related.length ? (
         <section className="tb-related-posts">
           <h2>{t('blog.related')}</h2>

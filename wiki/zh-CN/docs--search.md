@@ -12,6 +12,15 @@ updated: 2026-02-01
 
 搜索是独立包，核心框架不含搜索实现。
 
+对于已在使用 Algolia 的团队，还提供 `@tanstack-blog/algolia-search` 适配器：
+
+```ts
+provider: 'algolia',
+algolia: { appId, apiKey, indexName },
+```
+
+记录需包含 `title`、`description`、`section`、`locale`、`route` 字段；结果按当前语言做 facet 过滤。
+
 ## 包结构
 
 - `@tanstack-blog/search`：共享契约与默认本地适配器
@@ -38,6 +47,8 @@ const adapter = createOramaSearchAdapter(searchData)
 ```
 
 Orama 适配器在首次查询时延迟建索引，字段权重为 title ×3、description ×2、content ×1。
+
+结果上方提供板块筛选（docs、blog、components、wiki）。筛选是本地 UI 状态，不写入 URL。
 
 ## 结果高亮
 

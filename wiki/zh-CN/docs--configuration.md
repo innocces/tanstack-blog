@@ -31,6 +31,8 @@ export default defineConfig({
 })
 ```
 
+`analytics.provider` 支持 `none`、`plausible`、`umami`、`custom`。Plausible 与 Umami 需设置 `domain`（站点域名 / website id），框架会注入脚本；`custom` 只在 `<body>` 上暴露 `data-analytics-*` 钩子。
+
 ## 顶层选项
 
 | 选项 | 默认值 | 用途 |

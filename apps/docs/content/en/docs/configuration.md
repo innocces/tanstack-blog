@@ -63,6 +63,8 @@ export default defineConfig({
 })
 ```
 
+`analytics.provider` supports `none`, `plausible`, `umami` and `custom`. For Plausible and Umami, set `domain` to the site domain / website id; the framework emits the provider script. `custom` only exposes `data-analytics-*` hooks on `<body>`.
+
 ## Top-level options
 
 | Option | Type | Default | Purpose |

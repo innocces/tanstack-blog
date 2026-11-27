@@ -43,7 +43,8 @@
     "zod": "^4.1.0",
     "@tanstack-blog/search": "workspace:*",
     "@tanstack-blog/orama-search": "workspace:*",
-    "@tanstack-blog/kb": "workspace:*"
+    "@tanstack-blog/kb": "workspace:*",
+    "@tanstack-blog/algolia-search": "workspace:*"
   },
   "peerDependencies": {
     "vite": "^8.0.0"

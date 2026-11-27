@@ -23,6 +23,7 @@ const builtinDictionaries: Record<string, Dictionary> = {
     'page.updated': 'Last updated',
 
     'site.title': 'TanStack Blog',
+    'a11y.skip': 'Skip to content',
     'nav.tutorials': 'Tutorials',
     'version.selector': 'Version',
     'version.current': 'Current',
@@ -45,6 +46,7 @@ const builtinDictionaries: Record<string, Dictionary> = {
 
     'search.placeholder': 'Search documentation…',
     'search.noResults': 'No results found',
+    'search.allSections': 'All sections',
     'search.recent': 'Recently viewed',
     'theme.toggle': 'Change theme',
     'theme.light': 'Light',
@@ -52,6 +54,7 @@ const builtinDictionaries: Record<string, Dictionary> = {
     'theme.system': 'System',
     'toc.title': 'On this page',
     'page.edit': 'Edit this page',
+    'page.copyLink': 'Copy link to heading',
     'page.prev': 'Previous',
     'page.next': 'Next',
     'blog.all': 'All posts',
@@ -174,6 +177,7 @@ const builtinDictionaries: Record<string, Dictionary> = {
     'page.updated': 'Last updated',
 
     'site.title': 'TanStack Blog',
+    'a11y.skip': 'Skip to content',
     'nav.tutorials': 'Tutorials',
     'version.selector': 'Version',
     'version.current': 'Current',
@@ -249,6 +253,7 @@ const builtinDictionaries: Record<string, Dictionary> = {
     'page.updated': '最后更新',
 
     'site.title': 'TanStack 博客',
+    'a11y.skip': '跳到主要内容',
     'nav.tutorials': '教程',
     'version.selector': '版本',
     'version.current': '当前版本',
@@ -271,6 +276,7 @@ const builtinDictionaries: Record<string, Dictionary> = {
 
     'search.placeholder': '搜索文档…',
     'search.noResults': '没有找到结果',
+    'search.allSections': '全部板块',
     'search.recent': '最近浏览',
     'theme.toggle': '切换主题',
     'theme.light': '浅色',
@@ -278,6 +284,7 @@ const builtinDictionaries: Record<string, Dictionary> = {
     'theme.system': '跟随系统',
     'toc.title': '本页内容',
     'page.edit': '编辑此页',
+    'page.copyLink': '复制标题链接',
     'page.prev': '上一篇',
     'page.next': '下一篇',
     'blog.all': '全部文章',

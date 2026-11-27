@@ -40,6 +40,8 @@ type: docs
 
 Extra fields are preserved in `entry.meta` for custom components.
 
+Hovering the `#` anchor shows a copy-link tooltip; clicking copies the full heading URL instead of only moving the hash.
+
 ## Headings and anchors
 
 Headings get deterministic, duplicate-safe IDs. They are collected into `entry.headings` (levels 2 and 3) and rendered into the right-hand table of contents. Hover a heading in this page to see its anchor.

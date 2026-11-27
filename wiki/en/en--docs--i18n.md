@@ -64,6 +64,8 @@ registerDictionary('fr', {
 
 `createTranslator(locale)` returns a function that falls back to English and then to the key itself, so a partial dictionary never renders `undefined`.
 
+每个本地化页面都会为所有配置语言生成 `rel="alternate" hreflang` 链接，指向等价路由。
+
 ## Right-to-left
 
 Set `dir: 'rtl'` on a locale. The shell applies the direction from the locale definition; the sidebar and table of contents flip naturally because layout uses logical properties. Add per-theme RTL overrides through the theme's `css` field if a recipe needs them.

@@ -17,6 +17,15 @@ Search is configured in `app.config.ts` and built entirely from content — ther
 | `@tanstack-blog/search` | Shared `SearchAdapter` contract + zero-dependency local matcher (default) |
 | `@tanstack-blog/orama-search` | Optional Orama full-text adapter with typo tolerance |
 
+A fourth adapter, `@tanstack-blog/algolia-search`, is available for teams already indexing with Algolia:
+
+```ts
+provider: 'algolia',
+algolia: { appId, apiKey, indexName },
+```
+
+Records need `title`, `description`, `section`, `locale` and `route` fields; results are scoped to the active locale with a facet filter.
+
 ## Providers
 
 ```ts
@@ -47,6 +56,8 @@ The index is built lazily on first query. Field boosts are title ×3, descriptio
 ### None
 
 `none` hides the search trigger. The dialog component simply will not be wired up.
+
+Result chips filter by section (`docs`, `blog`, `components`, `wiki`). The active filter is local UI state and does not change the URL.
 
 ## Result highlighting
 

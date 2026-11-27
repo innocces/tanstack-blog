@@ -48,6 +48,8 @@ pnpm exec create-tanstack-blog run registry   # 重新生成 packages/themes/reg
 
 打开 `/themes/editor`，从任意预设出发，用取色器调整九个令牌，预览两种模式并导出 CSS。点击 **应用** 会把编辑结果注册为「Custom」并立即启用。
 
+编辑后的主题保存在本地；刷新后会在水合前重新注册，仍可选择，并在首屏前应用令牌。
+
 ## 编写新主题
 
 ```sh

@@ -2226,3 +2226,42 @@ html.light .tb-brand-wordmark {
     grid-template-columns: 1fr;
   }
 }
+
+/* Accessibility skip link (visible on keyboard focus). */
+.tb-skip-link {
+  position: fixed;
+  top: -60px;
+  left: 12px;
+  z-index: 200;
+  padding: 8px 14px;
+  border-radius: var(--tb-radius-sm);
+  background: var(--tb-accent);
+  color: var(--tb-accent-text);
+  font-size: 13px;
+  transition: top 140ms ease;
+}
+.tb-skip-link:focus {
+  top: 10px;
+}
+
+/* Search section facet buttons. */
+.tb-search-sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 12px 8px;
+  border-bottom: 1px solid var(--tb-border);
+}
+.tb-search-sections button {
+  padding: 3px 9px;
+  border: 1px solid var(--tb-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--tb-text-muted);
+  font-size: 10px;
+}
+.tb-search-sections button.is-active {
+  border-color: var(--tb-accent);
+  color: var(--tb-accent);
+  background: color-mix(in srgb, var(--tb-accent) 10%, transparent);
+}

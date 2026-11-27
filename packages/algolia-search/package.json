@@ -1,0 +1,29 @@
+{
+  "name": "@tanstack-blog/algolia-search",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Optional Algolia adapter for TanStack Blog search.",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@tanstack-blog/search": "workspace:*",
+    "algoliasearch": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^6.0.2"
+  }
+}

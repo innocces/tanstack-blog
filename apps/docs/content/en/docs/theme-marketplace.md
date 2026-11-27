@@ -46,6 +46,8 @@ pnpm exec create-tanstack-blog run registry   # regenerate packages/themes/regis
 
 Open `/themes/editor` to start from any preset, tweak the nine tokens with color pickers, preview both modes and export the resulting CSS. **Apply** registers the edited theme as "Custom" and activates it immediately.
 
+The edited theme is saved locally; after a reload it is re-registered before hydration, so it stays selectable and its tokens are applied before first paint.
+
 ## Authoring a new theme
 
 ```sh

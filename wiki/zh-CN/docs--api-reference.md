@@ -31,6 +31,9 @@ updated: 2026-02-01
 `createOramaSearchAdapter`、`createSearchIndex`、`searchIndex`、`serializeIndex`、`deserializeIndex`
 
 ## themes
+`allThemes`、`flagshipThemes`、`defaultTheme`、`getTheme`、`themesBySchool`、`localizedThemeName`、`localizedThemeDescription`、主题注册表。
+
+
 
 `allThemes`、`flagshipThemes`、`defaultTheme`、`getTheme`、`themesBySchool`
 

@@ -48,6 +48,9 @@ updated: 2026-02-01
 `tanstackBlog({ config, root? })` returns a Vite plugin that generates the three virtual modules. `virtualModules` exposes their ids.
 
 ## `@tanstack-blog/themes`
+`allThemes`, `flagshipThemes`, `defaultTheme`, `getTheme`, `themesBySchool`, `localizedThemeName`, `localizedThemeDescription`, theme registry.
+
+
 
 `allThemes`, `flagshipThemes`, `defaultTheme`, `getTheme(id)`, `themesBySchool(school)`.
 
